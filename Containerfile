@@ -19,7 +19,7 @@ RUN rpm-ostree install --idempotent dnf5 dnf5-plugins
 RUN dnf -y install dnf-plugins-core && \
     dnf -y copr enable bieszczaders/kernel-cachyos && \
     rpm-ostree override remove kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra \
-      --install kernel-cachyos && \
+    --install kernel-cachyos kernel-cachyos-core kernel-cachyos-modules kernel-cachyos-modules-extra && \
     setsebool -P domain_kernel_load_modules on && \
     dracut -f && \
     sync && \
