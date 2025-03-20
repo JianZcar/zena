@@ -21,7 +21,7 @@ RUN dnf -y install dnf-plugins-core && \
     rpm-ostree override remove kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra \
     --install kernel-cachyos kernel-cachyos-core kernel-cachyos-modules kernel-cachyos-modules-extra && \
     setsebool -P domain_kernel_load_modules on && \
-    dracut -f && \
+    dracut -f --kerneldir=/usr/lib/modules/$(uname -r) && \
     sync && \
     ostree container commit
 
