@@ -25,7 +25,7 @@ RUN dnf5 install -y kernel-devel kernel-headers && \
     rpm-ostree override remove kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra \
       --install kernel-cachyos && \
     setsebool -P domain_kernel_load_modules on && \
-    dracut -f --kerneldir=/usr/lib/modules/$(uname -r)  && \
+    dracut -f && \
     sync && \
     ostree container commit
 
