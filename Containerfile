@@ -25,7 +25,9 @@ RUN dnf5 install -y kernel-devel kernel-headers && \
     rpm-ostree override remove kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra \
       --install kernel-cachyos && \
     setsebool -P domain_kernel_load_modules on && \
-    dracut -f && \
+    KVER=$(rpm -q --qf '%{VERSION}-%{RELEASE}.%{ARCH}' kernel-cachyos) && \
+    echo "Detected kernel version: ${KVER}" && \
+    dracut -f /boot/initramfs-${KVER}.img ${KVER} && \
     sync && \
     ostree container commit
 
