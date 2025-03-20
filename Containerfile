@@ -23,7 +23,7 @@ RUN dnf -y install dnf-plugins-core && \
     setsebool -P domain_kernel_load_modules on && \
     ostree container commit
     
-RUN RUN dnf -y groupinstall "Fedora Workstation" && \
+RUN dnf -y groupinstall "Fedora Workstation" && \
     ostree container commit
 
 COPY build.sh /tmp/build.sh
