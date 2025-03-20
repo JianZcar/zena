@@ -13,15 +13,18 @@ FROM ghcr.io/ublue-os/silverblue-main:41
 ## make modifications desired in your image and install packages by modifying the build.sh script
 ## the following RUN directive does all the things required to run "build.sh" as recommended.
 
+#Install DNF 5
 RUN rpm-ostree install --idempotent dnf5 dnf5-plugins
 
-# Install cachy kernel 
-RUN dnf -y install dnf-plugins-core && \
-    dnf -y copr enable bieszczaders/kernel-cachyos && \
-    rpm-ostree override remove kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra \
-    --install kernel-cachyos && \
+# Add the Cachy kernel COPR repository file
+RUN cd /etc/yum.repos.d/ && \
+    wget https://copr.fedorainfracloud.org/coprs/bieszczaders/kernel-cachyos/repo/fedora-$(rpm -E %fedora)/bieszczaders-kernel-cachyos-fedora-$(rpm -E %fedora).repo
+
+# Override the default kernel and install the Cachy kernel
+RUN rpm-ostree override remove kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra \
+      --install kernel-cachyos && \
     setsebool -P domain_kernel_load_modules on && \
-    dracut -f --kerneldir=/usr/lib/modules/$(uname -r) && \
+    dracut -f --kerneldir=/usr/lib/modules/$(uname -r)  && \
     sync && \
     ostree container commit
 
