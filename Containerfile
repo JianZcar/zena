@@ -22,9 +22,6 @@ RUN dnf -y install dnf-plugins-core && \
       --install kernel-cachyos && \
     setsebool -P domain_kernel_load_modules on && \
     ostree container commit
-    
-RUN dnf -y groupinstall "Fedora Workstation" && \
-    ostree container commit
 
 COPY build.sh /tmp/build.sh
 
