@@ -16,10 +16,12 @@ FROM ghcr.io/ublue-os/silverblue-main:41
 RUN rpm-ostree install --idempotent dnf5 dnf5-plugins
 
 # Install cachy kernel 
-RUN cd /etc/yum.repos.d/ && \
-    wget https://copr.fedorainfracloud.org/coprs/bieszczaders/kernel-cachyos/repo/fedora-$(rpm -E %fedora)/bieszczaders-kernel-cachyos-fedora-$(rpm -E %fedora).repo && \
-    rpm-ostree override remove kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra --install kernel-cachyos && \
+RUN dnf -y install dnf-plugins-core && \
+    dnf -y copr enable bieszczaders/kernel-cachyos && \
+    rpm-ostree override remove kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra \
+      --install kernel-cachyos && \
     setsebool -P domain_kernel_load_modules on && \
+    dracut -f && \
     sync && \
     ostree container commit
 
