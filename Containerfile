@@ -13,6 +13,8 @@ FROM quay.io/fedora/fedora-bootc:41
 ## make modifications desired in your image and install packages by modifying the build.sh script
 ## the following RUN directive does all the things required to run "build.sh" as recommended.
 
+RUN rpm-ostree install --idempotent dnf5 dnf5-plugins
+
 # Install cachy kernel 
 RUN dnf -y install dnf-plugins-core && \
     dnf -y copr enable bieszczaders/kernel-cachyos && \
