@@ -21,7 +21,7 @@ RUN cd /etc/yum.repos.d/ && \
     wget --no-hsts https://copr.fedorainfracloud.org/coprs/bieszczaders/kernel-cachyos/repo/fedora-$(rpm -E %fedora)/bieszczaders-kernel-cachyos-fedora-$(rpm -E %fedora).repo
 
 # Override the default kernel and install the Cachy kernel
-RUN yum install -y kernel-devel kernel-headers && \
+RUN dnf5 install -y kernel-devel kernel-headers && \
     rpm-ostree override remove kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra \
       --install kernel-cachyos && \
     setsebool -P domain_kernel_load_modules on && \
