@@ -18,7 +18,7 @@ RUN rpm-ostree install --idempotent dnf5 dnf5-plugins
 
 # Add the Cachy kernel COPR repository file
 RUN cd /etc/yum.repos.d/ && \
-    wget https://copr.fedorainfracloud.org/coprs/bieszczaders/kernel-cachyos/repo/fedora-$(rpm -E %fedora)/bieszczaders-kernel-cachyos-fedora-$(rpm -E %fedora).repo
+    wget --no-hsts https://copr.fedorainfracloud.org/coprs/bieszczaders/kernel-cachyos/repo/fedora-$(rpm -E %fedora)/bieszczaders-kernel-cachyos-fedora-$(rpm -E %fedora).repo
 
 # Override the default kernel and install the Cachy kernel
 RUN yum install -y kernel-devel kernel-headers && \
