@@ -13,7 +13,7 @@ cd ../ && rm -rf MoreWaita
 echo "::endgroup::"
 
 
-/ctx/build-scripts/pre/00-image-info.sh
-/ctx/build-scripts/pre/01-install-kernel.sh
+/ctx/build-scripts/base/00-image-info.sh
+/ctx/build-scripts/base/01-install-kernel.sh
 
 ostree container commit
