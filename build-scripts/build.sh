@@ -1,7 +1,7 @@
 #!/bin/bash
 
 run_scripts() {
-  dir="/tmp/build-scripts/$1"
+  dir="/ctx/build-scripts/$1"
   if [ -d "$dir" ]; then
     for script in "$dir"/*; do
       [ -x "$script" ] && "$script"

@@ -1,3 +1,6 @@
+FROM scratch AS ctx
+COPY / /
+
 FROM ghcr.io/ublue-os/silverblue-main:41
 
 ## Other possible base images include:
@@ -15,9 +18,8 @@ FROM ghcr.io/ublue-os/silverblue-main:41
 
 RUN rpm-ostree install --idempotent dnf5 dnf5-plugins
 
-COPY build-scripts/ /tmp/build-scripts/
-
-RUN mkdir -p /var/lib/alternatives && \
-    /tmp/build-scripts/build.sh && \
-    ostree container commit
+RUN --mount=type=cache,dst=/var/cache/libdnf5 \
+    --mount=type=cache,dst=/var/cache/rpm-ostree \
+    --mount=type=bind,from=ctx,source=/,target=/ctx \
+    /ctx/build-scripts/build.sh
     
