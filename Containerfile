@@ -3,15 +3,15 @@ ARG FEDORA_MAJOR_VERSION="41"
 ARG SOURCE_IMAGE="${BASE_IMAGE_NAME}-main"
 ARG BASE_IMAGE="ghcr.io/ublue-os/${SOURCE_IMAGE}"
 
-ARG IMAGE_NAME="zena"
-ARG IMAGE_VENDOR="jianzcar"
-ARG IMAGE_TAG="stable"
-ARG VERSION=""
-
 FROM scratch AS ctx
 COPY / /
 
 FROM ${BASE_IMAGE}:${FEDORA_MAJOR_VERSION} AS base
+
+ARG IMAGE_NAME="zena"
+ARG IMAGE_VENDOR="JianZcar"
+ARG IMAGE_TAG="stable"
+ARG VERSION=""
 
 RUN --mount=type=cache,dst=/var/cache/libdnf5 \
     --mount=type=cache,dst=/var/cache/rpm-ostree \
