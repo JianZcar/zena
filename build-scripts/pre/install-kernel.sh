@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # Tell this script to exit if there are any errors.
 set -oue pipefail
@@ -8,7 +8,7 @@ INSTALLED_KERNEL_PACKAGES="$(rpm -qa --qf "%{NAME}\n" | grep -P '^kernel(?!-tool
 # Add required kernel repo
 # Run script with sudo or add sudo to below if using script locally
 wget -P /etc/yum.repos.d/ \
-    "wget https://copr.fedorainfracloud.org/coprs/bieszczaders/kernel-cachyos/repo/fedora-$(rpm -E %fedora)/bieszczaders-kernel-cachyos-fedora-$(rpm -E %fedora).repo"
+    "https://copr.fedorainfracloud.org/coprs/bieszczaders/kernel-cachyos/repo/fedora-$(rpm -E %fedora)/bieszczaders-kernel-cachyos-fedora-$(rpm -E %fedora).repo"
 # wget -P /etc/yum.repos.d/ ".REPO URL"
 
 printf "### Packages to be replaced ###\n$INSTALLED_KERNEL_PACKAGES\n\n"
