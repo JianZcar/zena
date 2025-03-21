@@ -13,8 +13,6 @@ run_scripts() {
 
 set -ouex pipefail
 
-find /ctx/build-scripts -type f -exec chmod +x {} \;
-
 run_scripts "pre"
 
 git clone https://github.com/somepaulo/MoreWaita.git && cd MoreWaita
