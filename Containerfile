@@ -1,4 +1,4 @@
-FROM quay.io/fedora/fedora-bootc:41
+FROM ghcr.io/ublue-os/silverblue-main:41
 
 ## Other possible base images include:
 # FROM ghcr.io/ublue-os/bazzite:latest
@@ -21,6 +21,7 @@ RUN dnf -y install dnf-plugins-core && \
     rpm-ostree override remove kernel kernel-core kernel-modules kernel-modules-core \
       --install kernel-cachyos && \
     setsebool -P domain_kernel_load_modules on && \
+    sync && \
     ostree container commit
 
 COPY build.sh /tmp/build.sh
@@ -28,3 +29,4 @@ COPY build.sh /tmp/build.sh
 RUN mkdir -p /var/lib/alternatives && \
     /tmp/build.sh && \
     ostree container commit
+    
