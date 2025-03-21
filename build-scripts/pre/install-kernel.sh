@@ -18,6 +18,6 @@ sleep 2
 # an initramfs.
 ### COMMENT OUT BELOW LINE IF USING LOCALLY ###
 rpm-ostree cliwrap install-to-root / && \
-rpm-ostree override remove $INSTALLED_KERNEL_PACKAGES --install=kernel-cachyos
+rpm-ostree override remove $INSTALLED_KERNEL_PACKAGES --install=kernel-cachyos-lts
 # rpm-ostree override remove $INSTALLED_KERNEL_PACKAGES --install=kernel-specified
 # rpm-ostree override replace "URL/kernel-name.rpm"
