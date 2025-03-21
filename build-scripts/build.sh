@@ -12,7 +12,6 @@ git clone https://github.com/somepaulo/MoreWaita.git && cd MoreWaita
 cd ../ && rm -rf MoreWaita
 echo "::endgroup::"
 
-# Generate image-info.json
 /ctx/build-scripts/pre/install-kernel.sh
 
 ostree container commit
