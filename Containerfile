@@ -15,18 +15,9 @@ FROM ghcr.io/ublue-os/silverblue-main:41
 
 RUN rpm-ostree install --idempotent dnf5 dnf5-plugins
 
-# Install cachy kernel 
-RUN dnf -y install dnf-plugins-core && \
-    dnf -y copr enable bieszczaders/kernel-cachyos && \
-    rpm-ostree override remove kernel kernel-core kernel-modules kernel-modules-core \
-      --install kernel-cachyos && \
-    setsebool -P domain_kernel_load_modules on && \
-    sync && \
-    ostree container commit
-
-COPY build.sh /tmp/build.sh
+COPY build-scripts/ /tmp/build-scripts/
 
 RUN mkdir -p /var/lib/alternatives && \
-    /tmp/build.sh && \
+    /tmp/build-scripts/build.sh && \
     ostree container commit
     
