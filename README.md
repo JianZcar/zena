@@ -1,7 +1,4 @@
 # Zena
-
-## Description
-
 Zena is a custom Silverblue image that leverages the Cachyos LTS kernel to provide a stable and optimized environment.
 
 ## Installation
