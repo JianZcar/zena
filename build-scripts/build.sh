@@ -9,7 +9,7 @@ echo "::endgroup::"
 echo "::group:: ===Install MoreWaita==="
 git clone https://github.com/somepaulo/MoreWaita.git && cd MoreWaita
 ./install.sh 
-cd ../ && rm MoreWaita
+cd ../ && rm -rf MoreWaita
 echo "::endgroup::"
 
 # Generate image-info.json
