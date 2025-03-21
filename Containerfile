@@ -4,7 +4,7 @@ ARG SOURCE_IMAGE="${BASE_IMAGE_NAME}-main"
 ARG BASE_IMAGE="ghcr.io/ublue-os/${SOURCE_IMAGE}"
 
 ARG IMAGE_NAME="zena"
-ARG IMAGE_VENDOR="JianZcar"
+ARG IMAGE_VENDOR="jianzcar"
 ARG IMAGE_TAG="stable"
 ARG VERSION=""
 
