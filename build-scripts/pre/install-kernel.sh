@@ -5,8 +5,6 @@ set -oue pipefail
 
 INSTALLED_KERNEL_PACKAGES="$(rpm -qa --qf "%{NAME}\n" | grep -P '^kernel(?!-tools).*')"
 
-printf "### Fedora version ###\n$FEDORA_VERSION\n\n"
-
 # Add required kernel repo
 # Run script with sudo or add sudo to below if using script locally
 wget -P /etc/yum.repos.d/ \
