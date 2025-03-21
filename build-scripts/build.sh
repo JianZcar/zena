@@ -18,7 +18,7 @@ find /tmp/build-scripts -type f -exec chmod +x {} \;
 run_scripts "pre"
 
 git clone https://github.com/somepaulo/MoreWaita.git && cd MoreWaita
-sudo ./install.sh || echo "MoreWaita installation failed!"
+./install.sh && rm MoreWaita || echo "MoreWaita installation failed!"
 
 ### Install packages
 
