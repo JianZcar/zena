@@ -13,7 +13,7 @@ run_scripts() {
 
 set -ouex pipefail
 
-find /tmp/build-scripts -type f -exec chmod +x {} \;
+find /ctx/build-scripts -type f -exec chmod +x {} \;
 
 run_scripts "pre"
 
