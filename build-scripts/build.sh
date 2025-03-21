@@ -4,11 +4,10 @@
 
 set -ouex pipefail
 
-
-git clone https://github.com/somepaulo/MoreWaita.git && cd MoreWaita
-./install.sh && rm MoreWaita || echo "MoreWaita installation failed!"
+dnf copr enable dusansimic/themes && dnf install morewaita-icon-theme
+dnf copr disable dusansimic/themes
 
 # Generate image-info.json
-/ctx/build-scripts/install-kernel.sh
+/ctx/build-scripts/pre/install-kernel.sh
 
 ostree container commit
