@@ -5,8 +5,8 @@ echo "::group:: ===Install dnf5==="
 rpm-ostree install --idempotent dnf5 dnf5-plugins
 echo "::endgroup::"
 
-/ctx/build-scripts/base/00-image-info.sh
-/ctx/build-scripts/base/01-install-kernel-akmods.sh
+/ctx/base/00-image-info.sh
+/ctx/base/01-install-kernel-akmods.sh
 
 
 echo "::group:: ===Install MoreWaita==="
