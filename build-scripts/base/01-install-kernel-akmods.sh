@@ -6,6 +6,8 @@ trap 'echo "::endgroup::"' EXIT
 
 dnf5 -y remove --no-autoremove kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra
 
+ls /tmp/kernel-rpms/
+
 dnf5 -y install \
     /tmp/kernel-rpms/kernel-[0-9]*.rpm \
     /tmp/kernel-rpms/kernel-core-*.rpm \
