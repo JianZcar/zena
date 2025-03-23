@@ -11,7 +11,6 @@ DOCUMENTATION_URL="https://github.com/JianZcar/zena"
 SUPPORT_URL="https://github.com/JianZcar/zena/issues"
 BUG_SUPPORT_URL="https://github.com/JianZcar/zena/issues"
 CODE_NAME="k1"
-VERSION="${VERSION:-00.00000000}"
 
 mkdir "/usr/share/zena/"
 IMAGE_INFO="/usr/share/zena/image-info.json"
