@@ -9,5 +9,13 @@ LINK="https://copr.fedorainfracloud.org/coprs/bieszczaders/kernel-cachyos/repo/f
 wget -P $YUM_DIR $LINK
 
 rpm-ostree cliwrap install-to-root / && \
-rpm-ostree override remove $INSTALLED_KERNEL_PACKAGES --install=kernel-cachyos-lts
+rpm-ostree override remove $INSTALLED_KERNEL_PACKAGES \
+    --install=kernel-cachyos-lts \
+    --install=akmod-nvidia \
+    --install=xorg-x11-drv-nvidia \
+    --install=nvidia-kmod-common \
+    --install=nvidia-settings \
+    --install=nvidia-persistenced \
+    --install=nvidia-vaapi-driver
+    
 rm "${YUM_DIR}bieszczaders-kernel-cachyos-fedora-$(rpm -E %fedora).repo"
