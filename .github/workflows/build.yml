@@ -86,6 +86,14 @@ jobs:
           sep-tags: " "
           sep-annotations: " "
 
+      - name: Extract Date Tag
+        id: extract_date
+        run: |
+          # Extract date tag from the metadata output
+          TAGS="${{ steps.metadata.outputs.tags }}"
+          DATE_TAG=$(echo $TAGS | grep -oE 'latest\.[0-9]{8}' | head -n 1 | cut -d. -f2)
+          echo "date_tag=$DATE_TAG" >> $GITHUB_OUTPUT
+
       - name: Build Image
         id: build_image
         uses: redhat-actions/buildah-build@7a95fa7ee0f02d552a32753e7414641a04307056 # v2
@@ -98,6 +106,8 @@ jobs:
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
           oci: false
+          build-args: |
+            DATE_TAG=${{ steps.extract_date.outputs.date_tag }}
 
       # Rechunk is a script that we use on Universal Blue to make sure there isnt a single huge layer when your image gets published.
       # This does not make your image faster to download, just provides better resumability and fixes a few errors.
