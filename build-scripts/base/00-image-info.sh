@@ -1,8 +1,8 @@
-#!/usr/bin/env bash
-
-echo "::group:: ===$(basename "$0")==="
-
+#!/usr/bin/bash
 set -ouex pipefail
+
+echo "::group::===$(basename "$0")==="
+trap 'echo "::endgroup::"' EXIT
 
 IMAGE_PRETTY_NAME="Zena"
 IMAGE_LIKE="fedora"
@@ -62,5 +62,3 @@ echo "IMAGE_VERSION=\"${VERSION}\"" >> /usr/lib/os-release
 
 # Fix issues caused by ID no longer being fedora
 sed -i "s|^EFIDIR=.*|EFIDIR=\"fedora\"|" /usr/sbin/grub2-switch-to-blscfg
-
-echo "::endgroup::"
