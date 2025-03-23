@@ -32,3 +32,19 @@ dnf5 -y install \
     /tmp/akmods-extra-rpms/kmods/*bmi260*.rpm \
     /tmp/akmods-extra-rpms/kmods/*ryzen-smu*.rpm \
     /tmp/akmods-extra-rpms/kmods/*evdi*.rpm
+    
+for toswap in linux-firmware netronome-firmware libertas-firmware atheros-firmware realtek-firmware \
+	tiwilink-firmware cirrus-audio-firmware linux-firmware-whence iwlwifi-dvm-firmware iwlwifi-mvm-firmware \ 
+	amd-ucode-firmware qcom-firmware mt7xxx-firmware liquidio-firmware nxpwireless-firmware intel-vsc-firmware \
+	nvidia-gpu-firmware intel-audio-firmware amd-gpu-firmware iwlegacy-firmware intel-gpu-firmware mlxsw_spectrum-firmware \
+	qed-firmware mrvlprestera-firmware brcmfmac-firmware dvb-firmware; do \
+	
+  dnf5 -y swap --repo copr:copr.fedorainfracloud.org:bazzite-org:bazzite $toswap $toswap; \
+done && unset -v toswap && \
+dnf5 -y config-manager setopt "*rpmfusion*".enabled=0 && \
+dnf5 -y copr enable bieszczaders/kernel-cachyos-addons && \
+dnf5 -y install scx-scheds && \
+dnf5 -y copr disable bieszczaders/kernel-cachyos-addons && \
+for toswap in rpm-ostree bootc; do \
+    dnf5 -y swap --repo copr:copr.fedorainfracloud.org:bazzite-org:bazzite $toswap $toswap; \
+done && unset -v toswap
