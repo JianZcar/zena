@@ -22,7 +22,7 @@ ARG IMAGE_VENDOR="JianZcar"
 ARG IMAGE_TAG="stable"
 ARG VERSION=""
 
-COPY system_files/nvidia/shared system_files/nvidia/${BASE_IMAGE_NAME} /
+COPY --from=ghcr.io/ublue-os/akmods-nvidia:${KERNEL_FLAVOR}-${FEDORA_MAJOR_VERSION} /rpms/ /tmp/rpms
 
 RUN --mount=type=cache,dst=/var/cache/libdnf5 \
     --mount=type=cache,dst=/var/cache/rpm-ostree \
