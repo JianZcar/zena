@@ -16,4 +16,5 @@ git clone https://github.com/somepaulo/MoreWaita.git && cd MoreWaita
 cd ../ && rm -rf MoreWaita
 echo "::endgroup::"
 
-ostree container commit
+/ctx/build-initramfs.sh
+/ctx/cleanup.sh
