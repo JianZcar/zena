@@ -6,13 +6,6 @@ trap 'echo "::endgroup::"' EXIT
 
 IMAGE_NAME="${BASE_IMAGE_NAME}"
 
-dnf5 -y remove \
-        rocm-hip \
-        rocm-opencl \
-        rocm-clinfo \
-        rocm-smi
-/ctx/cleanup
-
 dnf5 -y copr enable ublue-os/staging
 dnf5 -y install \
     mesa-vdpau-drivers.x86_64 \
