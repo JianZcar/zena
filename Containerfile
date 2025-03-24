@@ -21,8 +21,9 @@ ARG IMAGE_NAME="zena"
 ARG IMAGE_VENDOR="JianZcar"
 ARG IMAGE_TAG="stable"
 ARG VERSION=""
+ARG NVIDIA_TAG="${KERNEL_FLAVOR}-${FEDORA_MAJOR_VERSION}"
 
-COPY --from=ghcr.io/ublue-os/akmods-nvidia:${KERNEL_FLAVOR}-${FEDORA_MAJOR_VERSION} /rpms/ /tmp/rpms
+COPY --from=ghcr.io/ublue-os/akmods-nvidia:${NVIDIA_TAG} /rpms/ /tmp/rpms
 
 RUN --mount=type=cache,dst=/var/cache/libdnf5 \
     --mount=type=cache,dst=/var/cache/rpm-ostree \
