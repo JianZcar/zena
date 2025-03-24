@@ -8,6 +8,7 @@ ARG KERNEL_VERSION="6.13.6-103.bazzite.fc41.x86_64"
 
 FROM ghcr.io/ublue-os/akmods:${KERNEL_FLAVOR}-${FEDORA_MAJOR_VERSION}-${KERNEL_VERSION} AS akmods
 FROM ghcr.io/ublue-os/akmods-extra:${KERNEL_FLAVOR}-${FEDORA_MAJOR_VERSION}-${KERNEL_VERSION} AS akmods-extra
+FROM ghcr.io/ublue-os/akmods-nvidia:${KERNEL_FLAVOR}-${FEDORA_MAJOR_VERSION}-${KERNEL_VERSION} AS nvidia-akmods
 
 FROM scratch AS ctx
 COPY build-scripts /
@@ -22,7 +23,6 @@ ARG IMAGE_VENDOR="JianZcar"
 ARG IMAGE_TAG="stable"
 ARG VERSION=""
 
-FROM ghcr.io/ublue-os/akmods-nvidia:${KERNEL_FLAVOR}-${FEDORA_MAJOR_VERSION}-${KERNEL_VERSION} AS nvidia-akmods
 COPY --from=ghcr.io/ublue-os/akmods-nvidia:${KERNEL_FLAVOR}-${FEDORA_MAJOR_VERSION} /rpms/ /tmp/rpms
 
 RUN --mount=type=cache,dst=/var/cache/libdnf5 \
