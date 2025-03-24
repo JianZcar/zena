@@ -17,13 +17,13 @@ FROM ${BASE_IMAGE}:${FEDORA_MAJOR_VERSION} AS base
 
 ARG BASE_IMAGE_NAME="silverblue"
 ARG FEDORA_MAJOR_VERSION="41"
+ARG KERNEL_FLAVOR="bazzite"
 ARG IMAGE_NAME="zena"
 ARG IMAGE_VENDOR="JianZcar"
 ARG IMAGE_TAG="stable"
 ARG VERSION=""
-ARG NVIDIA_TAG="${KERNEL_FLAVOR}-${FEDORA_MAJOR_VERSION}"
 
-COPY --from=ghcr.io/ublue-os/akmods-nvidia:${NVIDIA_TAG} /rpms/ /tmp/rpms
+COPY --from=ghcr.io/ublue-os/akmods-nvidia:${KERNEL_FLAVOR}-${FEDORA_MAJOR_VERSION} /rpms/ /tmp/rpms
 
 RUN --mount=type=cache,dst=/var/cache/libdnf5 \
     --mount=type=cache,dst=/var/cache/rpm-ostree \
