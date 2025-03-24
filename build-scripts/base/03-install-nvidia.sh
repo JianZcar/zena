@@ -11,9 +11,8 @@ dnf5 -y install \
     mesa-vdpau-drivers.x86_64 \
     mesa-vdpau-drivers.i686 
     
-curl -Lo /tmp/nvidia-install.sh https://raw.githubusercontent.com/ublue-os/hwe/b3a3dbddf4af81cfbfa7526c1918c9b9f014f86b/nvidia-install.sh
-chmod +x /tmp/nvidia-install.sh
-/tmp/nvidia-install.sh
+rpm-ostree install /tmp/rpms/ublue-os/ublue-os-nvidia*.rpm
+rpm-ostree install /tmp/rpms/kmods/kmod-nvidia*.rpm
 
 rm -f /usr/share/vulkan/icd.d/nouveau_icd.*.json
 
