@@ -24,7 +24,7 @@ ARG IMAGE_TAG="stable"
 ARG VERSION=""
 
 COPY --from=ghcr.io/ublue-os/akmods-nvidia:${KERNEL_FLAVOR}-${FEDORA_MAJOR_VERSION} /rpms/ /tmp/rpms
-
+RUN find /tmp/rpms
 RUN --mount=type=cache,dst=/var/cache/libdnf5 \
     --mount=type=cache,dst=/var/cache/rpm-ostree \
     --mount=type=bind,from=akmods,src=/kernel-rpms,dst=/tmp/kernel-rpms \
