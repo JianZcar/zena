@@ -16,22 +16,22 @@ dnf5 -y install \
 dnf5 versionlock add kernel kernel-devel kernel-devel-matched kernel-core kernel-modules kernel-modules-core kernel-modules-extra kernel-uki-virt
 
 dnf5 -y install \
-    /tmp/akmods-rpms/kmods/*kvmfr*.rpm \
-    /tmp/akmods-rpms/kmods/*xone*.rpm \
-    /tmp/akmods-rpms/kmods/*openrazer*.rpm \
-    /tmp/akmods-rpms/kmods/*v4l2loopback*.rpm \
-    /tmp/akmods-rpms/kmods/*wl*.rpm \
-    /tmp/akmods-rpms/kmods/*framework-laptop*.rpm \
-    /tmp/akmods-extra-rpms/kmods/*nct6687*.rpm \
-    /tmp/akmods-extra-rpms/kmods/*gcadapter_oc*.rpm \
-    /tmp/akmods-extra-rpms/kmods/*zenergy*.rpm \
-    /tmp/akmods-extra-rpms/kmods/*vhba*.rpm \
-    /tmp/akmods-extra-rpms/kmods/*gpd-fan*.rpm \
-    /tmp/akmods-extra-rpms/kmods/*ayaneo-platform*.rpm \
-    /tmp/akmods-extra-rpms/kmods/*ayn-platform*.rpm \
-    /tmp/akmods-extra-rpms/kmods/*bmi260*.rpm \
-    /tmp/akmods-extra-rpms/kmods/*ryzen-smu*.rpm \
-    /tmp/akmods-extra-rpms/kmods/*evdi*.rpm
+    /tmp/rpms/kmods/*kvmfr*.rpm \
+    /tmp/rpms/kmods/*xone*.rpm \
+    /tmp/rpms/kmods/*openrazer*.rpm \
+    /tmp/rpms/kmods/*v4l2loopback*.rpm \
+    /tmp/rpms/kmods/*wl*.rpm \
+    /tmp/rpms/kmods/*framework-laptop*.rpm \
+    /tmp/rpms/kmods/*nct6687*.rpm \
+    /tmp/rpms/kmods/*gcadapter_oc*.rpm \
+    /tmp/rpms/kmods/*zenergy*.rpm \
+    /tmp/rpms/kmods/*vhba*.rpm \
+    /tmp/rpms/kmods/*gpd-fan*.rpm \
+    /tmp/rpms/kmods/*ayaneo-platform*.rpm \
+    /tmp/rpms/kmods/*ayn-platform*.rpm \
+    /tmp/rpms/kmods/*bmi260*.rpm \
+    /tmp/rpms/kmods/*ryzen-smu*.rpm \
+    /tmp/rpms/kmods/*evdi*.rpm
     
 for toswap in linux-firmware netronome-firmware libertas-firmware atheros-firmware realtek-firmware \
 	tiwilink-firmware cirrus-audio-firmware linux-firmware-whence iwlwifi-dvm-firmware iwlwifi-mvm-firmware \
