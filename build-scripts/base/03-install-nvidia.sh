@@ -52,7 +52,7 @@ dnf5 install -y \
     nvidia-driver-libs.i686 \
     nvidia-settings \
     nvidia-container-toolkit gnome-shell-extension-supergfxctl-gex supergfxctl \
-    /tmp/akmods-rpms/kmods/kmod-nvidia-${KERNEL_VERSION}-${NVIDIA_AKMOD_VERSION}.fc${RELEASE}.rpm
+    /tmp/rpms/kmods/kmod-nvidia-${KERNEL_VERSION}-${NVIDIA_AKMOD_VERSION}.fc${RELEASE}.rpm
 
 ## nvidia post-install steps
 # disable repos provided by ublue-os-nvidia-addons
