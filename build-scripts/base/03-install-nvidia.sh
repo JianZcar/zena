@@ -19,7 +19,6 @@ sed -i 's@enabled=1@enabled=0@g' /etc/yum.repos.d/rpmfusion*.repo
 sed -i 's@enabled=1@enabled=0@g' /etc/yum.repos.d/fedora-cisco-openh264.repo
 
 rpm-ostree install /tmp/rpms/ublue-os/ublue-os-nvidia*.rpm
-rpm-ostree install /tmp/rpms/kmods/kmod-nvidia*.rpm
 
 # enable repos provided by ublue-os-nvidia-addons
 sed -i '0,/enabled=0/{s/enabled=0/enabled=1/}' /etc/yum.repos.d/negativo17-fedora-nvidia.repo
@@ -51,8 +50,8 @@ dnf5 install -y \
     nvidia-driver-cuda-libs.i686 \
     nvidia-driver-libs.i686 \
     nvidia-settings \
-    nvidia-container-toolkit gnome-shell-extension-supergfxctl-gex supergfxctl \
-    /tmp/rpms/kmods/kmod-nvidia-${KERNEL_VERSION}-${NVIDIA_AKMOD_VERSION}.fc${RELEASE}.rpm
+    nvidia-container-toolkit gnome-shell-extension-supergfxctl-gex supergfxctl
+rpm-ostree install /tmp/rpms/kmods/kmod-nvidia*.rpm
 
 ## nvidia post-install steps
 # disable repos provided by ublue-os-nvidia-addons
