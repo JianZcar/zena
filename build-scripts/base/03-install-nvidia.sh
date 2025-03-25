@@ -4,8 +4,6 @@ set -eoux pipefail
 echo "::group::===$(basename "$0")==="
 trap 'echo "::endgroup::"' EXIT
 
-source /tmp/rpms/kmods/nvidia-vars
-
 IMAGE_NAME="${BASE_IMAGE_NAME}"
 RELEASE="$(rpm -E %fedora)"
 
@@ -39,6 +37,8 @@ else
     # Otherwise, retrieve the repo file for staging
     curl -Lo /etc/yum.repos.d/_copr_ublue-os-staging.repo https://copr.fedorainfracloud.org/coprs/ublue-os/staging/repo/fedora-"${RELEASE}"/ublue-os-staging-fedora-"${RELEASE}".repo
 fi
+
+source /tmp/rpms/kmods/nvidia-vars
 
 dnf5 install -y \
     libnvidia-fbc \
