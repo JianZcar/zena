@@ -11,7 +11,7 @@ FROM scratch AS ctx
 COPY build_files /
 
 # Step 4: Base image for final system
-FROM ghcr.io/ublue-os/silverblue:${FEDORA_VERSION} AS base
+FROM ghcr.io/ublue-os/silverblue-main:${FEDORA_VERSION} AS base
 
 # Step 5: Copy RPMs from akmods
 COPY --from=akmods /kernel-rpms /tmp/kernel-rpms
