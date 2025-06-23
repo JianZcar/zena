@@ -1,13 +1,14 @@
 ARG FEDORA_VERSION=42
 ARG KERNEL_VERSION=6.14.6-109.bazzite.fc42.x86_64
 ARG KERNEL_FLAVOR=bazzite
+ARG BASE_IMAGE_NAME=silverblue
 
 FROM ghcr.io/ublue-os/akmods-nvidia-open:${KERNEL_FLAVOR}-${FEDORA_VERSION}-${KERNEL_VERSION} AS akmods
 
 FROM scratch AS ctx
 COPY build_files /
 
-FROM ghcr.io/ublue-os/silverblue-main:${FEDORA_VERSION} AS base
+FROM ghcr.io/ublue-os/${BASE_IMAGE_NAME}-main:${FEDORA_VERSION} AS base
 
 COPY --from=akmods / /tmp/akmods-nvidia
 RUN find /tmp/akmods-nvidia
@@ -30,9 +31,11 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
     --mount=type=bind,from=akmods,src=/kernel-rpms,dst=/tmp/kernel-rpms \
-    --mount=type=bind,from=akmods,src=/rpms,dst=/tmp/rpms \
-    --mount=type=bind,from=akmods-extra,src=/rpms,dst=/tmp/akmods-extra \
+    --mount=type=bind,from=akmods,src=/rpms,dst=/tmp/akmods-rpms \
     /ctx/build.sh && \
+    curl -Lo /tmp/nvidia-install.sh https://raw.githubusercontent.com/ublue-os/main/refs/heads/main/build_files/nvidia-install.sh && \
+    chmod +x /tmp/nvidia-install.sh && \
+    IMAGE_NAME="${BASE_IMAGE_NAME}" /tmp/nvidia-install.sh
     dnf5 clean all && \
     ostree container commit
     
