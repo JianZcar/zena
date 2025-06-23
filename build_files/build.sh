@@ -6,16 +6,16 @@ shopt -s nullglob
 dnf5 -y remove --no-autoremove kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra
 
 dnf5 -y install \
-  /tmp/akmods-nvidia/kernel-rpms/kernel-[0-9]*.rpm \
-  /tmp/akmods-nvidia/kernel-rpms/kernel-core-*.rpm \
-  /tmp/akmods-nvidia/kernel-rpms/kernel-modules-*.rpm \
-  /tmp/akmods-nvidia/kernel-rpms/kernel-modules-core-*.rpm \
-  /tmp/akmods-nvidia/kernel-rpms/kernel-modules-extra-*.rpm \
+  /tmp/kernel-rpms/kernel-[0-9]*.rpm \
+  /tmp/kernel-rpms/kernel-core-*.rpm \
+  /tmp/kernel-rpms/kernel-modules-*.rpm \
+  /tmp/kernel-rpms/kernel-modules-core-*.rpm \
+  /tmp/kernel-rpms/kernel-modules-extra-*.rpm \
   /tmp/akmods-nvidia/kernel-rpms/kernel-devel-*.rpm
 
 rpm-ostree install \
-  /tmp/akmods-nvidia/rpms/ublue-os/ublue-os-nvidia*.rpm \
-  /tmp/akmods-nvidia/rpms/kmods/kmod-nvidia*.rpm
+  /tmp/rpms/ublue-os/ublue-os-nvidia*.rpm \
+  /tmp/rpms/kmods/kmod-nvidia*.rpm
 
 # Packages can be installed from any enabled yum repo on the image.
 # RPMfusion repos are available by default in ublue main images
