@@ -2,6 +2,17 @@
 
 set -ouex pipefail
 
+
+dnf5 -y remove --no-autoremove kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra
+
+dnf5 -y install \
+  /tmp/akmods-nvidia/kernel-rpms/kernel-[0-9]*.rpm \
+  /tmp/akmods-nvidia/kernel-rpms/kernel-core-*.rpm \
+  /tmp/akmods-nvidia/kernel-rpms/kernel-modules-*.rpm \
+  /tmp/akmods-nvidia/kernel-rpms/kernel-devel-*.rpm
+
+rpm-ostree install /tmp/rpms/kmods/kmod-nvidia*.rpm
+
 ### Install packages
 
 # Packages can be installed from any enabled yum repo on the image.

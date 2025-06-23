@@ -15,7 +15,8 @@ FROM ghcr.io/ublue-os/silverblue-main:${FEDORA_VERSION} AS base
 
 # Step 5: Copy RPMs from akmods
 COPY --from=akmods / /tmp/akmods-nvidia
-
+RUN find /tmp/akmods-nvidia
+  
 ## Other possible base images include:
 # FROM ghcr.io/ublue-os/bazzite:latest
 # FROM ghcr.io/ublue-os/bluefin-nvidia:stable
@@ -29,20 +30,13 @@ COPY --from=akmods / /tmp/akmods-nvidia
 ## make modifications desired in your image and install packages by modifying the build.sh script
 ## the following RUN directive does all the things required to run "build.sh" as recommended.
 
-RUN dnf5 remove -y kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra --noautoremove
-
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
     /ctx/build.sh && \
-    dnf5 install -y dnf5-plugins && \
-    rpm-ostree install /tmp/rpms/ublue-os/ublue-os-nvidia*.rpm && \
-    rpm-ostree install /tmp/rpms/kmods/kmod-nvidia*.rpm && \
-    dnf5 clean all
     ostree container commit
     
-RUN bootc install-kernel --kver ${KERNEL_VERSION}
 ### LINTING
 ## Verify final image and contents are correct.
 RUN bootc container lint
