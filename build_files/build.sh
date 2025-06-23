@@ -2,7 +2,7 @@
 
 set -ouex pipefail
 
-
+shopt -s nullglob
 dnf5 -y remove --no-autoremove kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra
 
 dnf5 -y install \
