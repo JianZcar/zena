@@ -179,7 +179,7 @@ jobs:
         if: github.event_name != 'pull_request'
         with:
           containers: |
-            ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.DEFAULT_TAG }}
+            ${{ env.IMAGE_NAME }}:${{ env.DEFAULT_TAG }}
           registry-token: ${{ secrets.GITHUB_TOKEN }}
           signing-secret: ${{ secrets.SIGNING_SECRET }}
           registry: ${{ env.IMAGE_REGISTRY }}
