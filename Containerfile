@@ -10,7 +10,7 @@ COPY build_files /
 FROM ghcr.io/ublue-os/silverblue-main:${FEDORA_VERSION} AS base
 
 COPY --from=akmods / /tmp/akmods-nvidia
-find /tmp/akmods-nvidia
+RUN find /tmp/akmods-nvidia
 
 ## Other possible base images include:
 # FROM ghcr.io/ublue-os/bazzite:latest
