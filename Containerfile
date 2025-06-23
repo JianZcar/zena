@@ -14,8 +14,7 @@ COPY build_files /
 FROM ghcr.io/ublue-os/silverblue-main:${FEDORA_VERSION} AS base
 
 # Step 5: Copy RPMs from akmods
-COPY --from=akmods /kernel-rpms /tmp/kernel-rpms
-COPY --from=akmods /rpms /tmp/akmods-rpms
+COPY --from=akmods / /tmp/akmods-nvidia
 
 ## Other possible base images include:
 # FROM ghcr.io/ublue-os/bazzite:latest
@@ -37,11 +36,9 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
     /ctx/build.sh && \
-    dnf5 install -y dnf5-plugins &&\
-    rpm-ostree override replace /tmp/kernel-rpms/*.rpm && \
-    rpm-ostree install \
-      /tmp/rpms/ublue-os/ublue-os-nvidia*.rpm \
-      /tmp/rpms/kmods/kmod-nvidia*.rpm && \
+    dnf5 install -y dnf5-plugins && \
+    rpm-ostree install /tmp/rpms/ublue-os/ublue-os-nvidia*.rpm && \
+    rpm-ostree install /tmp/rpms/kmods/kmod-nvidia*.rpm && \
     dnf5 clean all
     ostree container commit
     
