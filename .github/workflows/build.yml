@@ -13,6 +13,11 @@ on:
       - '**/README.md'
   workflow_dispatch:
 
+permissions:
+  contents: read    # read the repo
+  packages: write   # allow GITHUB_TOKEN to push container images
+  id-token: write   # (for OIDC, cosign, etc.)
+
 env:
   IMAGE_DESC: "My Customized Universal Blue Image"
   IMAGE_KEYWORDS: "bootc,ublue,universal-blue"
