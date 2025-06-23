@@ -35,7 +35,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     /ctx/build.sh && \
     curl -Lo /tmp/nvidia-install.sh https://raw.githubusercontent.com/ublue-os/main/refs/heads/main/build_files/nvidia-install.sh && \
     chmod +x /tmp/nvidia-install.sh && \
-    IMAGE_NAME="${BASE_IMAGE_NAME}" /tmp/nvidia-install.sh
+    IMAGE_NAME="${BASE_IMAGE_NAME}" /tmp/nvidia-install.sh && \
     dnf5 clean all && \
     ostree container commit
     
