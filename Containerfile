@@ -2,8 +2,14 @@
 FROM scratch AS ctx
 COPY build_files /
 
+ARG FEDORA_VERSION=42
+ARG KERNEL_VERSION=6.14.6-109.bazzite.fc42.x86_64
+ARG KERNEL_FLAVOR=bazzite
+
+# Akmods
+FROM ghcr.io/ublue-os/akmods-nvidia-open:${KERNEL_FLAVOR}-${FEDORA_VERSION}-${KERNEL_VERSION} AS akmods
 # Base Image
-FROM ghcr.io/ublue-os/bazzite:stable
+FROM ghcr.io/ublue-os/silverblue:${FEDORA_VERSION} AS base
 
 ## Other possible base images include:
 # FROM ghcr.io/ublue-os/bazzite:latest
@@ -17,14 +23,29 @@ FROM ghcr.io/ublue-os/bazzite:stable
 ### MODIFICATIONS
 ## make modifications desired in your image and install packages by modifying the build.sh script
 ## the following RUN directive does all the things required to run "build.sh" as recommended.
+COPY --from=akmods /kernel-rpms /tmp/kernel-rpms
+COPY --from=akmods /rpms /tmp/akmods-rpms
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
     /ctx/build.sh && \
+    dnf5 install -y dnf5-plugins && \
+    dnf5 config-manager --add-repo=https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-${FEDORA_VERSION}.noarch.rpm && \
+    dnf5 config-manager --add-repo=https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-${FEDORA_VERSION}.noarch.rpm && \
+    dnf5 install -y \
+      /tmp/kernel-rpms/*.rpm \
+      /tmp/akmods-rpms/*.rpm \
+      kernel-devel-${KERNEL_VERSION} \
+      nvidia-settings \
+      vulkan-tools \
+      libva-utils \
+      glx-utils && \
+    dnf5 clean all
     ostree container commit
     
+RUN bootc install-kernel --kver ${KERNEL_VERSION}
 ### LINTING
 ## Verify final image and contents are correct.
 RUN bootc container lint
