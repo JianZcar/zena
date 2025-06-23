@@ -9,11 +9,13 @@ dnf5 -y install \
   /tmp/akmods-nvidia/kernel-rpms/kernel-[0-9]*.rpm \
   /tmp/akmods-nvidia/kernel-rpms/kernel-core-*.rpm \
   /tmp/akmods-nvidia/kernel-rpms/kernel-modules-*.rpm \
+  /tmp/akmods-nvidia/kernel-rpms/kernel-modules-core-*.rpm \
+  /tmp/akmods-nvidia/kernel-rpms/kernel-modules-extra-*.rpm \
   /tmp/akmods-nvidia/kernel-rpms/kernel-devel-*.rpm
 
-rpm-ostree install /tmp/rpms/kmods/kmod-nvidia*.rpm
-
-### Install packages
+rpm-ostree install \
+  /tmp/akmods-nvidia/rpms/ublue-os/ublue-os-nvidia*.rpm \
+  /tmp/akmods-nvidia/rpms/kmods/kmod-nvidia*.rpm
 
 # Packages can be installed from any enabled yum repo on the image.
 # RPMfusion repos are available by default in ublue main images
