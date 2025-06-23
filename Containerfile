@@ -30,19 +30,18 @@ COPY --from=akmods /rpms /tmp/akmods-rpms
 ## make modifications desired in your image and install packages by modifying the build.sh script
 ## the following RUN directive does all the things required to run "build.sh" as recommended.
 
+RUN dnf5 remove -y kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra --noautoremove
+
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
     /ctx/build.sh && \
-    dnf5 install -y dnf5-plugins \
-      /tmp/kernel-rpms/*.rpm \
-      /tmp/akmods-rpms/*.rpm \
-      kernel-devel-${KERNEL_VERSION} \
-      nvidia-settings \
-      vulkan-tools \
-      libva-utils \
-      glx-utils && \
+    dnf5 install -y dnf5-plugins &&\
+    rpm-ostree override replace /tmp/kernel-rpms/*.rpm && \
+    rpm-ostree install \
+      /tmp/rpms/ublue-os/ublue-os-nvidia*.rpm \
+      /tmp/rpms/kmods/kmod-nvidia*.rpm && \
     dnf5 clean all
     ostree container commit
     
