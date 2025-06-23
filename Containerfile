@@ -35,10 +35,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
     /ctx/build.sh && \
-    dnf5 install -y dnf5-plugins && \
-    dnf5 config-manager --add-repo=https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-${FEDORA_VERSION}.noarch.rpm && \
-    dnf5 config-manager --add-repo=https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-${FEDORA_VERSION}.noarch.rpm && \
-    dnf5 install -y \
+    dnf5 install -y dnf5-plugins \
       /tmp/kernel-rpms/*.rpm \
       /tmp/akmods-rpms/*.rpm \
       kernel-devel-${KERNEL_VERSION} \
