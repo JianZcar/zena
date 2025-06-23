@@ -9,6 +9,9 @@ COPY build_files /
 
 FROM ghcr.io/ublue-os/silverblue-main:${FEDORA_VERSION} AS base
 
+COPY --from=akmods / /tmp/akmods-nvidia
+find /tmp/akmods-nvidia
+
 ## Other possible base images include:
 # FROM ghcr.io/ublue-os/bazzite:latest
 # FROM ghcr.io/ublue-os/bluefin-nvidia:stable
@@ -28,6 +31,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=tmpfs,dst=/tmp \
     --mount=type=bind,from=akmods,src=/kernel-rpms,dst=/tmp/kernel-rpms \
     --mount=type=bind,from=akmods,src=/rpms,dst=/tmp/rpms \
+    --mount=type=bind,from=akmods-extra,src=/rpms,dst=/tmp/akmods-extra \
     /ctx/build.sh && \
     dnf5 clean all && \
     ostree container commit
