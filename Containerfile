@@ -35,9 +35,18 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=bind,from=akmods,src=/kernel-rpms,dst=/tmp/kernel-rpms \
     --mount=type=bind,from=akmods,src=/rpms,dst=/tmp/akmods-rpms \
     /ctx/build.sh && \
+    dnf5 config-manager setopt "terra-mesa".enabled=1 && \
+    dnf5 -y copr enable ublue-os/staging && \
+    dnf5 -y install \
+        mesa-vdpau-drivers.x86_64 \
+        mesa-vdpau-drivers.i686 && \
     curl -Lo /tmp/nvidia-install.sh https://raw.githubusercontent.com/ublue-os/main/refs/heads/main/build_files/nvidia-install.sh && \
     chmod +x /tmp/nvidia-install.sh && \
     IMAGE_NAME="${BASE_IMAGE_NAME}" /tmp/nvidia-install.sh && \
+    rm -f /usr/share/vulkan/icd.d/nouveau_icd.*.json && \
+    ln -s libnvidia-ml.so.1 /usr/lib64/libnvidia-ml.so && \
+    dnf5 config-manager setopt "terra-mesa".enabled=0 && \
+    dnf5 -y copr disable ublue-os/staging && \
     dnf5 clean all && \
     ostree container commit
     
