@@ -121,10 +121,10 @@ jobs:
         uses: hhd-dev/rechunk@ca77507401f8700bb0b25ebecbbf980a078cd180
         with:
           rechunk: 'ghcr.io/hhd-dev/rechunk:v1.2.2'
-          ref: "localhost/${{ env.IMAGE_NAME }}:${{ env.DEFAULT_TAG }}"
-          prev-ref: "${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.DEFAULT_TAG }}"
+          ref: "containers-storage:${{ env.IMAGE_NAME }}:${{ env.DEFAULT_TAG }}"
+          prev-ref: "containers-storage:${{ env.IMAGE_NAME }}:${{ env.DEFAULT_TAG }}"
           skip_compression: true
-          labels: ${{ steps.metadata.outputs.labels }} # Rechunk strips out all the labels during build, this needs to be reapplied here with newline separator
+          labels: ${{ steps.metadata.outputs.labels }}
 
       # This is necessary so that the podman socket can find the rechunked image on its storage
       - name: Load in podman and tag
