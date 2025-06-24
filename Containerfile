@@ -94,6 +94,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     ln -s libnvidia-ml.so.1 /usr/lib64/libnvidia-ml.so && \
     dnf5 config-manager setopt "terra-mesa".enabled=0 && \
     dnf5 -y copr disable ublue-os/staging && \
+    /ctx/build-initramfs.sh && \
     dnf5 clean all && \
     ostree container commit
     
