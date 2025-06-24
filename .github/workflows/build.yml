@@ -141,15 +141,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Push image to GHCR
-        if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
-        run: |
-          echo "${{ secrets.GITHUB_TOKEN }}" | podman login ghcr.io -u ${{ github.actor }} --password-stdin
-          for tag in ${{ steps.metadata.outputs.tags }}; do
-            full_image="${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}:$tag"
-            buildah tag ${{ env.IMAGE_NAME }} $full_image
-            buildah push $full_image
-          done
+      - name: Push To GHCR
+        uses: redhat-actions/push-to-registry@v2.8
+        with:
+          image: ${{ env.IMAGE_NAME }}
+          tags: ${{ steps.metadata.outputs.tags }}
+          registry: ${{ env.IMAGE_REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       # This section is optional and only needs to be enabled if you plan on distributing
       # your project for others to consume. You will need to create a public and private key
