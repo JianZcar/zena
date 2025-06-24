@@ -13,6 +13,8 @@ dnf5 -y install \
   /tmp/kernel-rpms/kernel-modules-extra-*.rpm \
   /tmp/akmods-nvidia/kernel-rpms/kernel-devel-*.rpm
 
+dnf5 versionlock add kernel kernel-devel kernel-devel-matched kernel-core kernel-modules kernel-modules-core kernel-modules-extra kernel-uki-virt
+
 # Packages can be installed from any enabled yum repo on the image.
 # RPMfusion repos are available by default in ublue main images
 # List of rpmfusion packages can be found here:
