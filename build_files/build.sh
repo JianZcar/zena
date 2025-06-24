@@ -15,6 +15,13 @@ dnf5 -y install \
 
 dnf5 versionlock add kernel kernel-devel kernel-devel-matched kernel-core kernel-modules kernel-modules-core kernel-modules-extra kernel-uki-virt
 
+dnf5 -y config-manager setopt "*rpmfusion*".enabled=0 
+dnf5 -y copr enable bieszczaders/kernel-cachyos-addons 
+dnf5 -y install \
+    scx-scheds
+dnf5 -y copr disable bieszczaders/kernel-cachyos-addons
+dnf5 -y swap --repo copr:copr.fedorainfracloud.org:bazzite-org:bazzite bootc bootc 
+
 # Packages can be installed from any enabled yum repo on the image.
 # RPMfusion repos are available by default in ublue main images
 # List of rpmfusion packages can be found here:
