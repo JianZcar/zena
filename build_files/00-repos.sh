@@ -66,8 +66,7 @@ dnf5 -y config-manager setopt "terra-mesa".enabled=true
 dnf5 -y config-manager setopt "terra-nvidia".enabled=false
 
 # negativo17
-dnf5 -y config-manager setopt "negativo17-fedora-steam".priority=4 "negativo17-fedora-steam".exclude="mesa-* *xone*"
-dnf5 -y config-manager setopt "negativo17-fedora-rar".priority=4 "negativo17-fedora-rar".exclude="mesa-* *xone*"
+eval "$(/ctx/dnf5-setopt setopt '*negativo17*' priority=4 exclude='mesa-* *xone*')"
 
 dnf5 -y config-manager setopt "*rpmfusion*".priority=5 "*rpmfusion*".exclude="mesa-*"
 dnf5 -y config-manager setopt "*fedora*".exclude="mesa-* kernel-core-* kernel-modules-* kernel-uki-virt-*"
