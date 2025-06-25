@@ -54,19 +54,20 @@ dnf5 -y install \
 # Enable Negativo17 multimedia repo
 sed -i 's@enabled=0@enabled=1@g' /etc/yum.repos.d/negativo17-fedora-multimedia.repo
 
-# Add additional Negativo17 repos
+# add additional negativo17 repos
 dnf5 -y config-manager addrepo --from-repofile=https://negativo17.org/repos/fedora-steam.repo
 dnf5 -y config-manager addrepo --from-repofile=https://negativo17.org/repos/fedora-rar.repo
 
-# Set priorities and exclusions
+# set priorities and exclusions
 dnf5 -y config-manager setopt "*bazzite*".priority=1
 dnf5 -y config-manager setopt "*akmods*".priority=2
 dnf5 -y config-manager setopt "*terra*".priority=3 "*terra*".exclude="nerd-fonts topgrade"
 dnf5 -y config-manager setopt "terra-mesa".enabled=true
 dnf5 -y config-manager setopt "terra-nvidia".enabled=false
 
-# Negativo17
-dnf5 -y config-manager setopt "*negativo17*".priority=4 "*negativo17*".exclude="mesa-* *xone*"
+# negativo17
+dnf5 -y config-manager setopt "negativo17-fedora-steam".priority=4 "negativo17-fedora-steam".exclude="mesa-* *xone*"
+dnf5 -y config-manager setopt "negativo17-fedora-rar".priority=4 "negativo17-fedora-rar".exclude="mesa-* *xone*"
 
 dnf5 -y config-manager setopt "*rpmfusion*".priority=5 "*rpmfusion*".exclude="mesa-*"
 dnf5 -y config-manager setopt "*fedora*".exclude="mesa-* kernel-core-* kernel-modules-* kernel-uki-virt-*"
