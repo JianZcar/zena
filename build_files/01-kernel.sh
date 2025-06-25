@@ -12,7 +12,7 @@ dnf5 -y install \
   /tmp/kernel-rpms/kernel-modules-*.rpm \
   /tmp/kernel-rpms/kernel-modules-core-*.rpm \
   /tmp/kernel-rpms/kernel-modules-extra-*.rpm \
-  /tmp/akmods-nvidia/kernel-rpms/kernel-devel-*.rpm
+  /tmp/kernel-rpms/kernel-devel-*.rpm
 
 dnf5 versionlock add kernel kernel-devel kernel-devel-matched kernel-core kernel-modules kernel-modules-core kernel-modules-extra kernel-uki-virt
 
