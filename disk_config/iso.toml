@@ -1,7 +1,8 @@
 [customizations.installer.kickstart]
 contents = """
-%post
-bootc switch --mutate-in-place --transport registry ghcr.io/jianzcar/zena-os:latest
+%post --erroronfail
+bootc install-source docker://ghcr.io/jianzcar/zena-os:latest
+bootc switch --transport registry docker://ghcr.io/jianzcar/zena-os:latest
 %end
 """
 
