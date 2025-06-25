@@ -4,9 +4,9 @@ set -ouex pipefail
 
 shopt -s nullglob
 
-./00-repos.sh
-./01-kernel.sh
-./02-nvidia.sh
+/ctx/00-repos.sh
+/ctx/01-kernel.sh
+/ctx/02-nvidia.sh
 
 # Packages can be installed from any enabled yum repo on the image.
 # RPMfusion repos are available by default in ublue main images
