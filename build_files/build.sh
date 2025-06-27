@@ -8,6 +8,7 @@ PKGS_TO_INSTALL=(
   tmux
   nvim
   btop
+  zen-browser
 )
 
 PKGS_TO_UNINSTALL=(
