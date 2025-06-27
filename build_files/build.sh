@@ -8,7 +8,6 @@ PKGS_TO_INSTALL=(
   tmux
   nvim
   btop
-  zen-browser
 )
 
 PKGS_TO_UNINSTALL=(
@@ -25,9 +24,6 @@ PKGS_TO_UNINSTALL=(
 # RPMfusion repos are available by default in ublue main images
 # List of rpmfusion packages can be found here:
 # https://mirrors.rpmfusion.org/mirrorlist?path=free/fedora/updates/39/x86_64/repoview/index.html&protocol=https&redirect=1
-
-# Ensure /opt/zen is clear before installation
-rm -rf /opt/zen
 
 # this installs a package from fedora repos
 if [ ${#PKGS_TO_INSTALL[@]} -gt 0 ]; then

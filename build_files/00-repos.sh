@@ -28,7 +28,6 @@ coprs=(
     mavit/discover-overlay
     rok/cdemu
     lizardbyte/beta
-    sneexy/zen-browser 
 )
 
 for copr in "${coprs[@]}"; do
