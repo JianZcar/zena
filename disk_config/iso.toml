@@ -1,5 +1,9 @@
-[image]
-ref = "ostree-unverified-registry:ghcr.io/jianzcar/zena-os:latest"
+[customizations.installer.kickstart]
+contents = """
+%post
+bootc switch --mutate-in-place --transport registry ghcr.io/jianzcar/zena-os:latest
+%end
+"""
 
 [customizations.installer.modules]
 enable = [
