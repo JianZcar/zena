@@ -4,6 +4,8 @@ set -ouex pipefail
 
 shopt -s nullglob
 
+rm -rf /opt/zen
+
 PKGS_TO_INSTALL=(
   tmux
   nvim
