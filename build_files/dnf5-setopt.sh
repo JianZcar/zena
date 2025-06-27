@@ -42,7 +42,7 @@ esac
 _repos_raw="$(
     cd "$(dirname "$0")"
     # shellcheck disable=SC2086
-    ./dnf5-search ${1//,/ }
+    ./dnf5-search.sh ${1//,/ }
 )"
 if [[ -z $_repos_raw ]]; then
     die "No repo found matching '$1'"
