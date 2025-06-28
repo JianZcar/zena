@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "::group:: ===$(basename "$0")==="
+
 set -eoux pipefail
 
 # Special handling for pipewire and pipewire-libs-extra from bazzite-multilib COPR
@@ -65,3 +67,5 @@ dnf5 -y install --enable-repo="*rpmfusion*" --disable-repo="*fedora-multimedia*"
     libbdplus \
     libbluray \
     libbluray-utils
+
+echo "::endgroup::"
