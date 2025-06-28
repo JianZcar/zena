@@ -2,10 +2,16 @@
 
 set -eoux pipefail
 
+# Special handling for pipewire and pipewire-libs-extra from bazzite-multilib COPR
+dnf5 -y copr enable bazzite-org/bazzite-multilib
+dnf5 -y install --allowerasing pipewire pipewire-libs-extra --repo=copr:copr.fedorainfracloud.org:bazzite-org:bazzite-multilib
+dnf5 -y copr disable bazzite-org/bazzite-multilib
+
 # Define repositories and the packages to be swapped from them
 declare -A toswap=(
     ["copr:copr.fedorainfracloud.org:bazzite-org:bazzite"]="wireplumber"
-    ["copr:copr.fedorainfracloud.org:bazzite-org:bazzite-multilib"]="pipewire pipewire-libs-extra bluez xorg-x11-server-Xwayland"
+    # pipewire and pipewire-libs-extra are handled above
+    ["copr:copr.fedorainfracloud.org:bazzite-org:bazzite-multilib"]="bluez xorg-x11-server-Xwayland"
     ["terra-extras"]="switcheroo-control"
     ["terra-mesa"]="mesa-filesystem"
     ["copr:copr.fedorainfracloud.org:ublue-os:staging"]="fwupd"
