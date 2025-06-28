@@ -8,9 +8,7 @@ shopt -s nullglob
 
 PKGS_TO_INSTALL=(
   # Development Tools
-  nvim
   ripgrep
-  vim
   udica
 
   # Dotfile management
@@ -18,7 +16,6 @@ PKGS_TO_INSTALL=(
 
   # Fonts
   twitter-twemoji-fonts
-  google-noto-sans-cjk-fonts
   lato-fonts
   fira-code-fonts
   nerd-fonts
@@ -31,7 +28,6 @@ PKGS_TO_INSTALL=(
   gum
   topgrade
   duperemove
-  compsize
   lzip
   p7zip
   p7zip-plugins
@@ -60,7 +56,6 @@ PKGS_TO_INSTALL=(
   ladspa-caps-plugins
   ladspa-noise-suppression-for-voice
   pipewire-module-filter-chain-sofa
-  pulseaudio-utils
 
   # Networking
   tailscale # VPN
@@ -71,7 +66,6 @@ PKGS_TO_INSTALL=(
   libvirt
 
   # Other Utilities
-  libadwaita # GTK4 library
   cpulimit
   xdotool
   wmctrl
