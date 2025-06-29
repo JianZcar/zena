@@ -48,6 +48,7 @@ PKGS_TO_INSTALL=(
   i2c-tools
   lm_sensors
   libcec # HDMI CEC library
+  mesa-va-drivers.i686
 
   # Display & Graphics
   xwininfo
@@ -60,6 +61,7 @@ PKGS_TO_INSTALL=(
   # Multimedia & Audio
   ladspa-caps-plugins
   ladspa-noise-suppression-for-voice
+  pipewire-alsa.i686
   pipewire-module-filter-chain-sofa
 
   # Networking
@@ -79,6 +81,9 @@ PKGS_TO_INSTALL=(
   uupd # Unified Update Platform Downloader
   ydotool # Simulate keyboard/mouse input
   stress-ng # Stress test system
+
+  # GNOME
+      
 )
 
 PKGS_TO_UNINSTALL=(
@@ -96,6 +101,14 @@ fi
 if [ ${#PKGS_TO_UNINSTALL[@]} -gt 0 ]; then
     dnf5 remove -y "${PKGS_TO_UNINSTALL[@]}"
 fi
+
+
+# Install multimedia libraries from RPM Fusion
+dnf5 -y install --enable-repo="*rpmfusion*" --disable-repo="*fedora-multimedia*" \
+    libaacs \
+    libbdplus \
+    libbluray \
+    libbluray-utils
 
 sed -i 's|uupd|& --disable-module-distrobox|' /usr/lib/systemd/system/uupd.service
 
