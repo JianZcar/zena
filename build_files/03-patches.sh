@@ -7,12 +7,13 @@ set -eoux pipefail
 # Define repositories and the packages to be swapped from them
 declare -A toswap=(
     ["copr:copr.fedorainfracloud.org:bazzite-org:bazzite"]="wireplumber"
-    # pipewire and pipewire-libs-extra are handled above
     ["copr:copr.fedorainfracloud.org:bazzite-org:bazzite-multilib"]="bluez xorg-x11-server-Xwayland"
     ["terra-extras"]="switcheroo-control"
     ["terra-mesa"]="mesa-filesystem"
     ["copr:copr.fedorainfracloud.org:ublue-os:staging"]="fwupd"
 )
+
+dnf5 install -y pipewire-alsa.i686
 
 # Swap packages from the specified repositories
 for repo in "${!toswap[@]}"; do
