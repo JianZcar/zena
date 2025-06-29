@@ -60,7 +60,6 @@ PKGS_TO_INSTALL=(
   # Multimedia & Audio
   ladspa-caps-plugins
   ladspa-noise-suppression-for-voice
-  pipewire-alsa.i686
   pipewire-module-filter-chain-sofa
 
   # Networking
@@ -116,6 +115,9 @@ PKGS_TO_UNINSTALL=(
 if [ ${#PKGS_TO_INSTALL[@]} -gt 0 ]; then
     dnf5 install -y "${PKGS_TO_INSTALL[@]}"
 fi
+
+dnf5 install --repo=copr:copr.fedorainfracloud.org:bazzite-org:bazzite pipewire pipewire-libs
+dnf5 install --repo=copr:copr.fedorainfracloud.org:bazzite-org:bazzite-multilib pipewire-alsa.i686
 
 # Uninstall packages
 if [ ${#PKGS_TO_UNINSTALL[@]} -gt 0 ]; then
