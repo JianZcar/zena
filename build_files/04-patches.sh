@@ -7,8 +7,8 @@ set -eoux pipefail
 # Define repositories and the packages to be swapped from them
 declare -A toswap=(
     ["copr:copr.fedorainfracloud.org:bazzite-org:bazzite"]="wireplumber"
-    ["copr:copr.fedorainfracloud.org:bazzite-org:bazzite-multilib"]="bluez xorg-x11-server-Xwayland"
-    ["terra-extras"]="switcheroo-control"
+    ["copr:copr.fedorainfracloud.org:bazzite-org:bazzite-multilib"]="bluez xorg-x11-server-Xwayland mutter"
+    ["terra-extras"]="switcheroo-control gnome-shell"
     ["terra-mesa"]="mesa-filesystem"
     ["copr:copr.fedorainfracloud.org:ublue-os:staging"]="fwupd"
 )
@@ -23,6 +23,10 @@ unset -v toswap repo package
 
 # Lock versions for critical system packages
 PKGS_TO_LOCK=(
+    # GNOME
+    gnome-shell
+    mutter
+
     pipewire
     pipewire-alsa
     pipewire-alsa.i686
