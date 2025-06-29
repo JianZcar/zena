@@ -48,7 +48,6 @@ PKGS_TO_INSTALL=(
   iwd # iNet Wireless Daemon
   libcec # HDMI CEC library
   lm_sensors
-  mesa-va-drivers.i686
 
   # Display & Graphics
   cage # Wayland compositor for single applications
@@ -89,7 +88,6 @@ PKGS_TO_INSTALL=(
   # Miscellaneous
   cpulimit
   firewall-config
-  ibus-mozc
   lsb_release
   openssh-askpass
   stress-ng # Stress test system
