@@ -22,6 +22,8 @@ PKGS_TO_INSTALL=(
     libobs_vkcapture.i686
     libobs_glcapture.i686
     VK_hdr_layer
+    steam
+    lutris
 )
 
 PKGS_TO_UNINSTALL=(
@@ -37,10 +39,6 @@ dnf5 versionlock add ibus
 if [ ${#PKGS_TO_INSTALL[@]} -gt 0 ]; then
     dnf5 install -y "${PKGS_TO_INSTALL[@]}"
 fi
-
-dnf5 -y --setopt=install_weak_deps=False install \
-    steam \
-    lutris
 
 # Uninstall packages
 if [ ${#PKGS_TO_UNINSTALL[@]} -gt 0 ]; then
