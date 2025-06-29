@@ -105,6 +105,14 @@ PKGS_TO_UNINSTALL=(
   firefox
   firefox-langpacks
   htop
+  gnome-classic-session
+  gnome-tour
+  gnome-extensions-app
+  gnome-system-monitor
+  gnome-initial-setup
+  gnome-browser-connector
+  gnome-shell-extension-background-logo
+  gnome-shell-extension-apps-menu
 )
 
 # Install packages from fedora repos
