@@ -8,12 +8,8 @@ shopt -s nullglob
 
 PKGS_TO_INSTALL=(
     gamescope.x86_64
-    gamescope-libs.x86_64
-    gamescope-libs.i686
     gamescope-shaders
     dbus-x11
-    xdg-user-dirs
-    gobject-introspection
     libFAudio.x86_64
     libFAudio.i686
     latencyflex-vulkan-layer
