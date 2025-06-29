@@ -7,23 +7,21 @@ set -ouex pipefail
 shopt -s nullglob
 
 PKGS_TO_INSTALL=(
-  # Development Tools
+  # Development
   nvim
-  tree-sitter
   ripgrep
+  tree-sitter
   udica
 
-  # Shell
+  # Shell & Dotfiles
   fish
-
-  # Dotfile management
   stow
 
   # Fonts
-  twitter-twemoji-fonts
-  lato-fonts
   fira-code-fonts
+  lato-fonts
   nerd-fonts
+  twitter-twemoji-fonts
 
   # System Utilities
   btop
@@ -31,32 +29,34 @@ PKGS_TO_INSTALL=(
   fastfetch
   glow
   gum
-  topgrade
-  duperemove
-  lzip
   p7zip
   p7zip-plugins
   rar
-  f3 # Flash memory tester
-  snapper # BTRFS snapshot management
-  btrfs-assistant # BTRFS GUI tool
+  topgrade
 
-  # Hardware Tools & Drivers
-  iwd # iNet Wireless Daemon
+  # File System & Storage
+  btrfs-assistant # BTRFS GUI tool
+  duperemove
+  f3 # Flash memory tester
+  lzip
+  snapper # BTRFS snapshot management
+
+  # Hardware & Drivers
   ddcutil # DDC/CI control for monitors
-  input-remapper
   i2c-tools
-  lm_sensors
+  input-remapper
+  iwd # iNet Wireless Daemon
   libcec # HDMI CEC library
+  lm_sensors
   mesa-va-drivers.i686
 
   # Display & Graphics
-  xwininfo
-  xrandr
-  vulkan-tools
-  extest.i686 # X extension tester
   cage # Wayland compositor for single applications
+  extest.i686 # X extension tester
+  vulkan-tools
   wlr-randr # Wayland output management
+  xrandr
+  xwininfo
 
   # Multimedia & Audio
   ladspa-caps-plugins
@@ -65,25 +65,40 @@ PKGS_TO_INSTALL=(
   pipewire-module-filter-chain-sofa
 
   # Networking
-  tailscale # VPN
+  tailscale
 
   # Virtualization
   edk2-ovmf # UEFI firmware for QEMU
-  qemu
   libvirt
-
-  # Other Utilities
-  cpulimit
-  xdotool
-  wmctrl
-  yad # Dialogs for shell scripts
-  lsb_release
-  uupd # Unified Update Platform Downloader
-  ydotool # Simulate keyboard/mouse input
-  stress-ng # Stress test system
+  qemu
 
   # GNOME
-      
+  gnome-randr-rust
+  gnome-shell-extension-appindicator
+  gnome-shell-extension-blur-my-shell
+  gnome-shell-extension-burn-my-windows
+  gnome-shell-extension-caffeine
+  gnome-shell-extension-compiz-windows-effect
+  gnome-shell-extension-gsconnect
+  gnome-shell-extension-hotedge
+  gnome-shell-extension-just-perfection
+  gnome-shell-extension-restart-to
+  gnome-shell-extension-user-theme
+  nautilus-gsconnect
+  rom-properties-gtk3
+
+  # Miscellaneous
+  cpulimit
+  firewall-config
+  ibus-mozc
+  lsb_release
+  openssh-askpass
+  stress-ng # Stress test system
+  uupd # Unified Update Platform Downloader
+  wmctrl
+  xdotool
+  yad # Dialogs for shell scripts
+  ydotool # Simulate keyboard/mouse input
 )
 
 PKGS_TO_UNINSTALL=(

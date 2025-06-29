@@ -23,10 +23,12 @@ unset -v toswap repo package
 
 # Lock versions for critical system packages
 PKGS_TO_LOCK=(
-    # GNOME
+    # GNOME & Display
     gnome-shell
     mutter
+    xorg-x11-server-Xwayland
 
+    # Pipewire
     pipewire
     pipewire-alsa
     pipewire-alsa.i686
@@ -39,12 +41,14 @@ PKGS_TO_LOCK=(
     pipewire-utils
     wireplumber
     wireplumber-libs
+
+    # Bluetooth
     bluez
     bluez-cups
     bluez-libs
     bluez-obexd
-    xorg-x11-server-Xwayland
-    switcheroo-control
+
+    # Mesa
     mesa-dri-drivers
     mesa-filesystem
     mesa-libEGL
@@ -52,10 +56,15 @@ PKGS_TO_LOCK=(
     mesa-libgbm
     mesa-va-drivers
     mesa-vulkan-drivers
+
+    # Firmware
     fwupd
     fwupd-plugin-flashrom
     fwupd-plugin-modem-manager
     fwupd-plugin-uefi-capsule-data
+
+    # Other
+    switcheroo-control
 )
 
 if [ ${#PKGS_TO_LOCK[@]} -gt 0 ]; then

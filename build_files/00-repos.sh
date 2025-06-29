@@ -12,22 +12,30 @@ dnf5 -y install dnf5-plugins
 
 # Enable COPR repositories
 coprs=(
-    ublue-os/staging
+    # Bazzite & Ublue
     bazzite-org/bazzite
     bazzite-org/bazzite-multilib
-    ublue-os/staging
-    ublue-os/packages
     bazzite-org/LatencyFleX
     bazzite-org/obs-vkcapture
-    ycollet/audinux
     bazzite-org/rom-properties
     bazzite-org/webapp-manager
-    hhd-dev/hhd
+    ublue-os/packages
+    ublue-os/staging
+
+    # Fonts
     che/nerd-fonts
+
+    # Gaming
     hikariknight/looking-glass-kvmfr
+    lizardbyte/beta
     mavit/discover-overlay
     rok/cdemu
-    lizardbyte/beta
+
+    # Hardware
+    hhd-dev/hhd
+
+    # Multimedia
+    ycollet/audinux
 )
 
 for copr in "${coprs[@]}"; do
