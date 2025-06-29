@@ -4,11 +4,6 @@ echo "::group:: ===$(basename "$0")==="
 
 set -eoux pipefail
 
-# Special handling for pipewire and pipewire-libs-extra from bazzite-multilib COPR
-dnf5 -y copr enable bazzite-org/bazzite-multilib
-dnf5 -y install --allowerasing pipewire pipewire-libs-extra pipewire-alsa.i686 --repo=copr:copr.fedorainfracloud.org:bazzite-org:bazzite-multilib
-dnf5 -y copr disable bazzite-org/bazzite-multilib
-
 # Define repositories and the packages to be swapped from them
 declare -A toswap=(
     ["copr:copr.fedorainfracloud.org:bazzite-org:bazzite"]="wireplumber"
