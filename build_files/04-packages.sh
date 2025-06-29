@@ -13,6 +13,9 @@ PKGS_TO_INSTALL=(
   ripgrep
   udica
 
+  # Shell
+  fish
+
   # Dotfile management
   stow
 
