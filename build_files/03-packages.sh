@@ -84,8 +84,8 @@ PKGS_TO_INSTALL=(
   gnome-shell-extension-just-perfection
   gnome-shell-extension-restart-to
   gnome-shell-extension-user-theme
+  gnome-shell-extension-v-shell
   nautilus-gsconnect
-  rom-properties-gtk3
 
   # Miscellaneous
   cpulimit
