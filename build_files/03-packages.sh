@@ -60,7 +60,6 @@ PKGS_TO_INSTALL=(
   # Multimedia & Audio
   ladspa-caps-plugins
   ladspa-noise-suppression-for-voice
-  pipewire-module-filter-chain-sofa
 
   # Networking
   tailscale
@@ -98,6 +97,7 @@ PKGS_TO_INSTALL=(
 )
 
 PKGS_TO_UNINSTALL=(
+  pipewire-libs
   firefox
   firefox-langpacks
   htop
