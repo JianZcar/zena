@@ -1,8 +1,8 @@
-# Zena OS
+# Zena
 
 ## Overview
 
-**Zena OS** is a customized [Ublue](https://github.com/ublue-os) operating system image, based on the [bootc](https://github.com/bootc-dev/bootc) image framework. This OS is not meant for public use.
+**Zena** is a customized [Ublue](https://github.com/ublue-os) operating system image, based on the [bootc](https://github.com/bootc-dev/bootc) image framework. This OS is not meant for public use.
 
 - **Base Framework:** bootc (Container-based OS images)
 - **Template Origin:** [ublue-os/image-template](https://github.com/ublue-os/image-template)
