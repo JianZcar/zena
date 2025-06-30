@@ -87,6 +87,7 @@ PKGS_TO_INSTALL=(
 
   # Miscellaneous
   ublue-brew
+  ublue-os-media-automount-udev
   cpulimit
   firewall-config
   lsb_release
@@ -162,6 +163,6 @@ tar --no-same-owner --no-same-permissions --no-overwrite-dir -xvzf /tmp/scopebud
 cp -r /tmp/scopebuddy/ScopeBuddy-*/bin/* /usr/bin/
 rm -rf /tmp/scopebuddy*
 
-systemctl enable podman.socket
+systemctl enable podman.socket ublue-os-media-automount.service
 
 echo "::endgroup::"
