@@ -27,7 +27,7 @@ dnf5 install -y "${AKMODNV_PATH}"/ublue-os/ublue-os-nvidia-addons-*.rpm
 
 # Install MULTILIB packages from negativo17-multimedia prior to disabling repo
 
-MULTILIB=(
+MULTILIB_PKGS=(
     mesa-dri-drivers.i686
     mesa-filesystem.i686
     mesa-libEGL.i686
@@ -38,13 +38,13 @@ MULTILIB=(
 )
 
 if [[ "$(rpm -E %fedora)" -lt 41 ]]; then
-    MULTILIB+=(
+    MULTILIB_PKGS+=(
         mesa-libglapi.i686
         libvdpau.i686
     )
 fi
 
-dnf5 install -y "${MULTILIB[@]}"
+dnf5 install -y "${MULTILIB_PKGS[@]}"
 
 # enable repos provided by ublue-os-nvidia-addons
 dnf5 config-manager setopt fedora-nvidia.enabled=1 nvidia-container-toolkit.enabled=1

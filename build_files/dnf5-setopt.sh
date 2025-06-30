@@ -28,45 +28,45 @@ while getopts "h" opt; do
     esac
 done
 
-cmd="dnf5 config-manager"
-action=$1
+CMD_STRING="dnf5 config-manager"
+ACTION=$1
 shift
 
-case $action in
-setopt | unsetopt) cmd+=" $action" ;;
+case $ACTION in
+setopt | unsetopt) CMD_STRING+=" $ACTION" ;;
 *)
     die "ERROR: Only setopt|unsetopt are allowed as first param"
     ;;
 esac
 
-_repos_raw="$(
+REPOS_RAW="$(
     cd "$(dirname "$0")"
     # shellcheck disable=SC2086
     ./dnf5-search.sh ${1//,/ }
 )"
-if [[ -z $_repos_raw ]]; then
+if [[ -z $REPOS_RAW ]]; then
     die "No repo found matching '$1'"
 fi
 shift
 
-repos=()
-mapfile -t repos <<<"$_repos_raw"
+REPOS=()
+mapfile -t REPOS <<<"$REPOS_RAW"
 
-options=()
+OPTIONS=()
 while (($#)); do
-    [[ -n ${_v:=${1##.}} ]] && options+=("$_v")
+    [[ -n ${_v:=${1##.}} ]] && OPTIONS+=("$_v")
     shift
 done
 unset -v _v
 
-if [[ ${#options[@]} -eq 0 ]]; then
+if [[ ${#OPTIONS[@]} -eq 0 ]]; then
     die "No options were providied"
 fi
 
-for repo in "${repos[@]}"; do
-    for opt in "${options[@]}"; do
-        cmd+=" $repo.$opt"
+for repo in "${REPOS[@]}"; do
+    for opt in "${OPTIONS[@]}"; do
+        CMD_STRING+=" $repo.$opt"
     done
 done
 
-echo "$cmd"
+echo "$CMD_STRING"

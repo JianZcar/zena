@@ -11,7 +11,7 @@ mkdir -p /var/roothome
 dnf5 -y install dnf5-plugins
 
 # Enable COPR repositories
-coprs=(
+COPRS=(
     # Bazzite & Ublue
     bazzite-org/bazzite
     bazzite-org/bazzite-multilib
@@ -38,12 +38,12 @@ coprs=(
     ycollet/audinux
 )
 
-for copr in "${coprs[@]}"; do
-    echo "Enabling copr: $copr"
-    dnf5 -y copr enable "$copr"
-    dnf5 -y config-manager setopt "copr:copr.fedorainfracloud.org:${copr////:}.priority=98"
+for COPR in "${COPRS[@]}"; do
+    echo "Enabling copr: $COPR"
+    dnf5 -y copr enable "$COPR"
+    dnf5 -y config-manager setopt "copr:copr.fedorainfracloud.org:${COPR////:}.priority=98"
 done
-unset copr
+unset COPR
 
 # Add Terra repo (custom repopath)
 dnf5 -y install --nogpgcheck \

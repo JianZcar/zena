@@ -5,7 +5,7 @@ echo "::group:: ===$(basename "$0")==="
 set -eoux pipefail
 
 # Define repositories and the packages to be swapped from them
-declare -A toswap=(
+declare -A PKGS_TO_SWAP=(
     ["copr:copr.fedorainfracloud.org:bazzite-org:bazzite"]="wireplumber"
     ["copr:copr.fedorainfracloud.org:bazzite-org:bazzite-multilib"]="pipewire bluez xorg-x11-server-Xwayland mutter"
     ["terra-extras"]="switcheroo-control gnome-shell"
@@ -14,10 +14,10 @@ declare -A toswap=(
 )
 
 # Swap packages from the specified repositories
-for repo in "${!toswap[@]}"; do
-    dnf5 -y distro-sync --repo="$repo" ${toswap[$repo]}
+for repo in "${!PKGS_TO_SWAP[@]}"; do
+    dnf5 -y distro-sync --repo="$repo" ${PKGS_TO_SWAP[$repo]}
 done
-unset -v toswap repo package
+unset -v PKGS_TO_SWAP repo package
 
 # Lock versions for critical system packages
 PKGS_TO_LOCK=(
