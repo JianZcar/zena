@@ -15,9 +15,7 @@ declare -A toswap=(
 
 # Swap packages from the specified repositories
 for repo in "${!toswap[@]}"; do
-    for package in ${toswap[$repo]}; do
-        dnf5 -y swap --repo="$repo" "$package" "$package"
-    done
+    dnf5 -y distro-sync --repo="$repo" ${toswap[$repo]}
 done
 unset -v toswap repo package
 
