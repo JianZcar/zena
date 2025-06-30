@@ -134,9 +134,9 @@ dnf5 -y install --enable-repo="*rpmfusion*" --disable-repo="*fedora-multimedia*"
 
 sed -i 's|uupd|& --disable-module-distrobox|' /usr/lib/systemd/system/uupd.service
 
-dnf5 -y install \
-    "$(curl -s https://api.github.com/repos/bazzite-org/cicpoffs/releases/latest \
-        | jq -r '.assets[] | select(.name | test(".*rpm$")) | .browser_download_url')"
+for i in {1..5}; do
+  dnf5 -y install "$(curl -s https://api.github.com/repos/bazzite-org/cicpoffs/releases/latest | jq -r '.assets[] | select(.name|test(".*rpm$")) | .browser_download_url')" && break || sleep 5
+done
 
 mkdir -p /etc/xdg/autostart
 
