@@ -60,6 +60,8 @@ PKGS_TO_INSTALL=(
   # Multimedia & Audio
   ladspa-caps-plugins
   ladspa-noise-suppression-for-voice
+  pipewire-module-filter-chain-sofa
+  pipewire-alsa.i686
 
   # Networking
   tailscale
