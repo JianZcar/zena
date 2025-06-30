@@ -86,6 +86,7 @@ PKGS_TO_INSTALL=(
   nautilus-gsconnect
 
   # Miscellaneous
+  ublue-brew
   cpulimit
   firewall-config
   lsb_release
