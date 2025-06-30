@@ -67,7 +67,6 @@ dnf5 -y config-manager addrepo --from-repofile=https://negativo17.org/repos/fedo
 dnf5 -y config-manager addrepo --from-repofile=https://negativo17.org/repos/fedora-rar.repo
 
 # set priorities and exclusions
-dnf5 config-manager setopt "*" exclude="*.aarch64"
 dnf5 -y config-manager setopt "*bazzite*".priority=1
 dnf5 -y config-manager setopt "*akmods*".priority=2
 dnf5 -y config-manager setopt "terra-mesa".enabled=true
@@ -76,6 +75,7 @@ dnf5 -y config-manager setopt "terra-nvidia".enabled=false
 # negativo17
 eval "$(/ctx/dnf5-setopt.sh setopt '*negativo17*' priority=4 exclude='mesa-* *xone*')"
 
+dnf5 -y config-manager setopt "*".exclude="*.aarch64"
 dnf5 -y config-manager setopt "*rpmfusion*".priority=5 "*rpmfusion*".exclude="mesa-*"
 dnf5 -y config-manager setopt "*fedora*".exclude="mesa-* kernel-core-* kernel-modules-* kernel-uki-virt-*"
 dnf5 -y config-manager setopt "*staging*".exclude="scx-scheds kf6-* mesa* mutter* rpm-ostree* systemd* gnome-shell gnome-settings-daemon gnome-control-center gnome-software libadwaita tuned*"
