@@ -4,8 +4,6 @@ echo "::group:: ===$(basename "$0")==="
 
 set -eoux pipefail
 
-dnf5 -y remove "pipewire*" "wireplumber*" "libspa*"
-
 # Define repositories and the packages to be swapped from them
 declare -A toswap=(
     ["copr:copr.fedorainfracloud.org:bazzite-org:bazzite"]="wireplumber"
