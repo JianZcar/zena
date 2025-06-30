@@ -13,8 +13,6 @@ declare -A toswap=(
     ["copr:copr.fedorainfracloud.org:ublue-os:staging"]="fwupd"
 )
 
-dnf5 -y install pipewire-libs pipewire-module-filter-chain-sofa
-
 # Swap packages from the specified repositories
 for repo in "${!toswap[@]}"; do
     for package in ${toswap[$repo]}; do

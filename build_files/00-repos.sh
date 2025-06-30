@@ -67,6 +67,7 @@ dnf5 -y config-manager addrepo --from-repofile=https://negativo17.org/repos/fedo
 dnf5 -y config-manager addrepo --from-repofile=https://negativo17.org/repos/fedora-rar.repo
 
 # set priorities and exclusions
+dnf5 config-manager setopt "*" exclude="*.aarch64"
 dnf5 -y config-manager setopt "*bazzite*".priority=1
 dnf5 -y config-manager setopt "*akmods*".priority=2
 dnf5 -y config-manager setopt "terra-mesa".enabled=true
