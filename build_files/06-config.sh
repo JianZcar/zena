@@ -28,7 +28,8 @@ while yq -e ".[$index]" "$CONFIG_FILE" >/dev/null 2>&1; do
       if [[ "$value" == \[*\] ]]; then
         echo "$key=$value" >> "$settings_path"
       else
-        echo "$key='$value'" >> "$settings_path"
+        escaped=$(printf '%s' "$value" | sed "s/'/''/g")
+        echo "$key='$escaped'" >> "$settings_path"
       fi
     done
   else
@@ -41,5 +42,7 @@ while yq -e ".[$index]" "$CONFIG_FILE" >/dev/null 2>&1; do
 
   index=$((index + 1))
 done
+
+glib-compile-schemas "$SCHEMA_DIR"
 
 echo "::endgroup::"
