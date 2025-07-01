@@ -12,7 +12,7 @@ mkdir -p "$OUTDIR" "$SCHEMA_DIR"
 
 index=0
 while yq -e ".[$index]" "$CONFIG_FILE" >/dev/null 2>&1; do
-  if yq -e ".[$index].gschema" "$CONFIG_FILE" >/dev/null 2>&1; then
+  if yq -e ".[$index] | has(\"gschema\")" "$CONFIG_FILE" >/dev/null 2>&1; then
     id=$(yq -r ".[$index].gschema.id" "$CONFIG_FILE")
     file=$(yq -r ".[$index].gschema.filename" "$CONFIG_FILE")
     settings_path="$SCHEMA_DIR/$file"
