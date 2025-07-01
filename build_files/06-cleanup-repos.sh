@@ -40,7 +40,6 @@ done
 
 dnf5 config-manager setopt "*tailscale*".enabled=0
 dnf5 config-manager setopt "terra-mesa".enabled=0
-dnf5 config-manager setopt "*charm*".enabled=0
 eval "$(/ctx/dnf5-setopt.sh setopt '*negativo17*' enabled=0)"
 
 echo "::endgroup::"
