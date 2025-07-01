@@ -4,7 +4,6 @@ echo "::group:: ===$(basename "$0")==="
 
 set -euxo pipefail
 
-
 CONFIG_FILE="ctx/config.yaml"
 OUTDIR="etc"
 SCHEMA_DIR="usr/share/glib-2.0/schemas"
@@ -32,17 +31,21 @@ while yq -e ".[$index]" "$CONFIG_FILE" >/dev/null 2>&1; do
         echo "$key='$escaped'" >> "$settings_path"
       fi
     done
+
+    echo "✅ Created GSchema override: $settings_path"
   else
     path=$(yq -r ".[$index].path" "$CONFIG_FILE")
     content=$(yq -r ".[$index].content" "$CONFIG_FILE")
     fullpath="$OUTDIR/$path"
     mkdir -p "$(dirname "$fullpath")"
     echo "$content" > "$fullpath"
+    echo "📄 Wrote file: $fullpath"
   fi
 
   index=$((index + 1))
 done
 
 glib-compile-schemas "$SCHEMA_DIR"
+echo "✅ Successfully compiled schemas in $SCHEMA_DIR"
 
 echo "::endgroup::"
