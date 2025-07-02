@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo "::group:: ===$(basename "$0")==="
 
 set -euxo pipefail
@@ -11,12 +13,17 @@ mkdir -p "$OUTDIR" "$SCHEMA_DIR"
 echo "📄 Using config file from: $CONFIG_FILE"
 echo "📁 Will write GSchema overrides to: $SCHEMA_DIR"
 
+# 🧾 Show the contents of the config file before doing anything else
+echo "📜 Dumping contents of $CONFIG_FILE:"
+cat "$CONFIG_FILE"
+echo
+
 index=0
 while yq -e ".[$index]" "$CONFIG_FILE" >/dev/null 2>&1; do
   echo "🔍 Entry $index:"
   yq ".[$index]" "$CONFIG_FILE"
 
-  if yq -e ".[$index] | has(\"gschema\")" "$CONFIG_FILE" >/dev/null 2>&1; then
+  if [[ $(yq ".[$index] | has(\"gschema\")" "$CONFIG_FILE") == "true" ]]; then
     echo "✅ Found .gschema in entry $index"
 
     id=$(yq -r ".[$index].gschema.id" "$CONFIG_FILE")
