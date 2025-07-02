@@ -1,3 +1,4 @@
+
 #!/bin/bash
 
 echo "::group:: ===$(basename "$0")==="
@@ -36,12 +37,14 @@ while yq -e ".[$index]" "$CONFIG_FILE" >/dev/null 2>&1; do
 
     setting_keys=$(yq -r ".[$index].gschema.settings | keys | .[]" "$CONFIG_FILE")
     for key in $setting_keys; do
-      value=$(yq -r ".[$index].gschema.settings[\"$key\"]" "$CONFIG_FILE")
+      tag=$(yq -r ".[$index].gschema.settings[\"$key\"] | tag" "$CONFIG_FILE")
 
-      # Format array values properly
-      if [[ "$value" == \[*\] ]]; then
-        echo "$key=$value" >> "$settings_path"
+      if [[ "$tag" == "!!seq" ]]; then
+        # Convert YAML array to GVariant array syntax: ['a','b','c']
+        array_items=$(yq -r ".[$index].gschema.settings[\"$key\"][]" "$CONFIG_FILE" | sed "s/'/''/g" | sed "s/^/'/;s/$/'/" | paste -sd, -)
+        echo "$key=[$array_items]" >> "$settings_path"
       else
+        value=$(yq -r ".[$index].gschema.settings[\"$key\"]" "$CONFIG_FILE")
         escaped=$(printf '%s' "$value" | sed "s/'/''/g")
         echo "$key='$escaped'" >> "$settings_path"
       fi
@@ -65,3 +68,4 @@ glib-compile-schemas "$SCHEMA_DIR"
 echo "✅ Successfully compiled schemas in $SCHEMA_DIR"
 
 echo "::endgroup::"
+
