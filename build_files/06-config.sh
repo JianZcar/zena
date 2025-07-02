@@ -7,6 +7,7 @@ set -euxo pipefail
 CONFIG_FILE="/ctx/config.yaml"
 OUTDIR="/etc"
 SCHEMA_DIR="/usr/share/glib-2.0/schemas"
+which yq
 
 mkdir -p "$OUTDIR" "$SCHEMA_DIR"
 
