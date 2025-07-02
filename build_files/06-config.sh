@@ -8,31 +8,31 @@ set -euxo pipefail
 CONFIG_FILE="/ctx/config.yaml"
 OUTDIR="/etc"
 SCHEMA_DIR="/usr/share/glib-2.0/schemas"
+
 which yq
 
 mkdir -p "$OUTDIR" "$SCHEMA_DIR"
 
-echo "📄 Using config file from: $CONFIG_FILE"
-echo "📁 Will write GSchema overrides to: $SCHEMA_DIR"
+echo "Using config file from: $CONFIG_FILE"
+echo "Will write GSchema overrides to: $SCHEMA_DIR"
 
-# 🧾 Show the contents of the config file before doing anything else
-echo "📜 Dumping contents of $CONFIG_FILE:"
+echo "Dumping contents of $CONFIG_FILE:"
 cat "$CONFIG_FILE"
 echo
 
 index=0
 while yq -e ".[$index]" "$CONFIG_FILE" >/dev/null 2>&1; do
-  echo "🔍 Entry $index:"
+  echo "Processing entry $index:"
   yq ".[$index]" "$CONFIG_FILE"
 
   if [[ $(yq ".[$index] | has(\"gschema\")" "$CONFIG_FILE") == "true" ]]; then
-    echo "✅ Found .gschema in entry $index"
+    echo "Found .gschema in entry $index"
 
     id=$(yq -r ".[$index].gschema.id" "$CONFIG_FILE")
     file=$(yq -r ".[$index].gschema.filename" "$CONFIG_FILE")
     settings_path="$SCHEMA_DIR/$file"
 
-    echo "📝 Writing schema override to: $settings_path"
+    echo "Writing schema override to: $settings_path"
     echo "[$id]" > "$settings_path"
 
     setting_keys=$(yq -r ".[$index].gschema.settings | keys | .[]" "$CONFIG_FILE")
@@ -40,9 +40,17 @@ while yq -e ".[$index]" "$CONFIG_FILE" >/dev/null 2>&1; do
       tag=$(yq -r ".[$index].gschema.settings[\"$key\"] | tag" "$CONFIG_FILE")
 
       if [[ "$tag" == "!!seq" ]]; then
-        # Convert YAML array to GVariant array syntax: ['a','b','c']
-        array_items=$(yq -r ".[$index].gschema.settings[\"$key\"][]" "$CONFIG_FILE" | sed "s/'/''/g" | sed "s/^/'/;s/$/'/" | paste -sd, -)
-        echo "$key=[$array_items]" >> "$settings_path"
+        # Read array values into Bash array
+        mapfile -t array <<< "$(yq -r ".[$index].gschema.settings[\"$key\"][]" "$CONFIG_FILE")"
+
+        # Escape and quote each item
+        quoted_items=()
+        for item in "${array[@]}"; do
+          quoted_items+=("'${item//\'/\'\'}'")
+        done
+
+        # Join items and write GVariant array
+        echo "$key=[${quoted_items[*]}]" >> "$settings_path"
       else
         value=$(yq -r ".[$index].gschema.settings[\"$key\"]" "$CONFIG_FILE")
         escaped=$(printf '%s' "$value" | sed "s/'/''/g")
@@ -50,22 +58,21 @@ while yq -e ".[$index]" "$CONFIG_FILE" >/dev/null 2>&1; do
       fi
     done
 
-    echo "✅ Created GSchema override: $settings_path"
+    echo "Created GSchema override: $settings_path"
   else
     path=$(yq -r ".[$index].path" "$CONFIG_FILE")
     content=$(yq -r ".[$index].content" "$CONFIG_FILE")
     fullpath="$OUTDIR/$path"
     mkdir -p "$(dirname "$fullpath")"
     echo "$content" > "$fullpath"
-    echo "📄 Wrote plain file to: $fullpath"
+    echo "Wrote plain file to: $fullpath"
   fi
 
   index=$((index + 1))
 done
 
-echo "⚙️ Compiling schemas in: $SCHEMA_DIR"
+echo "Compiling schemas in: $SCHEMA_DIR"
 glib-compile-schemas "$SCHEMA_DIR"
-echo "✅ Successfully compiled schemas in $SCHEMA_DIR"
+echo "Successfully compiled schemas in $SCHEMA_DIR"
 
 echo "::endgroup::"
-
