@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 echo "::group:: ===$(basename "$0")==="
@@ -49,8 +48,8 @@ while yq -e ".[$index]" "$CONFIG_FILE" >/dev/null 2>&1; do
           quoted_items+=("'${item//\'/\'\'}'")
         done
 
-        # Join items and write GVariant array
-        echo "$key=[${quoted_items[*]}]" >> "$settings_path"
+        # Join items with commas and write
+        IFS=','; echo "$key=[${quoted_items[*]}]" >> "$settings_path"; unset IFS
       else
         value=$(yq -r ".[$index].gschema.settings[\"$key\"]" "$CONFIG_FILE")
         escaped=$(printf '%s' "$value" | sed "s/'/''/g")
@@ -76,3 +75,4 @@ glib-compile-schemas "$SCHEMA_DIR"
 echo "Successfully compiled schemas in $SCHEMA_DIR"
 
 echo "::endgroup::"
+
