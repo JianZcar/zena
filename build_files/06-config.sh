@@ -21,12 +21,21 @@ while yq -e ".[$index]" "$CONFIG_FILE" >/dev/null 2>&1; do
 
     setting_keys=$(yq -r ".[$index].gschema.settings | keys | .[]" "$CONFIG_FILE")
     for key in $setting_keys; do
-      value=$(yq -r ".[$index].gschema.settings[\"$key\"]" "$CONFIG_FILE")
-
-      # Format array values properly
-      if [[ "$value" == \[*\] ]]; then
-        echo "$key=$value" >> "$settings_path"
+      type=$(yq ".[$index].gschema.settings[\"$key\"] | type" "$CONFIG_FILE")
+      if [ "$type" = "!!seq" ]; then
+        # Array value processing
+        values=()
+        while IFS= read -r element; do
+          # Escape single quotes by doubling them
+          element_escaped=$(sed "s/'/''/g" <<< "$element")
+          values+=("'$element_escaped'")
+        done < <(yq -r ".[$index].gschema.settings[\"$key\"] | .[]" "$CONFIG_FILE")
+        # Join array elements with commas
+        array_value=$(IFS=,; echo "${values[*]}")
+        echo "$key=[$array_value]" >> "$settings_path"
       else
+        # Scalar value processing
+        value=$(yq -r ".[$index].gschema.settings[\"$key\"]" "$CONFIG_FILE")
         escaped=$(printf '%s' "$value" | sed "s/'/''/g")
         echo "$key='$escaped'" >> "$settings_path"
       fi
