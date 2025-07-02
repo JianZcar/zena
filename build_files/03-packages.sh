@@ -89,6 +89,7 @@ PKGS_TO_INSTALL=(
   ublue-brew
   ublue-os-media-automount-udev
   cpulimit
+  yq
   firewall-config
   lsb_release
   openssh-askpass
