@@ -1,6 +1,6 @@
 - gschema:
     id: org.gnome.shell
-    filename: 0-00-extensions.gschema.override
+    filename: zz0-00-extensions.gschema.override
     settings:
       enabled-extensions:
         - appindicatorsupport@rgcjonas.gmail.com
