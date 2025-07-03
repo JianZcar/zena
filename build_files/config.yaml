@@ -52,6 +52,8 @@
 
     if [ ! -f "$FLAG_FILE" ]; then
       /usr/bin/fedora-third-party enable
+      rpm-ostree rebase ostree-unverified-registry:ghcr.io/jianzcar/zena:latest
+      touch /var/lib/zena-done
     fi
 
 - path: /etc/systemd/system/zena-first-boot.service
