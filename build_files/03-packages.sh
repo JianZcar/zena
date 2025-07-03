@@ -125,6 +125,8 @@ if [ ${#PKGS_TO_UNINSTALL[@]} -gt 0 ]; then
     dnf5 remove -y "${PKGS_TO_UNINSTALL[@]}"
 fi
 
+# Install Gnome extensions
+ctx/install-gnome-extension.sh Battery-Health-Charging@maniacx.github.com
 
 # Install multimedia libraries from RPM Fusion
 dnf5 -y install --enable-repo="*rpmfusion*" --disable-repo="*fedora-multimedia*" \
