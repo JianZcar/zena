@@ -11,6 +11,7 @@
         - caffeine@patapon.info
         - restartto@tiagoporsch.github.io
         - ideapad@laurento.frittella 
+        - luminus-desktop-y@dikasp.gitlab
       disabled-extensions:
         - user-theme@gnome-shell-extensions.gcampax.github.com
 
