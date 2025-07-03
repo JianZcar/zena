@@ -57,6 +57,12 @@ if [ ! -f "$extdir/metadata.json" ]; then
     exit 1
 fi
 
+# Compile GSettings schema if present
+if [ -d "$extdir/schemas" ]; then
+    echo "Compiling GSettings schema..."
+    sudo glib-compile-schemas "$extdir/schemas"
+fi
+
 echo "Extension $uuid installed system-wide for GNOME Shell $gnome_version."
 
 # Clean up
