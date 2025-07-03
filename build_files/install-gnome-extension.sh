@@ -25,7 +25,7 @@ metadata=$(curl -s "https://extensions.gnome.org/extension-info/?uuid=$uuid")
 
 if [[ "$force" == "force" ]]; then
     echo "Force mode enabled. Selecting the latest available version."
-    latest_version=$(echo "$metadata" | jq -r '.versions | max_by(.version)')
+    latest_version=$(echo "$metadata" | jq -r '.shell_version_map | to_entries | map(.value) | max_by(.version)')
     version_tag=$(echo "$latest_version" | jq -r '.version')
     pk=$(echo "$latest_version" | jq -r '.pk')
 else
