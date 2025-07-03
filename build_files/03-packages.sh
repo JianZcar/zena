@@ -127,6 +127,7 @@ fi
 
 # Install Gnome extensions
 ctx/install-gnome-extension.sh ideapad@laurento.frittella
+ctx/install-gnome-extension.sh luminus-desktop-y@dikasp.gitlab force
 
 # Install multimedia libraries from RPM Fusion
 dnf5 -y install --enable-repo="*rpmfusion*" --disable-repo="*fedora-multimedia*" \

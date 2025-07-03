@@ -2,12 +2,14 @@
 
 set -euo pipefail
 
-if [ "$#" -ne 1 ]; then
-    echo "Usage: $0 <extension-uuid>"
+if [ "$#" -lt 1 ] || [ "$#" -gt 2 ]; then
+    echo "Usage: $0 <extension-uuid> [force]"
     exit 1
 fi
 
 uuid="$1"
+force="${2:-}"
+
 workdir="$(mktemp -d)"
 echo "Working in $workdir"
 cd "$workdir"
@@ -21,35 +23,39 @@ echo "Detected GNOME Shell version $gnome_version (major: $gnome_major)"
 echo "Fetching extension info for $uuid..."
 metadata=$(curl -s "https://extensions.gnome.org/extension-info/?uuid=$uuid")
 
-version_info=$(echo "$metadata" | jq ".shell_version_map.\"$gnome_major\"")
+if [[ "$force" == "force" ]]; then
+    echo "Force mode enabled. Selecting the latest available version."
+    latest_version=$(echo "$metadata" | jq -r '.versions | max_by(.version)')
+    version_tag=$(echo "$latest_version" | jq -r '.version')
+    pk=$(echo "$latest_version" | jq -r '.pk')
+else
+    echo "Checking for compatibility with GNOME Shell $gnome_version..."
+    version_info=$(echo "$metadata" | jq ".shell_version_map.\"$gnome_major\"")
 
-if [[ "$version_info" == "null" ]]; then
-    echo "No compatible version found for GNOME Shell $gnome_version"
-    exit 1
+    if [[ "$version_info" == "null" ]]; then
+        echo "No compatible version found for GNOME Shell $gnome_version"
+        exit 1
+    fi
+
+    version_tag=$(echo "$version_info" | jq -r '.version')
+    pk=$(echo "$version_info" | jq -r '.pk')
 fi
-
-version_tag=$(echo "$version_info" | jq -r '.version')
-pk=$(echo "$version_info" | jq -r '.pk')
 
 echo "Using version_tag: $version_tag, pk: $pk"
 
-# Encode @ as %40 for the API call
+# Encode @ as %40 for API call
 encoded_uuid="${uuid//@/%40}"
-
 zipfile="${uuid}.zip"
 api_url="https://extensions.gnome.org/api/v1/extensions/${encoded_uuid}/versions/${version_tag}/?format=zip"
 
 echo "Downloading from API: $api_url"
-curl -s -L \
-     -H "accept: application/zip" \
-     -o "$zipfile" \
-     "$api_url"
+curl -s -L -H "accept: application/zip" -o "$zipfile" "$api_url"
 
 # Install system-wide
 extdir="/usr/share/gnome-shell/extensions/$uuid"
 echo "Installing to $extdir"
-mkdir -p "$extdir"
-unzip -q "$zipfile" -d "$extdir"
+sudo mkdir -p "$extdir"
+sudo unzip -q "$zipfile" -d "$extdir"
 
 # Check for metadata
 if [ ! -f "$extdir/metadata.json" ]; then
@@ -57,19 +63,27 @@ if [ ! -f "$extdir/metadata.json" ]; then
     exit 1
 fi
 
+# Patch metadata.json if forced
+if [[ "$force" == "force" ]]; then
+    echo "Patching metadata.json to include current GNOME version..."
+    sudo jq --arg ver "$gnome_version" \
+        '.["shell-version"] |= (.[0:] + [$ver] | unique)' \
+        "$extdir/metadata.json" | sudo tee "$extdir/metadata.json" > /dev/null
+fi
+
 # Compile GSettings schema if present
 if [ -d "$extdir/schemas" ]; then
     echo "Compiling GSettings schema..."
-    glib-compile-schemas "$extdir/schemas"
+    sudo glib-compile-schemas "$extdir/schemas"
 fi
 
 # Fix permissions
 echo "Fixing permissions..."
-chmod -R a+r "$extdir"
-find "$extdir" -type d -exec chmod 755 {} \;
-find "$extdir" -type f -exec chmod 644 {} \;
+sudo chmod -R a+r "$extdir"
+sudo find "$extdir" -type d -exec chmod 755 {} \;
+sudo find "$extdir" -type f -exec chmod 644 {} \;
 
-echo "Extension $uuid installed system-wide for GNOME Shell $gnome_version."
+echo "Extension $uuid installed system-wide${force:+ (forced)} for GNOME Shell $gnome_version."
 
 # Clean up
 rm -rf "$workdir"
