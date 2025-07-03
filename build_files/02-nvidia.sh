@@ -100,7 +100,6 @@ sed -i 's@enabled=1@enabled=0@g' /etc/yum.repos.d/_copr_ublue-os-staging.repo
 # kmod-nvidia-common defaults to 'nvidia-open' but this will match our akmod image
 sed -i "s/^MODULE_VARIANT=.*/MODULE_VARIANT=$KERNEL_MODULE_TYPE/" /etc/nvidia/kernel.conf
 
-systemctl enable ublue-nvctk-cdi.service
 semodule --verbose --install /usr/share/selinux/packages/nvidia-container.pp
 
 # Universal Blue specific Initramfs fixes

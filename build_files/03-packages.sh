@@ -166,6 +166,4 @@ tar --no-same-owner --no-same-permissions --no-overwrite-dir -xvzf /tmp/scopebud
 cp -r /tmp/scopebuddy/ScopeBuddy-*/bin/* /usr/bin/
 rm -rf /tmp/scopebuddy*
 
-systemctl enable podman.socket ublue-os-media-automount.service
-
 echo "::endgroup::"

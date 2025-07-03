@@ -5,12 +5,9 @@ echo "::group:: ===$(basename "$0")==="
 set -euxo pipefail
 
 CONFIG_FILE="/ctx/config.yaml"
-OUTDIR="/etc"
 SCHEMA_DIR="/usr/share/glib-2.0/schemas"
 
-which yq
-
-mkdir -p "$OUTDIR" "$SCHEMA_DIR"
+mkdir -p "/etc" "/etc/xdg/autostart" "$SCHEMA_DIR"
 
 echo "Using config file from: $CONFIG_FILE"
 echo "Will write GSchema overrides to: $SCHEMA_DIR"
@@ -61,10 +58,15 @@ while yq -e ".[$index]" "$CONFIG_FILE" >/dev/null 2>&1; do
   else
     path=$(yq -r ".[$index].path" "$CONFIG_FILE")
     content=$(yq -r ".[$index].content" "$CONFIG_FILE")
-    fullpath="$OUTDIR/$path"
-    mkdir -p "$(dirname "$fullpath")"
-    echo "$content" > "$fullpath"
-    echo "Wrote plain file to: $fullpath"
+    fullpath="$path"
+    mkdir -p "$(dirname "$path")"
+    echo "$content" > "$path"
+    echo "Wrote plain file to: $path"
+    if yq -e ".[$index] | has(\"permissions\")" "$CONFIG_FILE" >/dev/null; then
+      perms=$(yq -r ".[$index].permissions" "$CONFIG_FILE")
+      chmod "$perms" "$path"
+      echo "Set permissions $perms on $path"
+    fi
   fi
 
   index=$((index + 1))
@@ -75,4 +77,3 @@ glib-compile-schemas "$SCHEMA_DIR"
 echo "Successfully compiled schemas in $SCHEMA_DIR"
 
 echo "::endgroup::"
-

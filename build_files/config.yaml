@@ -26,11 +26,44 @@
     settings:
       accel-profile: 'flat'
 
-# Allow writing conservation_mode without sudo password
-- path: sudoers.d/ideapad 
+- path: /etc/flatpak/remotes.d/flathub.flatpakrepo
   content: |
-    %sudo ALL=(ALL) NOPASSWD: /usr/bin/tee /sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode
+    [Flatpak Remote]
+    Name=flathub
+    Title=Flathub
+    Url=https://flathub.org/repo/flathub.flatpakrepo
+    IsDefault=true
 
-- path: modules
+# Allow writing conservation_mode without sudo password
+- path: /etc/sudoers.d/ideapad 
+  content: |
+    %wheel ALL=(ALL) NOPASSWD: /usr/bin/tee /sys/bus/platform/drivers/ideapad_acpi/VPC2004\:00/conservation_mode
+
+- path: /etc/modules
   content: |
     ideapad_laptop
+
+- path: /usr/local/bin/zena-first-boot.sh
+  permissions: '0755'
+  content: |
+    #!/bin/bash
+
+    FLAG_FILE="/var/lib/zena-done"
+
+    if [ ! -f "$FLAG_FILE" ]; then
+      /usr/bin/fedora-third-party enable
+    fi
+
+- path: /etc/systemd/system/zena-first-boot.service
+  content: |
+    [Unit]
+    Description=Zena First Boot Setup
+    After=multi-user.target
+
+    [Service]
+    Type=oneshot
+    ExecStart=/usr/local/bin/zena-first-boot.sh
+    RemainAfterExit=true
+
+    [Install]
+    WantedBy=multi-user.target
