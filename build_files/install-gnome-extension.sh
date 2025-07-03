@@ -48,8 +48,8 @@ curl -s -L \
 # Install system-wide
 extdir="/usr/share/gnome-shell/extensions/$uuid"
 echo "Installing to $extdir"
-sudo mkdir -p "$extdir"
-sudo unzip -q "$zipfile" -d "$extdir"
+mkdir -p "$extdir"
+unzip -q "$zipfile" -d "$extdir"
 
 # Check for metadata
 if [ ! -f "$extdir/metadata.json" ]; then
@@ -60,8 +60,14 @@ fi
 # Compile GSettings schema if present
 if [ -d "$extdir/schemas" ]; then
     echo "Compiling GSettings schema..."
-    sudo glib-compile-schemas "$extdir/schemas"
+    glib-compile-schemas "$extdir/schemas"
 fi
+
+# Fix permissions
+echo "Fixing permissions..."
+chmod -R a+r "$extdir"
+find "$extdir" -type d -exec chmod 755 {} \;
+find "$extdir" -type f -exec chmod 644 {} \;
 
 echo "Extension $uuid installed system-wide for GNOME Shell $gnome_version."
 
