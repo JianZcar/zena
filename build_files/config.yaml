@@ -12,8 +12,19 @@
         - restartto@tiagoporsch.github.io
         - ideapad@laurento.frittella 
       disabled-extensions:
-        - background-logo@fedorahosted.org
         - user-theme@gnome-shell-extensions.gcampax.github.com
+
+- gschema:
+    id: org.gnome.software
+    filename: zz0-01-third-party.gschema.override
+    settings:
+      allow-third-party: true
+
+- gschema:
+    id: org.gnome.desktop.peripherals.mouse
+    filename: zz0-02-mouse.gschema.override
+    settings:
+      accel-profile: 'flat'
 
 # Allow writing conservation_mode without sudo password
 - path: sudoers.d/ideapad 
