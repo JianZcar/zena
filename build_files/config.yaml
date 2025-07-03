@@ -43,7 +43,7 @@
   content: |
     ideapad_laptop
 
-- path: /usr/local/bin/zena-first-boot.sh
+- path: /etc/zena/zena-first-boot.sh
   permissions: '0755'
   content: |
     #!/bin/bash
@@ -62,7 +62,7 @@
 
     [Service]
     Type=oneshot
-    ExecStart=/usr/local/bin/zena-first-boot.sh
+    ExecStart=/etc/zena/zena-first-boot.sh
     RemainAfterExit=true
 
     [Install]
