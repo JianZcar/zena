@@ -10,8 +10,9 @@
         - caffeine@patapon.info
         - restartto@tiagoporsch.github.io
         - ideapad@laurento.frittella 
-        - light-style@gnome-shell-extensions.gcampax.github.com
+        - light-shell-plus@jianzcar.github
         - accent-directories@taiwbi.com
+        - wireless-hid@chlumskyvaclav.gmail.com
       disabled-extensions:
         - user-theme@gnome-shell-extensions.gcampax.github.com
 
@@ -26,7 +27,8 @@
     filename: zz0-02-desktop.gschema.override
     settings:
       accent-color: 'slate'
-      clock-format: '12hr'
+      clock-format: '12h'
+      clock-show-seconds: true
       enable-hot-corners: false
 
 - gschema:
@@ -54,7 +56,12 @@
     [org/gnome/shell/extensions/blur-my-shell/panel]
     force-light-text=true
 
-- path: /etc/dconf/db/local.d/00-restartto
+- path: /etc/dconf/db/local.d/01-just-perfection
+  content: |
+    [/org/gnome/shell/extensions/just-perfection]
+    workspace-wrap-around=true
+
+- path: /etc/dconf/db/local.d/02-restartto
   content: |
     [org/gnome/shell/extensions/restartto]
     blacklist=['Fedora', 'EFI PXE 0 for IPv4 (E4-A8-DF-D3-0E-29) ', 'EFI PXE 0 for IPv6 (E4-A8-DF-D3-0E-29) ', 'EFI USB Device', 'EFI DVD/CDROM', 'EFI Network']

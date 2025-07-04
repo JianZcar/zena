@@ -125,8 +125,10 @@ fi
 
 # Install Gnome extensions
 ctx/install-gnome-extension.sh ideapad@laurento.frittella
-ctx/install-gnome-extension.sh light-style@gnome-shell-extensions.gcampax.github.com
+git clone https://github.com/JianZcar/light-shell-plus.git /usr/share/gnome-shell/extensions/light-shell-plus@jianzcar.github \
+  && rm -rf /usr/share/gnome-shell/extensions/light-shell-plus@jianzcar.github/.git
 ctx/install-gnome-extension.sh accent-directories@taiwbi.com
+ctx/install-gnome-extension.sh wireless-hid@chlumskyvaclav.gmail.com
 
 # MoreWaita Icons
 git clone https://github.com/somepaulo/MoreWaita.git /tmp/MoreWaita && bash /tmp/MoreWaita/install.sh
