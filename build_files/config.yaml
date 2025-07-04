@@ -12,6 +12,7 @@
         - restartto@tiagoporsch.github.io
         - ideapad@laurento.frittella 
         - light-style@gnome-shell-extensions.gcampax.github.com
+        - accent-directories@taiwbi.com
       disabled-extensions:
         - user-theme@gnome-shell-extensions.gcampax.github.com
 
