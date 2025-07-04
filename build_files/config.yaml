@@ -27,6 +27,7 @@
     filename: zz0-02-desktop.gschema.override
     settings:
       accent-color: 'slate'
+      color-scheme: 'prefer-light'
       clock-format: '12h'
       clock-show-seconds: true
       enable-hot-corners: false
@@ -58,7 +59,7 @@
 
 - path: /etc/dconf/db/local.d/01-just-perfection
   content: |
-    [/org/gnome/shell/extensions/just-perfection]
+    [org/gnome/shell/extensions/just-perfection]
     workspace-wrap-around=true
 
 - path: /etc/dconf/db/local.d/02-restartto
