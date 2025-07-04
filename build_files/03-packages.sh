@@ -129,6 +129,9 @@ fi
 ctx/install-gnome-extension.sh ideapad@laurento.frittella
 ctx/install-gnome-extension.sh light-style@gnome-shell-extensions.gcampax.github.com
 
+# MoreWaita Icons
+git clone https://github.com/somepaulo/MoreWaita.git /tmp/MoreWaita && bash /tmp/MoreWaita/install.sh
+
 # Install multimedia libraries from RPM Fusion
 dnf5 -y install --enable-repo="*rpmfusion*" --disable-repo="*fedora-multimedia*" \
     libaacs \
