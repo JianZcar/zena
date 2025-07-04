@@ -78,12 +78,10 @@ PKGS_TO_INSTALL=(
   gnome-shell-extension-burn-my-windows
   gnome-shell-extension-caffeine
   gnome-shell-extension-compiz-windows-effect
-  gnome-shell-extension-gsconnect
   gnome-shell-extension-hotedge
   gnome-shell-extension-just-perfection
   gnome-shell-extension-restart-to
   gnome-shell-extension-user-theme
-  nautilus-gsconnect
 
   # Miscellaneous
   ublue-brew
