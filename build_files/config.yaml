@@ -22,14 +22,22 @@
       allow-third-party: true
 
 - gschema:
+    id: org.gnome.desktop.interface
+    filename: zz0-02-desktop.gschema.override
+    settings:
+      accent-color: 'slate'
+      clock-format: '12hr'
+      enable-hot-corners: false
+
+- gschema:
     id: org.gnome.desktop.peripherals.mouse
-    filename: zz0-02-mouse.gschema.override
+    filename: zz0-03-mouse.gschema.override
     settings:
       accel-profile: 'flat'
 
 - gschema:
     id: org.gnome.Ptyxis
-    filename: zz0-03-ptyxis.gschema.override
+    filename: zz0-04-ptyxis.gschema.override
     settings:
       interface-style: 'system'
 
@@ -46,6 +54,11 @@
     [org/gnome/shell/extensions/blur-my-shell/panel]
     force-light-text=true
 
+- path: /etc/dconf/db/local.d/00-restartto
+  content: |
+    [org/gnome/shell/extensions/restartto]
+    blacklist=['Fedora', 'EFI PXE 0 for IPv4 (E4-A8-DF-D3-0E-29) ', 'EFI PXE 0 for IPv6 (E4-A8-DF-D3-0E-29) ', 'EFI USB Device', 'EFI DVD/CDROM', 'EFI Network']
+
 - path: /etc/dconf/profile/user
   content: |
     user-db:user
@@ -59,6 +72,16 @@
 - path: /etc/modules
   content: |
     ideapad_laptop
+
+- path: /etc/polkit-1/rules.d/50-efibootmgr.rules
+  content: |
+    polkit.addRule(function(action, subject) {
+      if (action.id == "org.freedesktop.policykit.exec" &&
+          subject.isInGroup("wheel") &&
+          action.lookup("program") == "/usr/bin/efibootmgr") {
+          return polkit.Result.YES;
+      }
+    });
 
 - path: /etc/zena/zena-first-boot.sh
   permissions: '0755'
