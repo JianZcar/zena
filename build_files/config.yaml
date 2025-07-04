@@ -11,7 +11,7 @@
         - caffeine@patapon.info
         - restartto@tiagoporsch.github.io
         - ideapad@laurento.frittella 
-        - luminus-desktop-y@dikasp.gitlab
+        - light-style@gnome-shell-extensions.gcampax.github.com
       disabled-extensions:
         - user-theme@gnome-shell-extensions.gcampax.github.com
 
@@ -26,6 +26,18 @@
     filename: zz0-02-mouse.gschema.override
     settings:
       accel-profile: 'flat'
+
+- gschema:
+    id: org.gnome.Ptyxis
+    filename: zz0-03-ptyxis.gschema.override
+    settings:
+      interface-style: 'system'
+
+- gschema:
+    id: org.gnome.shell.extensions.blur-my-shell.panel
+    filename: zz0-04-blurmyshellpanel.gschema.override
+    settings:
+      force-light-text: true
 
 - path: /etc/flatpak/remotes.d/flathub.flatpakrepo
   content: |
