@@ -54,8 +54,8 @@ curl -s -L -H "accept: application/zip" -o "$zipfile" "$api_url"
 # Install system-wide
 extdir="/usr/share/gnome-shell/extensions/$uuid"
 echo "Installing to $extdir"
-sudo mkdir -p "$extdir"
-sudo unzip -q "$zipfile" -d "$extdir"
+mkdir -p "$extdir"
+unzip -q "$zipfile" -d "$extdir"
 
 # Check for metadata
 if [ ! -f "$extdir/metadata.json" ]; then
@@ -66,22 +66,33 @@ fi
 # Patch metadata.json if forced
 if [[ "$force" == "force" ]]; then
     echo "Patching metadata.json to include current GNOME version..."
-    sudo jq --arg ver "$gnome_version" \
-        '.["shell-version"] |= (.[0:] + [$ver] | unique)' \
-        "$extdir/metadata.json" | sudo tee "$extdir/metadata.json" > /dev/null
+    tmpfile=$(mktemp)
+    jq --arg ver "$gnome_version" '
+        .["shell-version"] |=
+            (if type == "array" then
+                . + [$ver] | unique
+             elif type == "string" then
+                [., $ver] | unique
+             else
+                [$ver]
+             end)
+    ' "$extdir/metadata.json" > "$tmpfile" && mv "$tmpfile" "$extdir/metadata.json"
+
+    echo "metadata.json patched successfully."
 fi
+
 
 # Compile GSettings schema if present
 if [ -d "$extdir/schemas" ]; then
     echo "Compiling GSettings schema..."
-    sudo glib-compile-schemas "$extdir/schemas"
+    glib-compile-schemas "$extdir/schemas"
 fi
 
 # Fix permissions
 echo "Fixing permissions..."
-sudo chmod -R a+r "$extdir"
-sudo find "$extdir" -type d -exec chmod 755 {} \;
-sudo find "$extdir" -type f -exec chmod 644 {} \;
+chmod -R a+r "$extdir"
+find "$extdir" -type d -exec chmod 755 {} \;
+find "$extdir" -type f -exec chmod 644 {} \;
 
 echo "Extension $uuid installed system-wide${force:+ (forced)} for GNOME Shell $gnome_version."
 
