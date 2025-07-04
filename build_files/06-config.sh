@@ -75,5 +75,6 @@ done
 echo "Compiling schemas in: $SCHEMA_DIR"
 glib-compile-schemas "$SCHEMA_DIR"
 echo "Successfully compiled schemas in $SCHEMA_DIR"
+dconf update
 
 echo "::endgroup::"

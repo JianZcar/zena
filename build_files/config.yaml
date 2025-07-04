@@ -33,12 +33,6 @@
     settings:
       interface-style: 'system'
 
-- gschema:
-    id: org.gnome.shell.extensions.blur-my-shell.panel
-    filename: zz0-04-blurmyshellpanel.gschema.override
-    settings:
-      force-light-text: true
-
 - path: /etc/flatpak/remotes.d/flathub.flatpakrepo
   content: |
     [Flatpak Remote]
@@ -46,6 +40,16 @@
     Title=Flathub
     Url=https://flathub.org/repo/flathub.flatpakrepo
     IsDefault=true
+
+- path: /etc/dconf/db/local.d/00-blurmyshell
+  content: |
+    [org/gnome/shell/extensions/blur-my-shell/panel]
+    force-light-text=true
+
+- path: /etc/dconf/profile/user
+  content: |
+    user-db:user
+    system-db:local
 
 # Allow writing conservation_mode without sudo password
 - path: /etc/sudoers.d/ideapad 
