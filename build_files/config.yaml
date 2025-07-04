@@ -83,12 +83,10 @@
       }
     });
 
-- path: /etc/bluetooth/main.conf.d/99-dualshock.conf
+# To allow old controllers to connect
+- path: /etc/modprobe.d/disable-ertm.conf
   content: |
-    [General]
-    ControllerMode = dual
-    FastConnectable = true
-    JustWorksRepairing = always
+    options bluetooth disable_ertm=Y
 
 - path: /etc/zena/zena-first-boot.sh
   permissions: '0755'
