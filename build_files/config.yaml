@@ -69,7 +69,7 @@
 
     if [ ! -f "$FLAG_FILE" ]; then
       /usr/bin/fedora-third-party enable
-      flatpak remote-modify --enable=false fedora
+      flatpak remote-modify --disable fedora
       rpm-ostree rebase ostree-unverified-registry:ghcr.io/jianzcar/zena:latest
       touch /var/lib/zena-done
     fi
