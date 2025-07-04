@@ -83,6 +83,13 @@
       }
     });
 
+- path: /etc/bluetooth/main.conf.d/99-dualshock.conf
+  content: |
+    [General]
+    ControllerMode = dual
+    FastConnectable = true
+    JustWorksRepairing = always
+
 - path: /etc/zena/zena-first-boot.sh
   permissions: '0755'
   content: |
