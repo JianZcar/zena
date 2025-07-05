@@ -16,6 +16,10 @@
       disabled-extensions:
         - appindicatorsupport@rgcjonas.gmail.com
         - user-theme@gnome-shell-extensions.gcampax.github.com
+      favorite-apps:
+        - app.zen_browser.zen.desktop
+        - org.gnome.Ptyxis.desktop
+        - org.gnome.Nautilus.desktop
 
 - gschema:
     id: org.gnome.desktop.interface
@@ -159,16 +163,52 @@
       rpm-ostree rebase ostree-unverified-registry:ghcr.io/jianzcar/zena:latest
 
       flatpaks=(
+        # System & Utilities
+        com.github.tchx84.Flatseal
         com.mattjakeman.ExtensionManager
-        com.belmoussaoui.Authenticator
-        org.gtk.Gtk3theme.adw-gtk3
-        org.gtk.Gtk3theme.adw-gtk3-dark
+        com.ranfdev.DistroShelf
+        io.github.flattool.Warehouse
+        io.missioncenter.MissionCenter
+        it.mijorus.gearlever
         org.virt_manager.virt-manager
         page.tesk.Refine
-        com.vysp3r.ProtonPlus
-        org.gnome.World.Secrets
-        app.zen_browser.zen
+
+        # GNOME Core Apps
+        org.gnome.Calculator
+        org.gnome.Calendar
+        org.gnome.Characters
+        org.gnome.clocks
+        org.gnome.Contacts
+        org.gnome.font-viewer
+        org.gnome.Logs
+        org.gnome.Loupe
+        org.gnome.NautilusPreviewer
+        org.gnome.Papers
+        org.gnome.Weather
+        org.gnome.baobab
+
+        # Security
         com.belmoussaoui.Authenticator
+        org.gnome.World.Secrets
+
+        # Gaming
+        com.vysp3r.ProtonPlus
+        io.github.radiolamp.mangojuice
+        org.freedesktop.Platform.VulkanLayer.MangoHud
+        org.freedesktop.Platform.VulkanLayer.vkBasalt
+
+        # Streaming/Recording
+        com.obsproject.Studio.Plugin.Gstreamer
+        com.obsproject.Studio.Plugin.GStreamerVaapi
+        com.obsproject.Studio.Plugin.OBSVkCapture
+        org.freedesktop.Platform.VulkanLayer.OBSVkCapture
+
+        # Web Browsers
+        app.zen_browser.zen
+
+        # Themes
+        org.gtk.Gtk3theme.adw-gtk3
+        org.gtk.Gtk3theme.adw-gtk3-dark
       )
 
       for app in "${flatpaks[@]}"; do
