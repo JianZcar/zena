@@ -68,9 +68,6 @@ if [ ${#PKGS_TO_LOCK[@]} -gt 0 ]; then
     dnf5 versionlock add "${PKGS_TO_LOCK[@]}"
 fi
 
-# Use colored icon for tray icon of steam for better visibility in light mode
-cp -f /usr/share/pixmaps/steam.png /usr/share/pixmaps/steam_tray_mono.png
-
 sed -i 's|grub_probe} --target=device /`|grub_probe} --target=device /sysroot`|g' /usr/bin/grub2-mkconfig
 
 # Patch rtkit
