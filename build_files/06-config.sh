@@ -47,7 +47,12 @@ while yq -e ".[$index]" "$CONFIG_FILE" >/dev/null 2>&1; do
 
         # Join items with commas and write
         IFS=','; echo "$key=[${quoted_items[*]}]" >> "$settings_path"; unset IFS
+      elif [[ "$tag" == "!!bool" || "$tag" == "!!int" || "$tag" == "!!float" ]]; then
+        # Write booleans and numbers unquoted
+        value=$(yq -r ".[$index].gschema.settings[\"$key\"]" "$CONFIG_FILE")
+        echo "$key=$value" >> "$settings_path"
       else
+        # Quote and escape string
         value=$(yq -r ".[$index].gschema.settings[\"$key\"]" "$CONFIG_FILE")
         escaped=$(printf '%s' "$value" | sed "s/'/''/g")
         echo "$key='$escaped'" >> "$settings_path"
@@ -77,4 +82,6 @@ glib-compile-schemas "$SCHEMA_DIR"
 echo "Successfully compiled schemas in $SCHEMA_DIR"
 dconf update
 
+sed -i 's/#UserspaceHID.*/UserspaceHID=true/' /etc/bluetooth/input.conf
+sed -i 's/^#SCX_FLAGS=/SCX_FLAGS=/' /etc/default/scx
 echo "::endgroup::"

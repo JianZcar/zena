@@ -129,7 +129,9 @@ git clone https://github.com/JianZcar/light-shell-plus.git /usr/share/gnome-shel
   && rm -rf /usr/share/gnome-shell/extensions/light-shell-plus@jianzcar.github/.git
 ctx/install-gnome-extension.sh accent-directories@taiwbi.com
 ctx/install-gnome-extension.sh wireless-hid@chlumskyvaclav.gmail.com
-
+ctx/install-gnome-extension.sh gnome-fuzzy-app-search@gnome-shell-extensions.Czarlie.gitlab.com
+git clone https://github.com/JianZcar/auto-appfolders.git /usr/share/gnome-shell/extensions/auto-appfolders@jianzcar.github \
+  && rm -rf /usr/share/gnome-shell/extensions/auto-appfolders@jianzcar.github/.git
 # MoreWaita Icons
 git clone https://github.com/somepaulo/MoreWaita.git /tmp/MoreWaita && bash /tmp/MoreWaita/install.sh
 

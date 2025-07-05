@@ -18,21 +18,25 @@ for repo in "${DISABLE_REPOS[@]}"; do
 done
 
 COPRS_TO_DISABLE=(
+    # Bazzite & Ublue
     bazzite-org/bazzite
     bazzite-org/bazzite-multilib
-    ublue-os/staging
-    ublue-os/packages
     bazzite-org/LatencyFleX
     bazzite-org/obs-vkcapture
-    ycollet/audinux
-    bazzite-org/rom-properties
-    bazzite-org/webapp-manager
-    hhd-dev/hhd
+    ublue-os/packages
+    ublue-os/staging
+
+    # Fonts
     che/nerd-fonts
-    mavit/discover-overlay
-    lizardbyte/beta
-    rok/cdemu
+
+    # Gaming
     hikariknight/looking-glass-kvmfr
+
+    # Hardware
+    hhd-dev/hhd
+
+    # Multimedia
+    ycollet/audinux
 )
 for copr in "${COPRS_TO_DISABLE[@]}"; do
     dnf5 -y copr disable "$copr"

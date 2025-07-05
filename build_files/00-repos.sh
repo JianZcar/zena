@@ -17,8 +17,6 @@ COPRS=(
     bazzite-org/bazzite-multilib
     bazzite-org/LatencyFleX
     bazzite-org/obs-vkcapture
-    bazzite-org/rom-properties
-    bazzite-org/webapp-manager
     ublue-os/packages
     ublue-os/staging
 
@@ -27,9 +25,6 @@ COPRS=(
 
     # Gaming
     hikariknight/looking-glass-kvmfr
-    lizardbyte/beta
-    mavit/discover-overlay
-    rok/cdemu
 
     # Hardware
     hhd-dev/hhd

@@ -68,4 +68,12 @@ if [ ${#PKGS_TO_LOCK[@]} -gt 0 ]; then
     dnf5 versionlock add "${PKGS_TO_LOCK[@]}"
 fi
 
+sed -i 's|grub_probe} --target=device /`|grub_probe} --target=device /sysroot`|g' /usr/bin/grub2-mkconfig
+
+# Patch SELinux util
+sed -i 's#/var/lib/selinux#/etc/selinux#g' /usr/lib/python3.*/site-packages/setroubleshoot/util.py
+
+# Patch rtkit
+sed -i 's|^ExecStart=.*|ExecStart=/usr/libexec/rtkit-daemon --no-canary|' /usr/lib/systemd/system/rtkit-daemon.service
+
 echo "::endgroup::"

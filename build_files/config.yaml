@@ -13,18 +13,14 @@
         - light-shell-plus@jianzcar.github
         - accent-directories@taiwbi.com
         - wireless-hid@chlumskyvaclav.gmail.com
+        - gnome-fuzzy-app-search@gnome-shell-extensions.Czarlie.gitlab.com
+        - auto-appfolders@jianzcar.github
       disabled-extensions:
         - user-theme@gnome-shell-extensions.gcampax.github.com
 
 - gschema:
-    id: org.gnome.software
-    filename: zz0-01-third-party.gschema.override
-    settings:
-      allow-third-party: true
-
-- gschema:
     id: org.gnome.desktop.interface
-    filename: zz0-02-desktop.gschema.override
+    filename: zz0-01-desktop.gschema.override
     settings:
       accent-color: 'slate'
       color-scheme: 'prefer-light'
@@ -34,13 +30,13 @@
 
 - gschema:
     id: org.gnome.desktop.peripherals.mouse
-    filename: zz0-03-mouse.gschema.override
+    filename: zz0-02-mouse.gschema.override
     settings:
       accel-profile: 'flat'
 
 - gschema:
     id: org.gnome.Ptyxis
-    filename: zz0-04-ptyxis.gschema.override
+    filename: zz0-03-ptyxis.gschema.override
     settings:
       interface-style: 'system'
 
@@ -52,17 +48,22 @@
     Url=https://flathub.org/repo/flathub.flatpakrepo
     IsDefault=true
 
-- path: /etc/dconf/db/local.d/00-blurmyshell
+- path: /etc/dconf/db/local.d/00-blurmyshell-panel
   content: |
     [org/gnome/shell/extensions/blur-my-shell/panel]
     force-light-text=true
 
-- path: /etc/dconf/db/local.d/01-just-perfection
+- path: /etc/dconf/db/local.d/01-blurmyshell-overview
+  content: |
+    [org/gnome/shell/extensions/blur-my-shell/overview]
+    style-components=3
+
+- path: /etc/dconf/db/local.d/02-just-perfection
   content: |
     [org/gnome/shell/extensions/just-perfection]
     workspace-wrap-around=true
 
-- path: /etc/dconf/db/local.d/02-restartto
+- path: /etc/dconf/db/local.d/03-restartto
   content: |
     [org/gnome/shell/extensions/restartto]
     blacklist=['Fedora', 'EFI PXE 0 for IPv4 (E4-A8-DF-D3-0E-29) ', 'EFI PXE 0 for IPv6 (E4-A8-DF-D3-0E-29) ', 'EFI USB Device', 'EFI DVD/CDROM', 'EFI Network']
@@ -73,7 +74,7 @@
     system-db:local
 
 # Allow writing conservation_mode without sudo password
-- path: /etc/sudoers.d/ideapad 
+- path: /etc/sudoers.d/ideapad
   content: |
     %wheel ALL=(ALL) NOPASSWD: /usr/bin/tee /sys/bus/platform/drivers/ideapad_acpi/VPC2004\:00/conservation_mode
 
