@@ -13,8 +13,8 @@
         - accent-directories@taiwbi.com
         - wireless-hid@chlumskyvaclav.gmail.com
         - gnome-fuzzy-app-search@gnome-shell-extensions.Czarlie.gitlab.com
-      disabled-extensions:
         - appindicatorsupport@rgcjonas.gmail.com
+      disabled-extensions:
         - user-theme@gnome-shell-extensions.gcampax.github.com
       favorite-apps:
         - app.zen_browser.zen.desktop
