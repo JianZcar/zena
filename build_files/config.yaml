@@ -3,7 +3,6 @@
     filename: zz0-00-extensions.gschema.override
     settings:
       enabled-extensions:
-        - appindicatorsupport@rgcjonas.gmail.com
         - just-perfection-desktop@just-perfection
         - blur-my-shell@aunetx
         - hotedge@jonathan.jdoda.ca
@@ -14,8 +13,8 @@
         - accent-directories@taiwbi.com
         - wireless-hid@chlumskyvaclav.gmail.com
         - gnome-fuzzy-app-search@gnome-shell-extensions.Czarlie.gitlab.com
-        - auto-appfolders@jianzcar.github
       disabled-extensions:
+        - appindicatorsupport@rgcjonas.gmail.com
         - user-theme@gnome-shell-extensions.gcampax.github.com
 
 - gschema:
@@ -52,7 +51,7 @@
 - path: /etc/dconf/db/local.d/00-blurmyshell-panel
   content: |
     [org/gnome/shell/extensions/blur-my-shell/panel]
-    force-light-text=true
+    blur=false
 
 - path: /etc/dconf/db/local.d/01-blurmyshell-overview
   content: |
@@ -68,6 +67,55 @@
   content: |
     [org/gnome/shell/extensions/restartto]
     blacklist=['Fedora', 'EFI PXE 0 for IPv4 (E4-A8-DF-D3-0E-29) ', 'EFI PXE 0 for IPv6 (E4-A8-DF-D3-0E-29) ', 'EFI USB Device', 'EFI DVD/CDROM', 'EFI Network']
+
+- path: /etc/dconf/db/local.d/04-appfolders
+  content: |
+    [org/gnome/desktop/app-folders]
+    folder-children=['AudioVideo', 'Development', 'Education', 'Games', 'Graphics', 'Network', 'Office', 'Science', 'Settings', 'System', 'Utilities']
+
+    [org/gnome/desktop/app-folders/folders/AudioVideo]
+    name='Audio & Video'
+    categories=['AudioVideo']
+
+    [org/gnome/desktop/app-folders/folders/Development]
+    name='Development'
+    categories=['Development']
+
+    [org/gnome/desktop/app-folders/folders/Education]
+    name='Education'
+    categories=['Education']
+
+    [org/gnome/desktop/app-folders/folders/Games]
+    name='Games'
+    categories=['Game']
+
+    [org/gnome/desktop/app-folders/folders/Graphics]
+    name='Graphics'
+    categories=['Graphics']
+
+    [org/gnome/desktop/app-folders/folders/Network]
+    name='Internet'
+    categories=['Network']
+
+    [org/gnome/desktop/app-folders/folders/Office]
+    name='Office'
+    categories=['Office']
+
+    [org/gnome/desktop/app-folders/folders/Science]
+    name='Science'
+    categories=['Science']
+
+    [org/gnome/desktop/app-folders/folders/Settings]
+    name='Settings'
+    categories=['Settings']
+
+    [org/gnome/desktop/app-folders/folders/System]
+    name='System'
+    categories=['System']
+
+    [org/gnome/desktop/app-folders/folders/Utilities]
+    name='Utilities'
+    categories=['Utility']
 
 - path: /etc/dconf/profile/user
   content: |

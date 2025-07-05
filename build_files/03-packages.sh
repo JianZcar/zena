@@ -97,6 +97,7 @@ PKGS_TO_INSTALL=(
   xdotool
   yad # Dialogs for shell scripts
   ydotool # Simulate keyboard/mouse input
+  python3-gobject
 )
 
 PKGS_TO_UNINSTALL=(
@@ -130,8 +131,7 @@ git clone https://github.com/JianZcar/light-shell-plus.git /usr/share/gnome-shel
 ctx/install-gnome-extension.sh accent-directories@taiwbi.com
 ctx/install-gnome-extension.sh wireless-hid@chlumskyvaclav.gmail.com
 ctx/install-gnome-extension.sh gnome-fuzzy-app-search@gnome-shell-extensions.Czarlie.gitlab.com
-git clone https://github.com/JianZcar/auto-appfolders.git /usr/share/gnome-shell/extensions/auto-appfolders@jianzcar.github \
-  && rm -rf /usr/share/gnome-shell/extensions/auto-appfolders@jianzcar.github/.git
+
 # MoreWaita Icons
 git clone https://github.com/somepaulo/MoreWaita.git /tmp/MoreWaita && bash /tmp/MoreWaita/install.sh
 
