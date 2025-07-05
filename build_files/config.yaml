@@ -24,6 +24,7 @@
     settings:
       accent-color: 'slate'
       color-scheme: 'prefer-light'
+      gtk-theme: 'adw-gtk3'
       clock-format: '12h'
       clock-show-seconds: true
       enable-hot-corners: false
@@ -108,6 +109,23 @@
       /usr/bin/fedora-third-party enable
       flatpak remote-modify --disable fedora
       rpm-ostree rebase ostree-unverified-registry:ghcr.io/jianzcar/zena:latest
+
+      flatpaks=(
+        com.mattjakeman.ExtensionManager
+        com.belmoussaoui.Authenticator
+        org.gtk.Gtk3theme.adw-gtk3
+        org.gtk.Gtk3theme.adw-gtk3-dark
+        org.virt_manager.virt-manager
+        page.tesk.Refine
+        com.vysp3r.ProtonPlus
+        org.gnome.World.Secrets
+        app.zen_browser.zen
+        com.belmoussaoui.Authenticator
+      )
+
+      for app in "${flatpaks[@]}"; do
+        flatpak install -y --system flathub "$app"
+      done
       touch /var/lib/zena-done
     fi
 
