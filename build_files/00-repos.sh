@@ -31,6 +31,9 @@ COPRS=(
 
     # Multimedia
     ycollet/audinux
+
+    # Gaming
+    atim/heroic-games-launcher
 )
 
 for COPR in "${COPRS[@]}"; do

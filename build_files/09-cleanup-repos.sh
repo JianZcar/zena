@@ -37,6 +37,9 @@ COPRS_TO_DISABLE=(
 
     # Multimedia
     ycollet/audinux
+
+    # Gaming
+    atim/heroic-games-launcher
 )
 for copr in "${COPRS_TO_DISABLE[@]}"; do
     dnf5 -y copr disable "$copr"
