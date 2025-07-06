@@ -77,11 +77,9 @@ PKGS_TO_INSTALL=(
   gnome-shell-extension-blur-my-shell
   gnome-shell-extension-burn-my-windows
   gnome-shell-extension-caffeine
-  gnome-shell-extension-compiz-windows-effect
   gnome-shell-extension-hotedge
   gnome-shell-extension-just-perfection
   gnome-shell-extension-restart-to
-  gnome-shell-extension-user-theme
 
   # Miscellaneous
   ublue-brew
@@ -129,9 +127,6 @@ git clone https://github.com/JianZcar/light-shell-plus.git /usr/share/gnome-shel
 
 git clone https://github.com/JianZcar/peek-top-bar-on-fullscreen.git /usr/share/gnome-shell/extensions/peek-top-bar-on-fullscreen@marcinjahn.com \
   && rm -rf /usr/share/gnome-shell/extensions/peek-top-bar-on-fullscreen@marcinjahn.com/.git
-
-git clone https://github.com/JianZcar/zen.git /usr/share/gnome-shell/extensions/zen@le0.gs \
-  && rm -rf /usr/share/gnome-shell/extensions/zen@le0.gs/.git
 
 ctx/install-gnome-extension.sh ideapad@laurento.frittella
 ctx/install-gnome-extension.sh accent-directories@taiwbi.com

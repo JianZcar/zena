@@ -18,9 +18,6 @@
         - disable-workspace-switcher-overlay@cleardevice
         - splashindicator@ochi12.github.com
         - window-centering@hnjjhmtr27
-        - zen@le0.gs
-      disabled-extensions:
-        - user-theme@gnome-shell-extensions.gcampax.github.com
       favorite-apps:
         - app.zen_browser.zen.desktop
         - org.gnome.Ptyxis.desktop
@@ -131,11 +128,6 @@
     [org/gnome/desktop/app-folders/folders/Utilities]
     name='Utilities'
     categories=['Utility']
-
-- path: /etc/dconf/db/local.d/05-zen
-  content: |
-    [org/gnome/shell/extensions/zen]
-    enable-direct-window-switch=false
 
 - path: /etc/dconf/profile/user
   content: |

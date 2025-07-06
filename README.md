@@ -29,9 +29,6 @@ This image comes bundled with several GNOME Shell extensions, some of which are 
 - **peek-top-bar-on-fullscreen@marcinjahn.com**  
   _Patched_  
   [Source](https://github.com/JianZcar/peek-top-bar-on-fullscreen)
-- **zen@le0.gs**  
-  _Patched_  
-  [Source](https://github.com/JianZcar/zen)
 
 ### Additional Extensions
 Installed via script (patched for compatibility if needed):
