@@ -79,7 +79,6 @@ done
 
 echo "Compiling schemas in: $SCHEMA_DIR"
 glib-compile-schemas "$SCHEMA_DIR"
-glib-compile-schemas /usr/share/gnome-shell/extensions/zen@le0.gs/schemas
 echo "Successfully compiled schemas in $SCHEMA_DIR"
 dconf update
 
