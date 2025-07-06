@@ -14,7 +14,4 @@ sed -i 's@\[Desktop Entry\]@\[Desktop Entry\]\nNoDisplay=true@g' /usr/share/appl
 sed -i 's@\[Desktop Entry\]@\[Desktop Entry\]\nNoDisplay=true@g' /usr/share/applications/btop.desktop
 sed -i 's@\[Desktop Entry\]@\[Desktop Entry\]\nNoDisplay=true@g' /usr/share/applications/yad-icon-browser.desktop
 
-# Use colored icon for tray icon of steam for better visibility in light mode
-cp -f /usr/share/pixmaps/steam.png /usr/share/pixmaps/steam_tray_mono.png
-
 echo "::endgroup::"

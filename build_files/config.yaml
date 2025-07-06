@@ -14,6 +14,11 @@
         - wireless-hid@chlumskyvaclav.gmail.com
         - gnome-fuzzy-app-search@gnome-shell-extensions.Czarlie.gitlab.com
         - appindicatorsupport@rgcjonas.gmail.com
+        - peek-top-bar-on-fullscreen@marcinjahn.command
+        - disable-workspace-switcher-overlay@cleardevice
+        - splashindicator@ochi12.github.command
+        - window-centering@hnjjhmtr27
+        - zen@le0.gs
       disabled-extensions:
         - user-theme@gnome-shell-extensions.gcampax.github.com
       favorite-apps:
@@ -33,14 +38,20 @@
       enable-hot-corners: false
 
 - gschema:
+    id: org.gnome.mutter
+    filename: zz0-02-mutter.gschema.override
+    settings:
+      center-new-windows: false
+
+- gschema:
     id: org.gnome.desktop.peripherals.mouse
-    filename: zz0-02-mouse.gschema.override
+    filename: zz0-03-mouse.gschema.override
     settings:
       accel-profile: 'flat'
 
 - gschema:
     id: org.gnome.Ptyxis
-    filename: zz0-03-ptyxis.gschema.override
+    filename: zz0-04-ptyxis.gschema.override
     settings:
       interface-style: 'system'
 
@@ -120,6 +131,11 @@
     [org/gnome/desktop/app-folders/folders/Utilities]
     name='Utilities'
     categories=['Utility']
+
+- path: /etc/dconf/db/local.d/05-zen
+  content: |
+    [org/gnome/shell/extensions/zen]
+    enable-direct-window-switch=false
 
 - path: /etc/dconf/profile/user
   content: |

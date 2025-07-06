@@ -97,7 +97,6 @@ PKGS_TO_INSTALL=(
   xdotool
   yad # Dialogs for shell scripts
   ydotool # Simulate keyboard/mouse input
-  python3-gobject
 )
 
 PKGS_TO_UNINSTALL=(
@@ -125,12 +124,22 @@ if [ ${#PKGS_TO_UNINSTALL[@]} -gt 0 ]; then
 fi
 
 # Install Gnome extensions
-ctx/install-gnome-extension.sh ideapad@laurento.frittella
 git clone https://github.com/JianZcar/light-shell-plus.git /usr/share/gnome-shell/extensions/light-shell-plus@jianzcar.github \
   && rm -rf /usr/share/gnome-shell/extensions/light-shell-plus@jianzcar.github/.git
+
+git clone https://github.com/JianZcar/peek-top-bar-on-fullscreen.git /usr/share/gnome-shell/extensions/peek-top-bar-on-fullscreen@marcinjahn.com \
+  && rm -rf /usr/share/gnome-shell/extensions/peek-top-bar-on-fullscreen@marcinjahn.com/.git
+
+git clone https://github.com/JianZcar/zen.git /usr/share/gnome-shell/extensions/zen@le0.gs \
+  && rm -rf /usr/share/gnome-shell/extensions/zen@le0.gs/.git
+
+ctx/install-gnome-extension.sh ideapad@laurento.frittella
 ctx/install-gnome-extension.sh accent-directories@taiwbi.com
 ctx/install-gnome-extension.sh wireless-hid@chlumskyvaclav.gmail.com
 ctx/install-gnome-extension.sh gnome-fuzzy-app-search@gnome-shell-extensions.Czarlie.gitlab.com
+ctx/install-gnome-extension.sh window-centering@hnjjhmtr27
+ctx/install-gnome-extension.sh splashindicator@ochi12.github.com
+ctx/install-gnome-extension.sh disable-workspace-switcher-overlay@cleardevice
 
 # MoreWaita Icons
 git clone https://github.com/somepaulo/MoreWaita.git /tmp/MoreWaita && bash /tmp/MoreWaita/install.sh
