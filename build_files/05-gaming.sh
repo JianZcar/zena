@@ -67,4 +67,6 @@ chmod +x /usr/bin/latencyflex
 curl -Lo /usr/bin/winetricks https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
 chmod +x /usr/bin/winetricks
 
+curl -sSL https://raw.githubusercontent.com/JianZcar/fgmod/main/prepare.sh -o /tmp/fg-prepare.sh && bash /tmp/fg-prepare.sh
+
 echo "::endgroup::"
