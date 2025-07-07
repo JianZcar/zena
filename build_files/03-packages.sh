@@ -125,8 +125,8 @@ fi
 git clone https://github.com/JianZcar/light-shell-plus.git /usr/share/gnome-shell/extensions/light-shell-plus@jianzcar.github \
   && rm -rf /usr/share/gnome-shell/extensions/light-shell-plus@jianzcar.github/.git
 
-git clone https://github.com/JianZcar/peek-top-bar-on-fullscreen.git /usr/share/gnome-shell/extensions/peek-top-bar-on-fullscreen@marcinjahn.com \
-  && rm -rf /usr/share/gnome-shell/extensions/peek-top-bar-on-fullscreen@marcinjahn.com/.git
+git clone https://github.com/JianZcar/peek-top-bar.git /usr/share/gnome-shell/extensions/peek-top-bar@jianzcar.github \
+  && rm -rf /usr/share/gnome-shell/extensions/peek-top-bar@jianzcar.github/.git
 
 ctx/install-gnome-extension.sh ideapad@laurento.frittella
 ctx/install-gnome-extension.sh accent-directories@taiwbi.com
