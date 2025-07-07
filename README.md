@@ -45,7 +45,6 @@ Packaged (Fedora/RPMFusion):
 - **gnome-shell-extension-blur-my-shell**
 - **gnome-shell-extension-burn-my-windows**
 - **gnome-shell-extension-caffeine**
-- **gnome-shell-extension-compiz-windows-effect**
 - **gnome-shell-extension-hotedge**
 - **gnome-shell-extension-just-perfection**
 - **gnome-shell-extension-restart-to**
