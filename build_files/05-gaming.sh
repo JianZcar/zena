@@ -9,6 +9,7 @@ shopt -s nullglob
 PKGS_TO_INSTALL=(
     # Gaming Runtimes & Launchers
     steam
+    lutris
     heroic-games-launcher-bin
 
     # Performance & Overlay Tools
