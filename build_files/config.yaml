@@ -83,7 +83,7 @@
 - path: /etc/dconf/db/local.d/04-appfolders
   content: |
     [org/gnome/desktop/app-folders]
-    folder-children=['AudioVideo', 'Development', 'Education', 'Games', 'Graphics', 'Network', 'Office', 'Science', 'Settings', 'System', 'Utilities']
+    folder-children=['AudioVideo', 'Development', 'Education', 'Games', 'Graphics', 'Network', 'Office', 'Science', 'Settings', 'System', 'Utilities', 'Wine']
 
     [org/gnome/desktop/app-folders/folders/AudioVideo]
     name='Audio & Video'
@@ -128,6 +128,10 @@
     [org/gnome/desktop/app-folders/folders/Utilities]
     name='Utilities'
     categories=['Utility']
+    
+    [org/gnome/desktop/app-folders/folders/Wine]
+    name='Wine'
+    categories=['X-Wine']
 
 - path: /etc/dconf/profile/user
   content: |
