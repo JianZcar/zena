@@ -28,7 +28,7 @@ This image comes bundled with several GNOME Shell extensions, some of which are 
   [Source](https://github.com/JianZcar/light-shell-plus)
 - **peek-top-bar-on-fullscreen@marcinjahn.com**  
   _Patched_  
-  [Source](https://github.com/JianZcar/peek-top-bar-on-fullscreen)
+  [Source](https://github.com/JianZcar/peek-top-bar)
 
 ### Additional Extensions
 Installed via script (patched for compatibility if needed):
