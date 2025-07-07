@@ -23,33 +23,22 @@
 
 This image comes bundled with several GNOME Shell extensions, some of which are patched or custom-developed:
 
-### Patched & Custom Extensions
-- **light-shell-plus@jianzcar.github**    
-  [Source](https://github.com/JianZcar/light-shell-plus)
-- **peek-top-bar-on-fullscreen@marcinjahn.com**  
-  _Patched_  
-  [Source](https://github.com/JianZcar/peek-top-bar)
-
-### Additional Extensions
-Installed via script (patched for compatibility if needed):
-- **ideapad@laurento.frittella**
-- **accent-directories@taiwbi.com**
-- **wireless-hid@chlumskyvaclav.gmail.com**
-- **gnome-fuzzy-app-search@gnome-shell-extensions.Czarlie.gitlab.com**
-- **window-centering@hnjjhmtr27**
-- **splashindicator@ochi12.github.com**
-- **disable-workspace-switcher-overlay@cleardevice**
-
-Packaged (Fedora/RPMFusion):
-- **gnome-shell-extension-appindicator**
-- **gnome-shell-extension-blur-my-shell**
-- **gnome-shell-extension-burn-my-windows**
-- **gnome-shell-extension-caffeine**
-- **gnome-shell-extension-hotedge**
-- **gnome-shell-extension-just-perfection**
-- **gnome-shell-extension-restart-to**
-- **gnome-shell-extension-user-theme**
-- **gnome-shell-extension-supergfxctl-gex** (for NVIDIA/supergfxctl integration)
+- [**light shell plus**](https://github.com/JianZcar/light-shell-plus)
+- [**peek top bar**](https://github.com/JianZcar/peek-top-bar)
+- [**ideapad**](https://extensions.gnome.org/extension/2992/ideapad/)
+- [**accent directories**](https://extensions.gnome.org/extension/7535/accent-directories/)
+- [**wireless hid**](https://extensions.gnome.org/extension/4228/wireless-hid/)
+- [**gnome fuzzy app search**](https://extensions.gnome.org/extension/3956/gnome-fuzzy-app-search/)
+- [**window centering**](https://extensions.gnome.org/extension/8087/window-centering/)
+- [**splash indicator**](https://extensions.gnome.org/extension/8187/splash-indicator/)
+- [**disable workspace switcher overlay**](https://extensions.gnome.org/extension/6358/disable-workspace-switcher-overlay/)
+- [**app indicator**](https://extensions.gnome.org/extension/615/appindicator-support/)
+- [**blur my shell**](https://extensions.gnome.org/extension/3193/blur-my-shell/)
+- [**burn my windows**](https://extensions.gnome.org/extension/4679/burn-my-windows/)
+- [**caffeine**](https://extensions.gnome.org/extension/517/caffeine/)
+- [**hotedge**](https://extensions.gnome.org/extension/4222/hot-edge/)
+- [**just perfection**](https://extensions.gnome.org/extension/3843/just-perfection/)
+- [**restart to**](https://extensions.gnome.org/extension/7215/restart-to/)
 
 > ⚠️ **This image is for my personal use and not intended for general public use. Use at your own risk!**
 (Unless if many want me to support it for public use, just make a pull request)
