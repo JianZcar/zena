@@ -15,7 +15,6 @@
 - **Flathub:** Uses Flathub as the main repo for flatpaks instead of fedora
 - **Wayland & GNOME Enhancements:** Includes custom GNOME Shell extensions, Wayland utilities, and display management tools.
 - **Gaming Support:** Steam, LatencyFleX, Looking Glass, and additional tools for optimal Linux gaming.
-- **Virtualization Ready:** QEMU, libvirt, OVMF, and QCOW2/RAW/ISO image building.
 - **Networking:** Tailscale and other networking enhancements.
 - **Multimedia:** Advanced audio (Pipewire, LADSPA plugins), video, and hardware support.
 
