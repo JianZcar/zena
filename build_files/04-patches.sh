@@ -73,4 +73,10 @@ sed -i 's|grub_probe} --target=device /`|grub_probe} --target=device /sysroot`|g
 # Patch rtkit
 sed -i 's|^ExecStart=.*|ExecStart=/usr/libexec/rtkit-daemon --no-canary|' /usr/lib/systemd/system/rtkit-daemon.service
 
+sed -i 's/balanced=balanced$/balanced=balanced-bazzite/' /etc/tuned/ppd.conf
+sed -i 's/performance=throughput-performance$/performance=throughput-performance-bazzite/' /etc/tuned/ppd.conf
+sed -i 's/balanced=balanced-battery$/balanced=balanced-battery-bazzite/' /etc/tuned/ppd.conf
+
+ln -s /usr/bin/true /usr/bin/pulseaudio
+
 echo "::endgroup::"

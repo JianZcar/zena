@@ -153,15 +153,9 @@
   content: |
     ideapad_laptop
 
-- path: /etc/polkit-1/rules.d/50-efibootmgr.rules
+- path: /etc/sudoers.d/efibootmgr
   content: |
-    polkit.addRule(function(action, subject) {
-      if (action.id == "org.freedesktop.policykit.exec" &&
-          subject.isInGroup("wheel") &&
-          action.lookup("program") == "/usr/bin/efibootmgr") {
-          return polkit.Result.YES;
-      }
-    });
+    %wheel ALL=(ALL) NOPASSWD: /usr/bin/efibootmgr
 
 # To allow old controllers to connect
 - path: /etc/modprobe.d/disable-ertm.conf
