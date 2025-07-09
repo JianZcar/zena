@@ -153,6 +153,84 @@
   content: |
     options bluetooth disable_ertm=Y
 
+- path: /usr/lib/tuned/profiles/throughput-performance-bazzite/tuned.conf
+  content: |
+    #
+    # tuned configuration
+    #
+
+    [main]
+    summary = General non-specialized tuned profile with added Bazzite tweaks
+    include = throughput-performance
+
+    [audio]
+    # See 17c869d
+    timeout=0
+
+    [sysctl]
+    # The swappiness parameter controls the tendency of the kernel to move
+    # processes out of physical memory and onto the swap disk.
+    # 0 tells the kernel to avoid swapping processes out of physical memory
+    # for as long as possible
+    # 100 tells the kernel to aggressively swap processes out of physical memory
+    # and move them to swap cache
+    vm.swappiness = 180
+
+    vm.watermark_boost_factor = 0
+    vm.watermark_scale_factor = 125
+    vm.dirty_bytes = 268435456
+    vm.dirty_background_bytes = 134217728
+    vm.page-cluster = 0
+
+- path: /usr/lib/tuned/profiles/balanced-bazzite/tuned.conf
+  content: |
+    #
+    # tuned configuration
+    #
+
+    [main]
+    summary = General non-specialized tuned profile with added Bazzite tweaks
+    include = balanced
+
+    [audio]
+    # See 17c869d
+    timeout=0
+
+    [sysctl]
+    # The swappiness parameter controls the tendency of the kernel to move
+    # processes out of physical memory and onto the swap disk.
+    # 0 tells the kernel to avoid swapping processes out of physical memory
+    # for as long as possible
+    # 100 tells the kernel to aggressively swap processes out of physical memory
+    # and move them to swap cache
+    vm.swappiness = 180
+
+    vm.watermark_boost_factor = 0
+    vm.watermark_scale_factor = 125
+    vm.dirty_bytes = 268435456
+    vm.dirty_background_bytes = 134217728
+    vm.page-cluster = 0
+
+- path: /usr/lib/tuned/profiles/balanced-battery-bazzite/tuned.conf
+  content: |
+    #
+    # tuned configuration
+    #
+
+    [main]
+    summary = Balanced profile biased towards power savings changes for battery with added Bazzite tweaks
+    include = balanced-bazzite
+
+    [cpu]
+    energy_performance_preference=balance_power
+    boost=1
+
+    [audio]
+    timeout=10
+
+    [video]
+    panel_power_savings=1
+
 - path: /etc/zena/zena-first-boot.sh
   permissions: '0755'
   content: |
