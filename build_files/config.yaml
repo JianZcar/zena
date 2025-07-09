@@ -7,7 +7,6 @@
         - blur-my-shell@aunetx
         - hotedge@jonathan.jdoda.ca
         - caffeine@patapon.info
-        - restartto@tiagoporsch.github.io
         - ideapad@laurento.frittella 
         - light-shell-plus@jianzcar.github
         - accent-directories@taiwbi.com
@@ -81,12 +80,7 @@
     [org/gnome/shell/extensions/just-perfection]
     workspace-wrap-around=true
 
-- path: /etc/dconf/db/local.d/03-restartto
-  content: |
-    [org/gnome/shell/extensions/restartto]
-    blacklist=['Fedora', 'EFI PXE 0 for IPv4 (E4-A8-DF-D3-0E-29) ', 'EFI PXE 0 for IPv6 (E4-A8-DF-D3-0E-29) ', 'EFI USB Device', 'EFI DVD/CDROM', 'EFI Network']
-
-- path: /etc/dconf/db/local.d/04-appfolders
+- path: /etc/dconf/db/local.d/03-appfolders
   content: |
     [org/gnome/desktop/app-folders]
     folder-children=['AudioVideo', 'Development', 'Education', 'Games', 'Graphics', 'Network', 'Office', 'Science', 'Settings', 'System', 'Utilities', 'Wine']
@@ -152,10 +146,6 @@
 - path: /etc/modules
   content: |
     ideapad_laptop
-
-- path: /etc/sudoers.d/efibootmgr
-  content: |
-    %wheel ALL=(ALL) NOPASSWD: /usr/bin/efibootmgr
 
 # To allow old controllers to connect
 - path: /etc/modprobe.d/disable-ertm.conf

@@ -79,7 +79,6 @@ PKGS_TO_INSTALL=(
   gnome-shell-extension-caffeine
   gnome-shell-extension-hotedge
   gnome-shell-extension-just-perfection
-  gnome-shell-extension-restart-to
 
   # Miscellaneous
   ublue-brew
