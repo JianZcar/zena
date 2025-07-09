@@ -16,6 +16,9 @@ dnf5 -y install \
 
 dnf5 versionlock add kernel kernel-devel kernel-devel-matched kernel-core kernel-modules kernel-modules-core kernel-modules-extra kernel-uki-virt
 
+dnf5 -y install \
+    /tmp/akmods-rpms/kmods/*v4l2loopback*.rpm
+
 dnf5 -y config-manager setopt "*rpmfusion*".enabled=0 
 dnf5 -y copr enable bieszczaders/kernel-cachyos-addons 
 dnf5 -y install \
