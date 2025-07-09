@@ -15,7 +15,8 @@ dnf5 -y install \
   /tmp/kernel-rpms/kernel-devel-*.rpm
 
 dnf5 versionlock add kernel kernel-devel kernel-devel-matched kernel-core kernel-modules kernel-modules-core kernel-modules-extra kernel-uki-virt
-
+find /tmp/akmods-rpms
+find /tmp/akmods-rpms/kmods
 dnf5 -y install \
     /tmp/akmods-rpms/kmods/*v4l2loopback*.rpm
 
