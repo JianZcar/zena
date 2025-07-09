@@ -12,7 +12,4 @@ sed -i 's@\[Desktop Entry\]@\[Desktop Entry\]\nNoDisplay=true@g' /usr/share/appl
 sed -i 's@\[Desktop Entry\]@\[Desktop Entry\]\nNoDisplay=true@g' /usr/share/applications/btop.desktop
 sed -i 's@\[Desktop Entry\]@\[Desktop Entry\]\nNoDisplay=true@g' /usr/share/applications/yad-icon-browser.desktop
 
-git clone https://github.com/JianZcar/sleek--themes.git /tmp/sleek
-bash "/tmp/sleek/Sleek theme-light/install.sh"
-
 echo "::endgroup::"
