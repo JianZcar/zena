@@ -21,6 +21,7 @@
         - app.zen_browser.zen.desktop
         - org.gnome.Ptyxis.desktop
         - org.gnome.Nautilus.desktop
+        - page.kramo.Cartridges.desktop
 
 - gschema:
     id: org.gnome.desktop.interface
@@ -194,6 +195,7 @@
         org.gnome.World.Secrets
 
         # Gaming
+        page.kramo.Cartridges
         com.vysp3r.ProtonPlus
         io.github.radiolamp.mangojuice
         org.freedesktop.Platform.VulkanLayer.MangoHud
@@ -216,6 +218,7 @@
       for app in "${flatpaks[@]}"; do
         flatpak install -y --system flathub "$app"
       done
+      grub2-mkconfig -o /boot/grub2/grub.cfg
       touch /var/lib/zena-done
     fi
 
