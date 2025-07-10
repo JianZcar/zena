@@ -239,7 +239,7 @@
     
     [Service]
     Type=simple
-    ExecStart=/usr/bin/OpenTabletDriver.Daemon
+    ExecStart=/usr/lib/opentabletdriver/OpenTabletDriver.Daemon
     Restart=on-failure
     
     [Install]
