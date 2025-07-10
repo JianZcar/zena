@@ -17,4 +17,6 @@ for service in "${services[@]}"; do
   systemctl enable "$service"
 done
 
+systemctl --global enable opentabletdriver.service
+
 echo "::endgroup::"

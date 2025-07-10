@@ -296,24 +296,22 @@
         }
     ]
 
-- path: /etc/systemd/system/opentabletdriver.service
+- path: /usr/lib/systemd/user/opentabletdriver.service
   content: |
     [Unit]
-    Description=OpenTabletDriver Daemon (system-wide)
-    After=multi-user.target
-    Wants=network.target
-    
+    Description=OpenTabletDriver Daemon
+    PartOf=graphical-session.target
+    After=graphical-session.target
+    ConditionEnvironment=|WAYLAND_DISPLAY
+    ConditionEnvironment=|DISPLAY
+
     [Service]
-    Type=simple
-    ExecStartPre=/usr/bin/modprobe uinput
-    ExecStart=/usr/bin/otd-daemon
-    Restart=on-failure
+    ExecStart=otd-daemon
+    Restart=always
     RestartSec=3
-    Environment="DOTNET_EnableDiagnostics=0"
-    Environment="HOME=/root"
-    
+
     [Install]
-    WantedBy=multi-user.target
+    WantedBy=graphical-session.target
 
 - path: /etc/zena/zena-first-boot.sh
   permissions: '0755'
