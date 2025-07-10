@@ -231,6 +231,20 @@
     [video]
     panel_power_savings=1
 
+- path: /etc/systemd/system/opentabletdriver.service
+  content: |
+    [Unit]
+    Description=OpenTabletDriver Daemon
+    After=network.target
+    
+    [Service]
+    Type=simple
+    ExecStart=/usr/bin/OpenTabletDriver.Daemon
+    Restart=on-failure
+    
+    [Install]
+    WantedBy=multi-user.target
+
 - path: /etc/zena/zena-first-boot.sh
   permissions: '0755'
   content: |
