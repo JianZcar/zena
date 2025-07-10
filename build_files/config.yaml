@@ -300,19 +300,21 @@
   content: |
     [Unit]
     Description=OpenTabletDriver Daemon (system-wide)
-    Wants=systemd-modules-load.service
-    After=systemd-modules-load.service multi-user.target udev.service
-
+    After=multi-user.target
+    Wants=network.target
+    
     [Service]
     Type=simple
-    # load the uinput module so /dev/uinput exists
     ExecStartPre=/usr/bin/modprobe uinput
     ExecStart=/usr/bin/otd-daemon
-    Restart=always
-    RestartSec=3s
-
+    Restart=on-failure
+    RestartSec=3
+    # Provide a config path — adjust as needed!
+    Environment="DOTNET_EnableDiagnostics=0"
+    Environment="XDG_CONFIG_HOME=/etc/OpenTabletDriver"
+    Environment="HOME=/root"
+    
     [Install]
-    # start at the normal non‑graphical boot target
     WantedBy=multi-user.target
 
 - path: /etc/zena/zena-first-boot.sh
