@@ -77,10 +77,7 @@ sed -i 's/balanced=balanced$/balanced=balanced-bazzite/' /etc/tuned/ppd.conf
 sed -i 's/performance=throughput-performance$/performance=throughput-performance-bazzite/' /etc/tuned/ppd.conf
 sed -i 's/balanced=balanced-battery$/balanced=balanced-battery-bazzite/' /etc/tuned/ppd.conf
 
-mkdir -p /usr/local/bin
-ln -s /usr/lib/opentabletdriver/OpenTabletDriver.Daemon /usr/local/bin/OpenTabletDriver.Daemon
-ln -s /usr/lib/opentabletdriver/OpenTabletDriver.UX.Gtk /usr/local/bin/OpenTabletDriver.UX.Gtk
-ln -s /usr/lib/opentabletdriver/OpenTabletDriver.Console /usr/local/bin/OpenTabletDriver.Console
+echo 'export PATH=/usr/lib/opentabletdriver:$PATH' | sudo tee /etc/profile.d/opentabletdriver.sh
 
 ln -s /usr/bin/true /usr/bin/pulseaudio
 
