@@ -12,4 +12,8 @@ sed -i 's@\[Desktop Entry\]@\[Desktop Entry\]\nNoDisplay=true@g' /usr/share/appl
 sed -i 's@\[Desktop Entry\]@\[Desktop Entry\]\nNoDisplay=true@g' /usr/share/applications/btop.desktop
 sed -i 's@\[Desktop Entry\]@\[Desktop Entry\]\nNoDisplay=true@g' /usr/share/applications/yad-icon-browser.desktop
 
+ln -s /usr/lib/opentabletdriver/OpenTabletDriver.Daemon /usr/local/bin/OpenTabletDriver.Daemon
+ln -s /usr/lib/opentabletdriver/OpenTabletDriver.UX.Gtk /usr/local/bin/OpenTabletDriver.UX.Gtk
+ln -s /usr/lib/opentabletdriver/OpenTabletDriver.Console /usr/local/bin/OpenTabletDriver.Console
+
 echo "::endgroup::"
