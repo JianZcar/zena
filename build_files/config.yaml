@@ -309,9 +309,7 @@
     ExecStart=/usr/bin/otd-daemon
     Restart=on-failure
     RestartSec=3
-    # Provide a config path — adjust as needed!
     Environment="DOTNET_EnableDiagnostics=0"
-    Environment="XDG_CONFIG_HOME=/etc/OpenTabletDriver"
     Environment="HOME=/root"
     
     [Install]
