@@ -235,12 +235,14 @@
   content: |
     [Unit]
     Description=OpenTabletDriver Daemon
-    After=network.target
+    After=network.target dev-uinput.device
+    Requires=dev-uinput.device
     
     [Service]
     Type=simple
     ExecStart=/usr/lib/opentabletdriver/OpenTabletDriver.Daemon
     Restart=on-failure
+    Environment=DOTNET_EnableDiagnostics=0
     
     [Install]
     WantedBy=multi-user.target
