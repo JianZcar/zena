@@ -40,7 +40,6 @@ This image comes bundled with several GNOME Shell extensions, some of which are 
 - [**restart to**](https://extensions.gnome.org/extension/7215/restart-to/)
 
 > ⚠️ **This image is for my personal use and not intended for general public use. Use at your own risk!**
-(Unless if many want me to support it for public use, just make a pull request)
 
 ## Acknowledgements
 
