@@ -10,6 +10,7 @@ services=(
   ublue-os-media-automount.service
   zena-first-boot.service
   tailscaled.service
+  opentabletdriver.service
 )
 
 for service in "${services[@]}"; do

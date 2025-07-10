@@ -151,6 +151,11 @@ for i in {1..5}; do
   dnf5 -y install "$(curl -s https://api.github.com/repos/bazzite-org/cicpoffs/releases/latest | jq -r '.assets[] | select(.name|test(".*rpm$")) | .browser_download_url')" && break || sleep 5
 done
 
+for i in {1..5}; do
+  dnf5 -y install "$(curl -s https://api.github.com/repos/OpenTabletDriver/OpenTabletDriver/releases/latest | jq -r '.assets[] | select(.name|test(".*rpm$")) | .browser_download_url')" && break || sleep 5
+done
+
+
 mkdir -p /etc/xdg/autostart
 
 
