@@ -230,6 +230,71 @@
 
     [video]
     panel_power_savings=1
+    
+- path: /etc/pipewire/pipewire.conf.d/virtual-channels.conf
+  content: |
+    context.modules = [
+        { name = libpipewire-module-loopback
+            args = {
+                node.description = "Game"
+                capture.props = {
+                    node.name      = "game_output"
+                    media.class    = "Audio/Sink"
+                    audio.position = [ FL FR ]
+                }
+                playback.props = {
+                    node.name      = "playback.game_output"
+                    audio.position = [ FL FR ]
+                    node.passive   = true
+                }
+            }
+        }
+        { name = libpipewire-module-loopback
+            args = {
+                node.description = "Voice"
+                capture.props = {
+                    node.name      = "voice_output"
+                    media.class    = "Audio/Sink"
+                    audio.position = [ FL FR ]
+                }
+                playback.props = {
+                    node.name      = "playback.voice_output"
+                    audio.position = [ FL FR ]
+                    node.passive   = true
+                }
+            }
+        }
+        { name = libpipewire-module-loopback
+            args = {
+                node.description = "Browser"
+                capture.props = {
+                    node.name      = "browser_output"
+                    media.class    = "Audio/Sink"
+                    audio.position = [ FL FR ]
+                }
+                playback.props = {
+                    node.name      = "playback.browser_output"
+                    audio.position = [ FL FR ]
+                    node.passive   = true
+                }
+            }
+        }
+        { name = libpipewire-module-loopback
+            args = {
+                node.description = "Music"
+                capture.props = {
+                    node.name      = "music_output"
+                    media.class    = "Audio/Sink"
+                    audio.position = [ FL FR ]
+                }
+                playback.props = {
+                    node.name      = "playback.music_output"
+                    audio.position = [ FL FR ]
+                    node.passive   = true
+                }
+            }
+        }
+    ]
 
 - path: /etc/systemd/system/opentabletdriver.service
   content: |
