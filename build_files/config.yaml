@@ -17,6 +17,7 @@
         - disable-workspace-switcher-overlay@cleardevice
         - splashindicator@ochi12.github.com
         - window-centering@hnjjhmtr27
+        - static-bg@jianzcar.github
       favorite-apps:
         - app.zen_browser.zen.desktop
         - org.gnome.Ptyxis.desktop

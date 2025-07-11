@@ -127,6 +127,9 @@ git clone https://github.com/JianZcar/light-shell-plus.git /usr/share/gnome-shel
 git clone https://github.com/JianZcar/peek-top-bar.git /usr/share/gnome-shell/extensions/peek-top-bar@jianzcar.github \
   && rm -rf /usr/share/gnome-shell/extensions/peek-top-bar@jianzcar.github/.git
 
+git clone https://github.com/JianZcar/static-bg.git /usr/share/gnome-shell/extensions/static-bg@jianzcar.github \
+  && rm -rf /usr/share/gnome-shell/extensions/static-bg@jianzcar.github/.git
+
 ctx/install-gnome-extension.sh ideapad@laurento.frittella
 ctx/install-gnome-extension.sh accent-directories@taiwbi.com
 ctx/install-gnome-extension.sh wireless-hid@chlumskyvaclav.gmail.com
