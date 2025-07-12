@@ -333,14 +333,14 @@
     [Unit]
     Description=Zena First Boot Progress GUI
     After=graphical-session.target
+    PartOf=graphical-session.target
 
     [Service]
     Type=simple
     ExecStart=/etc/zena/first-boot/setup.py
     Restart=on-failure
-    Environment=GDK_BACKEND=wayland
     Environment=XDG_RUNTIME_DIR=%t
-    Environment=DISPLAY=:0
+    Environment=GDK_BACKEND=wayland
 
     [Install]
-    WantedBy=default.target
+    WantedBy=graphical-session.target
