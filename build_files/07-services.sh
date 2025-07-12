@@ -21,7 +21,7 @@ user_services=(
   zena-first-boot-gui.service
 )
 
-for service in "${services[@]}"; do
+for service in "${user_services[@]}"; do
   systemctl --global enable "$service"
 done
 
