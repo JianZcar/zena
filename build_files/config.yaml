@@ -61,7 +61,7 @@
 
 - path: /etc/flatpak/remotes.d/flathub.flatpakrepo
   content: |
-    [Flatpak Remote]
+    [Flatpak Repo]
     Name=flathub
     Title=Flathub
     Url=https://flathub.org/repo/flathub.flatpakrepo
