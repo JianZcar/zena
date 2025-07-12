@@ -314,75 +314,6 @@
     [Install]
     WantedBy=graphical-session.target
 
-- path: /etc/zena/zena-first-boot.sh
-  permissions: '0755'
-  content: |
-    #!/bin/bash
-
-    FLAG_FILE="/var/lib/zena-done"
-
-    if [ ! -f "$FLAG_FILE" ]; then
-      /usr/bin/fedora-third-party enable
-      flatpak remote-modify --disable fedora
-      rpm-ostree rebase ostree-unverified-registry:ghcr.io/jianzcar/zena:latest
-
-      flatpaks=(
-        # System & Utilities
-        com.github.tchx84.Flatseal
-        com.mattjakeman.ExtensionManager
-        com.ranfdev.DistroShelf
-        io.github.flattool.Warehouse
-        io.missioncenter.MissionCenter
-        it.mijorus.gearlever
-        org.virt_manager.virt-manager
-        page.tesk.Refine
-
-        # GNOME Core Apps
-        org.gnome.Calculator
-        org.gnome.Calendar
-        org.gnome.Characters
-        org.gnome.clocks
-        org.gnome.Contacts
-        org.gnome.font-viewer
-        org.gnome.Logs
-        org.gnome.Loupe
-        org.gnome.NautilusPreviewer
-        org.gnome.Papers
-        org.gnome.Weather
-        org.gnome.baobab
-
-        # Security
-        com.belmoussaoui.Authenticator
-        org.gnome.World.Secrets
-
-        # Gaming
-        page.kramo.Cartridges
-        com.vysp3r.ProtonPlus
-        io.github.radiolamp.mangojuice
-        org.freedesktop.Platform.VulkanLayer.MangoHud
-        org.freedesktop.Platform.VulkanLayer.vkBasalt
-
-        # Streaming/Recording
-        com.obsproject.Studio.Plugin.Gstreamer
-        com.obsproject.Studio.Plugin.GStreamerVaapi
-        com.obsproject.Studio.Plugin.OBSVkCapture
-        org.freedesktop.Platform.VulkanLayer.OBSVkCapture
-
-        # Web Browsers
-        app.zen_browser.zen
-
-        # Themes
-        org.gtk.Gtk3theme.adw-gtk3
-        org.gtk.Gtk3theme.adw-gtk3-dark
-      )
-
-      for app in "${flatpaks[@]}"; do
-        flatpak install -y --system flathub "$app"
-      done
-      grub2-mkconfig -o /boot/grub2/grub.cfg
-      touch /var/lib/zena-done
-    fi
-
 - path: /etc/systemd/system/zena-first-boot.service
   content: |
     [Unit]
@@ -391,8 +322,25 @@
 
     [Service]
     Type=oneshot
-    ExecStart=/etc/zena/zena-first-boot.sh
+    ExecStart=/etc/zena/first-boot/setup.sh
     RemainAfterExit=true
 
     [Install]
     WantedBy=multi-user.target
+
+- path: /usr/lib/systemd/user/zena-first-boot-gui.service
+  content: |
+    [Unit]
+    Description=Zena First Boot Progress GUI
+    After=graphical-session.target
+
+    [Service]
+    Type=simple
+    ExecStart=/etc/zena/first-boot/setup.py
+    Restart=on-failure
+    Environment=GDK_BACKEND=wayland
+    Environment=XDG_RUNTIME_DIR=%t
+    Environment=DISPLAY=:0
+
+    [Install]
+    WantedBy=default.target

@@ -16,6 +16,13 @@ for service in "${services[@]}"; do
   systemctl enable "$service"
 done
 
-systemctl --global enable opentabletdriver.service
+user_services=(
+  opentabletdriver.service
+  zena-first-boot-gui.service
+)
+
+for service in "${services[@]}"; do
+  systemctl --global enable "$service"
+done
 
 echo "::endgroup::"

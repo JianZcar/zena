@@ -82,6 +82,9 @@ glib-compile-schemas "$SCHEMA_DIR"
 echo "Successfully compiled schemas in $SCHEMA_DIR"
 dconf update
 
+mkdir -p /etc/zena
+cp -r /ctx/first-boot /etc/zena/
+
 sed -i 's/#UserspaceHID.*/UserspaceHID=true/' /etc/bluetooth/input.conf
 sed -i 's/^#SCX_FLAGS=/SCX_FLAGS=/' /etc/default/scx
 echo "::endgroup::"
