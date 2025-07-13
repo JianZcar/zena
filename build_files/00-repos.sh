@@ -80,9 +80,11 @@ dnf5 -y config-manager setopt "*staging*".exclude="scx-scheds kf6-* mesa* mutter
 
 # Disable fedora default repo
 mkdir -p /etc/flatpak/remotes.d/
-cat <<EOF > /etc/flatpak/remotes.d/fedora.flatpakrepo
-[Remote]
+tee /etc/flatpak/remotes.d/fedora.flatpakrepo >/dev/null <<'EOF'
+[Flatpak Repo]
+Title=Fedora Flatpak Remote
 Name=fedora
+Url=oci+https://registry.fedoraproject.org
 Disabled=true
 EOF
 
