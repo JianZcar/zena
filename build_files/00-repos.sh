@@ -78,8 +78,14 @@ dnf5 -y config-manager setopt "*rpmfusion*".priority=5 "*rpmfusion*".exclude="me
 dnf5 -y config-manager setopt "*fedora*".exclude="mesa-* kernel-core-* kernel-modules-* kernel-uki-virt-*"
 dnf5 -y config-manager setopt "*staging*".exclude="scx-scheds kf6-* mesa* mutter* rpm-ostree* systemd* gnome-shell gnome-settings-daemon gnome-control-center gnome-software libadwaita tuned*"
 
-# Remove fedora default repo
-flatpak remote-modify --disable fedora
+# Disable fedora default repo
+mkdir -p /etc/flatpak/remotes.d/
+cat <<EOF > /etc/flatpak/remotes.d/fedora.flatpakrepo
+[Remote]
+Name=fedora
+Disabled=true
+EOF
+
 curl -Lo /etc/flatpak/remotes.d/flathub.flatpakrepo https://dl.flathub.org/repo/flathub.flatpakrepo && \
 echo "Default=true" | sudo tee -a /etc/flatpak/remotes.d/flathub.flatpakrepo > /dev/null
 flatpak remote-add --if-not-exists --system flathub /etc/flatpak/remotes.d/flathub.flatpakrepo
