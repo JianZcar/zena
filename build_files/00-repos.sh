@@ -80,7 +80,7 @@ dnf5 -y config-manager setopt "*staging*".exclude="scx-scheds kf6-* mesa* mutter
 
 # Remove fedora default repo
 rm -f /etc/flatpak/remotes.d/flathub.flatpakrepo
-sudo curl -Lo /etc/flatpak/remotes.d/flathub.flatpakrepo https://dl.flathub.org/repo/flathub.flatpakrepo && \
+curl -Lo /etc/flatpak/remotes.d/flathub.flatpakrepo https://dl.flathub.org/repo/flathub.flatpakrepo && \
 echo "Default=true" | sudo tee -a /etc/flatpak/remotes.d/flathub.flatpakrepo > /dev/null
 
 echo "::endgroup::"
