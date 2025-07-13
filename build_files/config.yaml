@@ -59,14 +59,6 @@
     settings:
       interface-style: 'system'
 
-- path: /etc/flatpak/remotes.d/flathub.flatpakrepo
-  content: |
-    [Flatpak Remote]
-    Name=flathub
-    Title=Flathub
-    Url=https://flathub.org/repo/flathub.flatpakrepo
-    IsDefault=true
-
 - path: /etc/dconf/db/local.d/00-blurmyshell-panel
   content: |
     [org/gnome/shell/extensions/blur-my-shell/panel]
