@@ -80,6 +80,5 @@ sed -i 's/balanced=balanced-battery$/balanced=balanced-battery-bazzite/' /etc/tu
 # echo 'export PATH=/usr/lib/opentabletdriver:$PATH' | sudo tee /etc/profile.d/opentabletdriver.sh
 
 ln -s /usr/bin/true /usr/bin/pulseaudio
-rpm-ostree kargs --append=mem_sleep_default=deep
 
 echo "::endgroup::"

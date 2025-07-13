@@ -223,6 +223,11 @@
 
     [video]
     panel_power_savings=1
+
+- path: /etc/systemd/sleep.conf.d/mem-deep.conf
+  content: |
+    [Sleep]
+    MemorySleepMode=deep
     
 - path: /etc/pipewire/pipewire.conf.d/virtual-channels.conf
   content: |
