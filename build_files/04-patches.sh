@@ -15,7 +15,7 @@ declare -A PKGS_TO_SWAP=(
 
 # Swap packages from the specified repositories
 for repo in "${!PKGS_TO_SWAP[@]}"; do
-    dnf5 -y distro-sync --repo="$repo" ${PKGS_TO_SWAP[$repo]}
+    dnf5 -y distro-sync --repo="$repo" ${PKGS_TO_SWAP[$repo]} --allowerasing
 done
 unset -v PKGS_TO_SWAP repo package
 
