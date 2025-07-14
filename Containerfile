@@ -40,14 +40,14 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    /ctx/03-packages.sh && \
+    /ctx/03-patches.sh && \
     /ctx/cleanup.sh
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    /ctx/04-patches.sh && \
+    /ctx/04-packages.sh && \
     /ctx/cleanup.sh
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
