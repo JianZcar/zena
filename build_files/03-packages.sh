@@ -68,6 +68,8 @@ PKGS_TO_INSTALL=(
 
   # Virtualization
   edk2-ovmf # UEFI firmware for QEMU
+  virglrenderer
+  virt-viewer
   libvirt
   qemu
 
