@@ -1,7 +1,7 @@
 ARG FEDORA_VERSION=42
+
 ARG KERNEL_VERSION=6.15.6-113.bazzite.fc42.x86_64
 ARG KERNEL_FLAVOR=bazzite
-ARG BASE_IMAGE_NAME=silverblue
 
 FROM ghcr.io/ublue-os/akmods:${KERNEL_FLAVOR}-${FEDORA_VERSION}-${KERNEL_VERSION} AS akmods
 FROM ghcr.io/ublue-os/akmods-nvidia-open:${KERNEL_FLAVOR}-${FEDORA_VERSION}-${KERNEL_VERSION} AS nvidia
