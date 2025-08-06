@@ -7,6 +7,12 @@ set -ouex pipefail
 shopt -s nullglob
 
 PKGS_TO_INSTALL=(
+  # Desktop Environment
+  @gnome-desktop
+
+  # WM
+  niri
+
   # Development
   nvim
   ripgrep
@@ -27,12 +33,10 @@ PKGS_TO_INSTALL=(
   btop
   duf
   fastfetch
-  glow
   gum
   p7zip
   p7zip-plugins
   rar
-  topgrade
 
   # File System & Storage
   btrfs-assistant # BTRFS GUI tool
@@ -99,8 +103,6 @@ PKGS_TO_INSTALL=(
 )
 
 PKGS_TO_UNINSTALL=(
-  firefox
-  firefox-langpacks
   htop
   gnome-classic-session
   gnome-tour

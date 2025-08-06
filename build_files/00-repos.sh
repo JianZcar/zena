@@ -8,7 +8,7 @@ set -euxo pipefail
 mkdir -p /var/roothome
 
 # Install dnf5 plugins
-dnf5 -y install dnf5-plugins
+dnf5 -y install dnf5-plugins flatpak
 
 # Enable COPR repositories
 COPRS=(
@@ -19,6 +19,10 @@ COPRS=(
     bazzite-org/obs-vkcapture
     ublue-os/packages
     ublue-os/staging
+    ublue-os/akmods
+
+    #WM
+    yalter/niri
 
     # Fonts
     che/nerd-fonts
@@ -57,10 +61,8 @@ dnf5 -y install \
     "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm" \
     "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"
 
-# Enable Negativo17 multimedia repo
-sed -i 's@enabled=0@enabled=1@g' /etc/yum.repos.d/negativo17-fedora-multimedia.repo
-
 # add additional negativo17 repos
+dnf5 -y config-manager addrepo --from-repofile=https://negativo17.org/repos/fedora-multimedia.repo
 dnf5 -y config-manager addrepo --from-repofile=https://negativo17.org/repos/fedora-steam.repo
 dnf5 -y config-manager addrepo --from-repofile=https://negativo17.org/repos/fedora-rar.repo
 
