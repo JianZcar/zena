@@ -89,7 +89,6 @@ PKGS_TO_INSTALL=(
 
   # Nvidia
   gnome-shell-extension-supergfxctl-gex
-  supergfxctl
 
   # Miscellaneous
   ublue-brew

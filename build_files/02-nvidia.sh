@@ -68,6 +68,7 @@ fi
 source "${AKMODNV_PATH}"/kmods/nvidia-vars
 
 dnf5 install -y \
+    supergfxctl \
     libnvidia-fbc \
     libnvidia-ml.i686 \
     libva-nvidia-driver \
