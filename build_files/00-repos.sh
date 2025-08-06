@@ -7,8 +7,8 @@ set -euxo pipefail
 # Create directory
 mkdir -p /var/roothome
 
-# Install dnf5 plugins
-dnf5 -y install dnf5-plugins flatpak
+# Install pre-packages
+dnf5 -y install dnf5-plugins git flatpak
 
 # Enable COPR repositories
 COPRS=(

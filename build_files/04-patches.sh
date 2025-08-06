@@ -77,7 +77,10 @@ sed -i 's/balanced=balanced$/balanced=balanced-bazzite/' /etc/tuned/ppd.conf
 sed -i 's/performance=throughput-performance$/performance=throughput-performance-bazzite/' /etc/tuned/ppd.conf
 sed -i 's/balanced=balanced-battery$/balanced=balanced-battery-bazzite/' /etc/tuned/ppd.conf
 
-# echo 'export PATH=/usr/lib/opentabletdriver:$PATH' | sudo tee /etc/profile.d/opentabletdriver.sh
+sed -i \
+  -e '/^\s*#\?\s*AutomaticUpdatePolicy\s*=.*/{s//AutomaticUpdatePolicy=stage/;b}' \
+  -e '/^\[Daemon\]/a AutomaticUpdatePolicy=stage' \
+  /etc/rpm-ostreed.conf
 
 ln -s /usr/bin/true /usr/bin/pulseaudio
 

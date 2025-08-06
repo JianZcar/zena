@@ -67,8 +67,6 @@ fi
 
 source "${AKMODNV_PATH}"/kmods/nvidia-vars
 
-VARIANT_PKGS="gnome-shell-extension-supergfxctl-gex supergfxctl"
-
 dnf5 install -y \
     libnvidia-fbc \
     libnvidia-ml.i686 \
@@ -78,7 +76,7 @@ dnf5 install -y \
     nvidia-driver-cuda-libs.i686 \
     nvidia-driver-libs.i686 \
     nvidia-settings \
-    nvidia-container-toolkit ${VARIANT_PKGS} \
+    nvidia-container-toolkit \
     "${AKMODNV_PATH}"/kmods/kmod-nvidia-"${KERNEL_VERSION}"-"${NVIDIA_AKMOD_VERSION}"."${DIST_ARCH}".rpm
 
 # Ensure the version of the Nvidia module matches the driver

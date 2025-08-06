@@ -68,6 +68,7 @@ PKGS_TO_INSTALL=(
   pipewire-alsa.i686
 
   # Networking
+  NetworkManager
   tailscale
 
   # Virtualization
@@ -85,6 +86,10 @@ PKGS_TO_INSTALL=(
   gnome-shell-extension-caffeine
   gnome-shell-extension-hotedge
   gnome-shell-extension-just-perfection
+
+  # Nvidia
+  gnome-shell-extension-supergfxctl-gex
+  supergfxctl
 
   # Miscellaneous
   ublue-brew

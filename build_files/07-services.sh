@@ -5,6 +5,7 @@ echo "::group:: ===$(basename "$0")==="
 set -euxo pipefail
 
 services=(
+  NetworkManager
   ublue-nvctk-cdi.service
   podman.socket
   ublue-os-media-automount.service
@@ -12,8 +13,16 @@ services=(
   tailscaled.service
 )
 
+disable_services=(
+  systemd-remount-fs.service
+)
+
 for service in "${services[@]}"; do
   systemctl enable "$service"
+done
+
+for service in "${disable_services[@]}"; do
+  systemctl disable "$service"
 done
 
 user_services=(
