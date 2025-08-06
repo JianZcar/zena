@@ -73,6 +73,8 @@ jobs:
             type=raw,value=${{ env.DEFAULT_TAG }}
             type=raw,value=${{ env.DEFAULT_TAG }}.{{date 'YYYYMMDD'}}
             type=raw,value={{date 'YYYYMMDD'}}
+            type=raw,value=stable,enable=${{ github.ref_name == 'main' }}
+            type=raw,value=testing,enable=${{ github.ref_name == 'testing' }}
             type=sha,enable=${{ github.event_name == 'pull_request' }}
             type=ref,event=pr
           labels: |
@@ -94,7 +96,7 @@ jobs:
           sep-tags: " "
           sep-annotations: " "
       
-      - name: Build image (rootful)
+      - name: Build image
         id: build_image
         run: |
           # Builds image in root store as root, to be picked up by Rechunker
