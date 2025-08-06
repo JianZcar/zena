@@ -89,8 +89,6 @@ if [ "$KMOD_VERSION" != "$DRIVER_VERSION" ]; then
 fi
 
 ## nvidia post-install steps
-# disable repos provided by ublue-os-nvidia-addons
-dnf5 config-manager setopt fedora-nvidia.enabled=0 nvidia-container-toolkit.enabled=0
 
 # ensure kernel.conf matches NVIDIA_FLAVOR (which must be nvidia or nvidia-open)
 # kmod-nvidia-common defaults to 'nvidia-open' but this will match our akmod image
@@ -112,7 +110,4 @@ fi
 
 rm -f /usr/share/vulkan/icd.d/nouveau_icd.*.json
 ln -s libnvidia-ml.so.1 /usr/lib64/libnvidia-ml.so
-dnf5 config-manager setopt "terra-mesa".enabled=0
-dnf5 -y copr disable ublue-os/staging
-
 echo "::endgroup::"

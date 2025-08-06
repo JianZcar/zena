@@ -86,8 +86,6 @@ PKGS_TO_INSTALL=(
   gnome-shell-extension-caffeine
   gnome-shell-extension-hotedge
   gnome-shell-extension-just-perfection
-
-  # Nvidia
   gnome-shell-extension-supergfxctl-gex
 
   # Miscellaneous

@@ -49,6 +49,10 @@ done
 
 # Disable staging
 sed -i 's@enabled=1@enabled=0@g' /etc/yum.repos.d/_copr_ublue-os-staging.repo
+
+# disable repos provided by ublue-os-nvidia-addons
+dnf5 config-manager setopt fedora-nvidia.enabled=0 nvidia-container-toolkit.enabled=0
+
 dnf5 config-manager setopt "*tailscale*".enabled=0
 dnf5 config-manager setopt "terra-mesa".enabled=0
 eval "$(/ctx/dnf5-setopt.sh setopt '*negativo17*' enabled=0)"
