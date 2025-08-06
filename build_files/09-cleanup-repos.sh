@@ -47,6 +47,8 @@ for copr in "${COPRS_TO_DISABLE[@]}"; do
     dnf5 -y copr disable "$copr"
 done
 
+# Disable staging
+sed -i 's@enabled=1@enabled=0@g' /etc/yum.repos.d/_copr_ublue-os-staging.repo
 dnf5 config-manager setopt "*tailscale*".enabled=0
 dnf5 config-manager setopt "terra-mesa".enabled=0
 eval "$(/ctx/dnf5-setopt.sh setopt '*negativo17*' enabled=0)"
