@@ -57,14 +57,6 @@ if dnf5 repolist --enabled | grep -q "fedora-multimedia"; then
     dnf5 config-manager setopt fedora-multimedia.enabled=0
 fi
 
-# Enable staging for supergfxctl if repo file exists
-if [[ -f /etc/yum.repos.d/_copr_ublue-os-staging.repo ]]; then
-    sed -i 's@enabled=0@enabled=1@g' /etc/yum.repos.d/_copr_ublue-os-staging.repo
-else
-    # Otherwise, retrieve the repo file for staging
-    curl -Lo /etc/yum.repos.d/_copr_ublue-os-staging.repo https://copr.fedorainfracloud.org/coprs/ublue-os/staging/repo/fedora-"${RELEASE}"/ublue-os-staging-fedora-"${RELEASE}".repo
-fi
-
 source "${AKMODNV_PATH}"/kmods/nvidia-vars
 
 dnf5 install -y \

@@ -47,9 +47,6 @@ for copr in "${COPRS_TO_DISABLE[@]}"; do
     dnf5 -y copr disable "$copr"
 done
 
-# Disable staging
-sed -i 's@enabled=1@enabled=0@g' /etc/yum.repos.d/_copr_ublue-os-staging.repo
-
 # disable repos provided by ublue-os-nvidia-addons
 dnf5 config-manager setopt fedora-nvidia.enabled=0 nvidia-container-toolkit.enabled=0
 
