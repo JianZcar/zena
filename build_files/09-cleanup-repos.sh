@@ -6,7 +6,6 @@ set -euxo pipefail
 
 DISABLE_REPOS=(
     fedora-cisco-openh264
-    fedora-steam
     terra
     terra-extras
 )
