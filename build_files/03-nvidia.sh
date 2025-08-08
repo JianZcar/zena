@@ -1,0 +1,92 @@
+#!/bin/bash
+
+echo "::group:: ===$(basename "$0")==="
+
+set -ouex pipefail
+
+RELEASE="$(rpm -E %fedora)"
+: "${AKMODNV_PATH:=/tmp/akmods-rpms}"
+
+dnf5 -y install \
+    mesa-vdpau-drivers.x86_64 \
+    mesa-vdpau-drivers.i686
+
+# disable any remaining rpmfusion repos
+dnf5 config-manager setopt "rpmfusion*".enabled=0 fedora-cisco-openh264.enabled=0
+
+## nvidia install steps
+dnf5 install -y "${AKMODNV_PATH}"/ublue-os/ublue-os-nvidia-addons-*.rpm
+
+# Install MULTILIB packages from negativo17-multimedia prior to disabling repo
+
+MULTILIB_PKGS=(
+    mesa-dri-drivers.i686
+    mesa-filesystem.i686
+    mesa-libEGL.i686
+    mesa-libGL.i686
+    mesa-libgbm.i686
+    mesa-va-drivers.i686
+    mesa-vulkan-drivers.i686
+    mesa-libglapi.i686
+    libvdpau.i686
+)
+
+dnf5 install -y "${MULTILIB_PKGS[@]}"
+
+# enable repos provided by ublue-os-nvidia-addons
+dnf5 config-manager setopt fedora-nvidia.enabled=1 nvidia-container-toolkit.enabled=1
+
+# Disable Multimedia
+NEGATIVO17_MULT_PREV_ENABLED=N
+if dnf5 repolist --enabled | grep -q "fedora-multimedia"; then
+    NEGATIVO17_MULT_PREV_ENABLED=Y
+    echo "disabling negativo17-fedora-multimedia to ensure negativo17-fedora-nvidia is used"
+    dnf5 config-manager setopt fedora-multimedia.enabled=0
+fi
+
+source "${AKMODNV_PATH}"/kmods/nvidia-vars
+
+dnf5 install -y \
+    supergfxctl \
+    libnvidia-fbc \
+    libnvidia-ml.i686 \
+    libva-nvidia-driver \
+    nvidia-driver \
+    nvidia-driver-cuda \
+    nvidia-driver-cuda-libs.i686 \
+    nvidia-driver-libs.i686 \
+    nvidia-settings \
+    nvidia-container-toolkit \
+    "${AKMODNV_PATH}"/kmods/kmod-nvidia-"${KERNEL_VERSION}"-"${NVIDIA_AKMOD_VERSION}"."${DIST_ARCH}".rpm
+
+# Ensure the version of the Nvidia module matches the driver
+KMOD_VERSION="$(rpm -q --queryformat '%{VERSION}-%{RELEASE}' kmod-nvidia)"
+DRIVER_VERSION="$(rpm -q --queryformat '%{VERSION}-%{RELEASE}' nvidia-driver)"
+if [ "$KMOD_VERSION" != "$DRIVER_VERSION" ]; then
+    echo "Error: kmod-nvidia version ($KMOD_VERSION) does not match nvidia-driver version ($DRIVER_VERSION)"
+    exit 1
+fi
+
+## nvidia post-install steps
+
+# ensure kernel.conf matches NVIDIA_FLAVOR (which must be nvidia or nvidia-open)
+# kmod-nvidia-common defaults to 'nvidia-open' but this will match our akmod image
+sed -i "s/^MODULE_VARIANT=.*/MODULE_VARIANT=$KERNEL_MODULE_TYPE/" /etc/nvidia/kernel.conf
+
+semodule --verbose --install /usr/share/selinux/packages/nvidia-container.pp
+
+# Universal Blue specific Initramfs fixes
+cp /etc/modprobe.d/nvidia-modeset.conf /usr/lib/modprobe.d/nvidia-modeset.conf
+# we must force driver load to fix black screen on boot for nvidia desktops
+sed -i 's@omit_drivers@force_drivers@g' /usr/lib/dracut/dracut.conf.d/99-nvidia.conf
+# as we need forced load, also mustpre-load intel/amd iGPU else chromium web browsers fail to use hardware acceleration
+sed -i 's@ nvidia @ i915 amdgpu nvidia @g' /usr/lib/dracut/dracut.conf.d/99-nvidia.conf
+
+# re-enable negativo17-mutlimedia since we disabled it
+if [[ "${NEGATIVO17_MULT_PREV_ENABLED}" = "Y" ]]; then
+    dnf5 config-manager setopt fedora-multimedia.enabled=1
+fi
+
+rm -f /usr/share/vulkan/icd.d/nouveau_icd.*.json
+ln -s libnvidia-ml.so.1 /usr/lib64/libnvidia-ml.so
+echo "::endgroup::"
