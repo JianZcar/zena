@@ -12,6 +12,9 @@ dnf5 -y install dnf5-plugins
 # Enable COPR repositories
 COPRS=(
     bazzite-org/bazzite
+    bazzite-org/bazzite-multilib
+    bazzite-org/LatencyFleX
+    bazzite-org/obs-vkcapture
     ublue-os/packages
     ublue-os/staging
     ublue-os/akmods

@@ -17,6 +17,10 @@ done
 
 COPRS_TO_DISABLE=(
     # Bazzite & Ublue
+    bazzite-org/bazzite
+    bazzite-org/bazzite-multilib
+    bazzite-org/LatencyFleX
+    bazzite-org/obs-vkcapture
     ublue-os/packages
     ublue-os/staging
     ublue-os/akmods

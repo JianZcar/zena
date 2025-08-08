@@ -40,18 +40,10 @@ PKGS_TO_UNINSTALL=(
 
 dnf5 -y swap --repo copr:copr.fedorainfracloud.org:bazzite-org:bazzite \
     ibus ibus
-
 dnf5 versionlock add ibus
 
-# Install packages from fedora repos
-if [ ${#PKGS_TO_INSTALL[@]} -gt 0 ]; then
-    dnf5 install -y "${PKGS_TO_INSTALL[@]}"
-fi
-
-# Uninstall packages
-if [ ${#PKGS_TO_UNINSTALL[@]} -gt 0 ]; then
-    dnf5 remove -y "${PKGS_TO_UNINSTALL[@]}"
-fi
+/ctx/pkg-helper.sh install "${PKGS_TO_INSTALL[@]}"
+/ctx/pkg-helper.sh uninstall "${PKGS_TO_UNINSTALL[@]}"
 
 curl -Lo /tmp/latencyflex.tar.xz "$(curl -s https://api.github.com/repos/ishitatsuyuki/LatencyFleX/releases/latest | jq -r '.assets[] | select(.name| test(".*\\.tar\\.xz$")).browser_download_url')"
 
