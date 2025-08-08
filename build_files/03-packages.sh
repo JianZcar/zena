@@ -7,8 +7,19 @@ set -ouex pipefail
 shopt -s nullglob
 
 PKGS_TO_INSTALL=(
-  # Desktop Environment
+  # Groups
+  @base-graphical
+  @container-management
+  @core
+  @hardware-support
+  @multimedia
+  @networkmanager-submodules
+  @printing
+  @fonts
+  @virtualization
   @gnome-desktop
+  @guest-desktop-agents
+  @workstation-product
 
   # WM
   niri
@@ -116,15 +127,8 @@ PKGS_TO_UNINSTALL=(
   gnome-shell-extension-apps-menu
 )
 
-# Install packages from fedora repos
-if [ ${#PKGS_TO_INSTALL[@]} -gt 0 ]; then
-    dnf5 install -y "${PKGS_TO_INSTALL[@]}"
-fi
-
-# Uninstall packages
-if [ ${#PKGS_TO_UNINSTALL[@]} -gt 0 ]; then
-    dnf5 remove -y "${PKGS_TO_UNINSTALL[@]}"
-fi
+/ctx/pkg-helper.sh install PKGS_TO_INSTALL
+/ctx/pkg-helper.sh uninstall PKGS_TO_UNINSTALL
 
 # Install Gnome extensions
 git clone https://github.com/JianZcar/light-shell-plus.git /usr/share/gnome-shell/extensions/light-shell-plus@jianzcar.github \
