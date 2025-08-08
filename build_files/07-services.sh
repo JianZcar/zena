@@ -8,13 +8,11 @@ services=(
   NetworkManager
   ublue-nvctk-cdi.service
   podman.socket
-  ublue-os-media-automount.service
   zena-first-boot.service
   tailscaled.service
 )
 
 disable_services=(
-  systemd-remount-fs.service
 )
 
 for service in "${services[@]}"; do

@@ -20,6 +20,8 @@ PKGS_TO_INSTALL=(
   @gnome-desktop
   @workstation-product
 
+  fedora-release-ostree-desktop
+
   # WM
   niri
 
@@ -84,7 +86,6 @@ PKGS_TO_INSTALL=(
 
   # Miscellaneous
   ublue-brew
-  ublue-os-media-automount-udev
   cpulimit
   yq
   lsb_release
