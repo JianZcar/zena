@@ -6,8 +6,6 @@ set -eoux pipefail
 
 # Define repositories and the packages to be swapped from them
 declare -A PKGS_TO_SWAP=(
-    ["copr:copr.fedorainfracloud.org:bazzite-org:bazzite"]="wireplumber"
-    ["copr:copr.fedorainfracloud.org:bazzite-org:bazzite-multilib"]="pipewire bluez xorg-x11-server-Xwayland mutter"
     ["terra-extras"]="switcheroo-control gnome-shell"
     ["terra-mesa"]="mesa-filesystem"
     ["copr:copr.fedorainfracloud.org:ublue-os:staging"]="fwupd"
@@ -23,27 +21,6 @@ unset -v PKGS_TO_SWAP repo package
 PKGS_TO_LOCK=(
     # GNOME & Display
     gnome-shell
-    mutter
-    xorg-x11-server-Xwayland
-
-    # Pipewire
-    pipewire
-    pipewire-alsa
-    pipewire-gstreamer
-    pipewire-jack-audio-connection-kit
-    pipewire-jack-audio-connection-kit-libs
-    pipewire-libs
-    pipewire-plugin-libcamera
-    pipewire-pulseaudio
-    pipewire-utils
-    wireplumber
-    wireplumber-libs
-
-    # Bluetooth
-    bluez
-    bluez-cups
-    bluez-libs
-    bluez-obexd
 
     # Mesa
     mesa-dri-drivers
@@ -56,8 +33,6 @@ PKGS_TO_LOCK=(
 
     # Firmware
     fwupd
-    fwupd-plugin-flashrom
-    fwupd-plugin-modem-manager
     fwupd-plugin-uefi-capsule-data
 
     # Other
@@ -67,6 +42,8 @@ PKGS_TO_LOCK=(
 if [ ${#PKGS_TO_LOCK[@]} -gt 0 ]; then
     dnf5 versionlock add "${PKGS_TO_LOCK[@]}"
 fi
+
+mkdir -p /etc/xdg/autostart
 
 sed -i 's|grub_probe} --target=device /`|grub_probe} --target=device /sysroot`|g' /usr/bin/grub2-mkconfig
 
@@ -83,5 +60,10 @@ sed -i \
   /etc/rpm-ostreed.conf
 
 ln -s /usr/bin/true /usr/bin/pulseaudio
+
+curl -Lo /etc/flatpak/remotes.d/flathub.flatpakrepo https://dl.flathub.org/repo/flathub.flatpakrepo && \
+echo "Default=true" | tee -a /etc/flatpak/remotes.d/flathub.flatpakrepo > /dev/null
+flatpak remote-add --if-not-exists --system flathub /etc/flatpak/remotes.d/flathub.flatpakrepo
+flatpak remote-modify --system --enable flathub
 
 echo "::endgroup::"

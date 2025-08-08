@@ -31,16 +31,16 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    --mount=type=bind,from=nvidia,src=/kernel-rpms,dst=/tmp/kernel-rpms \
-    --mount=type=bind,from=nvidia,src=/rpms,dst=/tmp/akmods-rpms \
-    /ctx/02-nvidia.sh && \
+    /ctx/02-packages.sh && \
     /ctx/cleanup.sh
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    /ctx/03-packages.sh && \
+    --mount=type=bind,from=nvidia,src=/kernel-rpms,dst=/tmp/kernel-rpms \
+    --mount=type=bind,from=nvidia,src=/rpms,dst=/tmp/akmods-rpms \
+    /ctx/03-nvidia.sh && \
     /ctx/cleanup.sh
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
