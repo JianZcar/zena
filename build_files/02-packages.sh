@@ -12,7 +12,6 @@ PKGS_TO_INSTALL=(
   
   # Groups
   @base-graphical
-  @core
   @hardware-support
   @multimedia
   @networkmanager-submodules
@@ -44,7 +43,6 @@ PKGS_TO_INSTALL=(
   gum
   p7zip
   p7zip-plugins
-  rar
 
   # File System & Storage
   btrfs-assistant # BTRFS GUI tool
