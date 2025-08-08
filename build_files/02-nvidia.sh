@@ -27,8 +27,6 @@ MULTILIB_PKGS=(
     mesa-libgbm.i686
     mesa-va-drivers.i686
     mesa-vulkan-drivers.i686
-    mesa-libglapi.i686
-    libvdpau.i686
 )
 
 dnf5 install -y "${MULTILIB_PKGS[@]}"
