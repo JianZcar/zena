@@ -11,6 +11,7 @@ dnf5 -y install dnf5-plugins
 
 # Enable COPR repositories
 COPRS=(
+    bazzite-org/bazzite
     ublue-os/packages
     ublue-os/staging
     ublue-os/akmods
