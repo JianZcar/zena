@@ -127,8 +127,8 @@ PKGS_TO_UNINSTALL=(
   gnome-shell-extension-apps-menu
 )
 
-/ctx/pkg-helper.sh install PKGS_TO_INSTALL
-/ctx/pkg-helper.sh uninstall PKGS_TO_UNINSTALL
+/ctx/pkg-helper.sh install "${PKGS_TO_INSTALL[@]}"
+/ctx/pkg-helper.sh uninstall "${PKGS_TO_UNINSTALL[@]}"
 
 # Install Gnome extensions
 git clone https://github.com/JianZcar/light-shell-plus.git /usr/share/gnome-shell/extensions/light-shell-plus@jianzcar.github \

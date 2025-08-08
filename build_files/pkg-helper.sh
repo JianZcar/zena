@@ -9,22 +9,13 @@ set -euo pipefail
 #   ./pkg-helper.sh uninstall PKGS_TO_UNINSTALL
 
 ACTION="$1"
-VAR_NAME="$2"
-
-if [[ "$ACTION" != "install" && "$ACTION" != "uninstall" ]]; then
-    echo "Usage: $0 install|uninstall VAR_NAME"
-    exit 1
-fi
-
-PKGS=("${!VAR_NAME[@]}")
-
-if [[ ${#PKGS[@]} -eq 0 ]]; then
-    echo "No packages found in $VAR_NAME"
-    exit 1
-fi
+shift
 
 if [[ "$ACTION" == "install" ]]; then
-    dnf5 install -y "${PKGS[@]}"
+    dnf5 install -y "$@"
+elif [[ "$ACTION" == "uninstall" ]]; then
+    dnf5 remove -y "$@"
 else
-    dnf5 remove -y "${PKGS[@]}"
+    echo "Usage: $0 install|uninstall packages..."
+    exit 1
 fi
