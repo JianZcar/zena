@@ -2,7 +2,7 @@
 
 ## Overview
 
-**Zena** is a customized [Ublue OS](https://github.com/ublue-os) image based on the [bootc](https://github.com/bootc-dev/bootc) container image framework. This project is designed for my personal use, providing a tailored Fedora-based OS with advanced gaming, multimedia, and virtualization features.
+**Zena** is a customized Fedora image based on the [bootc](https://github.com/bootc-dev/bootc) container image framework. This project is designed for my personal use, providing a tailored Fedora-based OS with advanced gaming, multimedia, and virtualization features.
 
 - **Base Framework:** [bootc](https://github.com/bootc-dev/bootc) (container-based OS images)
 - **Template Origin:** [ublue-os/image-template](https://github.com/ublue-os/image-template)
