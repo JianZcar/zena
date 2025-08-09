@@ -1,5 +1,3 @@
-ARG FEDORA_VERSION=42
-
 ARG KERNEL_VERSION=6.15.6-113.bazzite.fc42.x86_64
 ARG KERNEL_FLAVOR=bazzite
 
@@ -9,7 +7,7 @@ FROM ghcr.io/ublue-os/akmods-nvidia-open:${KERNEL_FLAVOR}-${FEDORA_VERSION}-${KE
 FROM scratch AS ctx
 COPY build_files /
 
-FROM quay.io/fedora/fedora-bootc:${FEDORA_VERSION}  AS base
+FROM ghcr.io/jianzcar/fedora-gnome:stable  AS base
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
@@ -47,14 +45,14 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    /ctx/04-patches.sh && \
+    /ctx/04-gaming.sh && \
     /ctx/cleanup.sh
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    /ctx/05-gaming.sh && \
+    /ctx/05-patches.sh && \
     /ctx/cleanup.sh
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \

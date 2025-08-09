@@ -7,21 +7,6 @@ set -ouex pipefail
 shopt -s nullglob
 
 PKGS_TO_INSTALL=(
-  git
-  flatpak
-  
-  # Groups
-  @base-graphical
-  @hardware-support
-  @multimedia
-  @networkmanager-submodules
-  @printing
-  @fonts
-  @gnome-desktop
-  @workstation-product
-
-  fedora-release-ostree-desktop
-
   # WM
   niri
 
@@ -95,19 +80,10 @@ PKGS_TO_INSTALL=(
 )
 
 PKGS_TO_UNINSTALL=(
-  htop
-  gnome-classic-session
-  gnome-tour
-  gnome-extensions-app
-  gnome-system-monitor
-  gnome-initial-setup
-  gnome-browser-connector
-  gnome-shell-extension-background-logo
-  gnome-shell-extension-apps-menu
 )
 
 /ctx/pkg-helper.sh install "${PKGS_TO_INSTALL[@]}"
-/ctx/pkg-helper.sh uninstall "${PKGS_TO_UNINSTALL[@]}"
+# /ctx/pkg-helper.sh uninstall "${PKGS_TO_UNINSTALL[@]}"
 
 # Install Gnome extensions
 git clone https://github.com/JianZcar/light-shell-plus.git /usr/share/gnome-shell/extensions/light-shell-plus@jianzcar.github \
