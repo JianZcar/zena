@@ -103,10 +103,6 @@ ctx/install-gnome-extension.sh window-centering@hnjjhmtr27
 ctx/install-gnome-extension.sh splashindicator@ochi12.github.com
 ctx/install-gnome-extension.sh disable-workspace-switcher-overlay@cleardevice
 
-# MoreWaita Icons
-git clone https://github.com/somepaulo/MoreWaita.git /tmp/MoreWaita >/dev/null 2>&1 && \
-bash /tmp/MoreWaita/install.sh >/dev/null 2>&1
-
 for i in {1..5}; do
   dnf5 -y install "$(curl -s https://api.github.com/repos/bazzite-org/cicpoffs/releases/latest | jq -r '.assets[] | select(.name|test(".*rpm$")) | .browser_download_url')" && break || sleep 5
 done
