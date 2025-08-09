@@ -74,22 +74,21 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    /ctx/08-finalize.sh && \
+    /ctx/08-cleanup-repos.sh && \
     /ctx/cleanup.sh
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    /ctx/09-cleanup-repos.sh && \
+    /ctx/09-build-initramfs.sh && \
     /ctx/cleanup.sh
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    /ctx/build-initramfs.sh && \
-    /ctx/cleanup.sh
+    /ctx/10-finalize.sh
     
 ### LINTING
 ## Verify final image and contents are correct.
