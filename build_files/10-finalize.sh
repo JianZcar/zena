@@ -25,6 +25,8 @@ find /var/cache -mindepth 1 -maxdepth 1 -type d \
 
 # Recreate /var/tmp with correct sticky bit
 mkdir -p /var/tmp
-chmod 1777 /var/tmpostree container commit
+chmod 1777 /var/tmp
+
+ostree container commit
 
 echo "::endgroup::"
