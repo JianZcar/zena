@@ -99,17 +99,6 @@ PKGS_TO_INSTALL=(
 )
 
 PKGS_TO_UNINSTALL=(
-  firefox
-  firefox-langpacks
-  htop
-  gnome-classic-session
-  gnome-tour
-  gnome-extensions-app
-  gnome-system-monitor
-  gnome-initial-setup
-  gnome-browser-connector
-  gnome-shell-extension-background-logo
-  gnome-shell-extension-apps-menu
 )
 
 # Install packages from fedora repos
@@ -139,16 +128,6 @@ ctx/install-gnome-extension.sh gnome-fuzzy-app-search@gnome-shell-extensions.Cza
 ctx/install-gnome-extension.sh window-centering@hnjjhmtr27
 ctx/install-gnome-extension.sh splashindicator@ochi12.github.com
 ctx/install-gnome-extension.sh disable-workspace-switcher-overlay@cleardevice
-
-# MoreWaita Icons
-git clone https://github.com/somepaulo/MoreWaita.git /tmp/MoreWaita && bash /tmp/MoreWaita/install.sh
-
-# Install multimedia libraries from RPM Fusion
-dnf5 -y install --enable-repo="*rpmfusion*" --disable-repo="*fedora-multimedia*" \
-    libaacs \
-    libbdplus \
-    libbluray \
-    libbluray-utils
 
 sed -i 's|uupd|& --disable-module-distrobox|' /usr/lib/systemd/system/uupd.service
 

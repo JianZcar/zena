@@ -9,7 +9,7 @@ FROM ghcr.io/ublue-os/akmods-nvidia-open:${KERNEL_FLAVOR}-${FEDORA_VERSION}-${KE
 FROM scratch AS ctx
 COPY build_files /
 
-FROM ghcr.io/ublue-os/${BASE_IMAGE_NAME}-main:${FEDORA_VERSION}  AS base
+FROM ghcr.io/jianzcar/fedora-gnome:stable  AS base
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \

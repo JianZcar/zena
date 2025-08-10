@@ -6,7 +6,6 @@ set -euxo pipefail
 
 services=(
   ublue-nvctk-cdi.service
-  podman.socket
   ublue-os-media-automount.service
   zena-first-boot.service
   tailscaled.service
