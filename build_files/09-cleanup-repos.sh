@@ -6,11 +6,11 @@ set -euxo pipefail
 
 DISABLE_REPOS=(
     fedora-cisco-openh264
+    fedora-multimedia
     fedora-steam
     fedora-rar
     terra
     terra-extras
-    negativo17-fedora-multimedia
 )
 for repo in "${DISABLE_REPOS[@]}"; do
     sed -i 's@enabled=1@enabled=0@g' /etc/yum.repos.d/"$repo".repo
