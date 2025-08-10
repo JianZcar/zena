@@ -11,7 +11,6 @@ DISABLE_REPOS=(
     terra
     terra-extras
     negativo17-fedora-multimedia
-    _copr_ublue-os-akmods
 )
 for repo in "${DISABLE_REPOS[@]}"; do
     sed -i 's@enabled=1@enabled=0@g' /etc/yum.repos.d/"$repo".repo
@@ -25,15 +24,13 @@ COPRS_TO_DISABLE=(
     bazzite-org/obs-vkcapture
     ublue-os/packages
     ublue-os/staging
+    ublue-os/akmods 
 
     # Fonts
     che/nerd-fonts
 
     # Gaming
     hikariknight/looking-glass-kvmfr
-
-    # Hardware
-    hhd-dev/hhd
 
     # Multimedia
     ycollet/audinux
