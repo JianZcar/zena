@@ -18,7 +18,6 @@ COPRS=(
 for COPR in "${COPRS[@]}"; do
     echo "Enabling copr: $COPR"
     dnf5 -y copr enable "$COPR"
-    dnf5 -y config-manager setopt "copr:copr.fedorainfracloud.org:${COPR////:}.priority=50"
 done
 
 # Add Terra repo (custom repopath)

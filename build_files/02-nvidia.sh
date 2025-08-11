@@ -7,6 +7,9 @@ set -ouex pipefail
 RELEASE="$(rpm -E %fedora)"
 : "${AKMODNV_PATH:=/tmp/akmods-rpms}"
 
+dnf5 -y install mesa-vdpau-drivers.x86_64 mesa-vdpau-drivers.i686
+dnf5 config-manager setopt "rpmfusion*".enabled=false fedora-cisco-openh264.enabled=false
+
 dnf5 install -y "${AKMODNV_PATH}"/ublue-os/ublue-os-nvidia-addons-*.rpm
 
 MULTILIB_PKGS_TO_INSTALL=(
@@ -42,9 +45,6 @@ PKGS_TO_INSTALL=(
     libnvidia-fbc
     libnvidia-ml.i686
     libva-nvidia-driver
-
-    mesa-vdpau-drivers.x86_64
-    mesa-vdpau-drivers.i686
 
     supergfxd
     gnome-shell-extension-supergfxctl-gex
