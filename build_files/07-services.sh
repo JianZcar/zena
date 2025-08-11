@@ -5,7 +5,6 @@ echo "::group:: ===$(basename "$0")==="
 set -euxo pipefail
 
 services=(
-  ublue-nvctk-cdi.service
   ublue-os-media-automount.service
   zena-first-boot.service
   tailscaled.service

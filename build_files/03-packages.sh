@@ -17,12 +17,6 @@ PKGS_TO_INSTALL=(
   fish
   stow
 
-  # Fonts
-  fira-code-fonts
-  lato-fonts
-  nerd-fonts
-  twitter-twemoji-fonts
-
   # System Utilities
   btop
   duf
@@ -73,25 +67,14 @@ PKGS_TO_INSTALL=(
   libvirt
   qemu
 
-  # GNOME
-  gnome-randr-rust
-  gnome-shell-extension-appindicator
-  gnome-shell-extension-blur-my-shell
-  gnome-shell-extension-burn-my-windows
-  gnome-shell-extension-caffeine
-  gnome-shell-extension-hotedge
-  gnome-shell-extension-just-perfection
-
   # Miscellaneous
   ublue-brew
   ublue-os-media-automount-udev
   cpulimit
-  yq
   firewall-config
   lsb_release
   openssh-askpass
   stress-ng # Stress test system
-  uupd # Unified Update Platform Downloader
   wmctrl
   xdotool
   yad # Dialogs for shell scripts
@@ -101,35 +84,12 @@ PKGS_TO_INSTALL=(
 PKGS_TO_UNINSTALL=(
 )
 
-# Install packages from fedora repos
 if [ ${#PKGS_TO_INSTALL[@]} -gt 0 ]; then
-    dnf5 install -y "${PKGS_TO_INSTALL[@]}"
+    dnf5 -y install "${PKGS_TO_INSTALL[@]}"
 fi
-
-# Uninstall packages
 if [ ${#PKGS_TO_UNINSTALL[@]} -gt 0 ]; then
-    dnf5 remove -y "${PKGS_TO_UNINSTALL[@]}"
+    dnf5 -y remove "${PKGS_TO_UNINSTALL[@]}"
 fi
-
-# Install Gnome extensions
-git clone https://github.com/JianZcar/light-shell-plus.git /usr/share/gnome-shell/extensions/light-shell-plus@jianzcar.github \
-  && rm -rf /usr/share/gnome-shell/extensions/light-shell-plus@jianzcar.github/.git
-
-git clone https://github.com/JianZcar/peek-top-bar.git /usr/share/gnome-shell/extensions/peek-top-bar@jianzcar.github \
-  && rm -rf /usr/share/gnome-shell/extensions/peek-top-bar@jianzcar.github/.git
-
-git clone https://github.com/JianZcar/static-bg.git /usr/share/gnome-shell/extensions/static-bg@jianzcar.github \
-  && rm -rf /usr/share/gnome-shell/extensions/static-bg@jianzcar.github/.git
-
-ctx/install-gnome-extension.sh ideapad@laurento.frittella
-ctx/install-gnome-extension.sh accent-directories@taiwbi.com
-ctx/install-gnome-extension.sh wireless-hid@chlumskyvaclav.gmail.com
-ctx/install-gnome-extension.sh gnome-fuzzy-app-search@gnome-shell-extensions.Czarlie.gitlab.com
-ctx/install-gnome-extension.sh window-centering@hnjjhmtr27
-ctx/install-gnome-extension.sh splashindicator@ochi12.github.com
-ctx/install-gnome-extension.sh disable-workspace-switcher-overlay@cleardevice
-
-sed -i 's|uupd|& --disable-module-distrobox|' /usr/lib/systemd/system/uupd.service
 
 for i in {1..5}; do
   dnf5 -y install "$(curl -s https://api.github.com/repos/bazzite-org/cicpoffs/releases/latest | jq -r '.assets[] | select(.name|test(".*rpm$")) | .browser_download_url')" && break || sleep 5
@@ -139,11 +99,6 @@ for i in {1..5}; do
   dnf5 -y install "$(curl -s https://api.github.com/repos/OpenTabletDriver/OpenTabletDriver/releases/latest | jq -r '.assets[] | select(.name|test(".*rpm$")) | .browser_download_url')" && break || sleep 5
 done
 
-
-mkdir -p /etc/xdg/autostart
-
-
-sed -i 's/ --xdg-runtime=\\"${XDG_RUNTIME_DIR}\\"//g' /usr/bin/btrfs-assistant-launcher
 
 curl -Lo /usr/bin/installcab https://raw.githubusercontent.com/bazzite-org/steam-proton-mf-wmv/master/installcab.py
 chmod +x /usr/bin/installcab

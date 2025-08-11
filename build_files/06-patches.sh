@@ -2,15 +2,12 @@
 
 echo "::group:: ===$(basename "$0")==="
 
-set -eoux pipefail
+set -ouex pipefail
 
 # Define repositories and the packages to be swapped from them
 declare -A PKGS_TO_SWAP=(
-    ["copr:copr.fedorainfracloud.org:bazzite-org:bazzite"]="wireplumber"
-    ["copr:copr.fedorainfracloud.org:bazzite-org:bazzite-multilib"]="pipewire bluez xorg-x11-server-Xwayland mutter"
     ["terra-extras"]="switcheroo-control gnome-shell"
     ["terra-mesa"]="mesa-filesystem"
-    ["copr:copr.fedorainfracloud.org:ublue-os:staging"]="fwupd"
 )
 
 # Swap packages from the specified repositories
@@ -68,17 +65,5 @@ if [ ${#PKGS_TO_LOCK[@]} -gt 0 ]; then
     dnf5 versionlock add "${PKGS_TO_LOCK[@]}"
 fi
 
-sed -i 's|grub_probe} --target=device /`|grub_probe} --target=device /sysroot`|g' /usr/bin/grub2-mkconfig
-
-# Patch rtkit
-sed -i 's|^ExecStart=.*|ExecStart=/usr/libexec/rtkit-daemon --no-canary|' /usr/lib/systemd/system/rtkit-daemon.service
-
-sed -i 's/balanced=balanced$/balanced=balanced-bazzite/' /etc/tuned/ppd.conf
-sed -i 's/performance=throughput-performance$/performance=throughput-performance-bazzite/' /etc/tuned/ppd.conf
-sed -i 's/balanced=balanced-battery$/balanced=balanced-battery-bazzite/' /etc/tuned/ppd.conf
-
-# echo 'export PATH=/usr/lib/opentabletdriver:$PATH' | sudo tee /etc/profile.d/opentabletdriver.sh
-
-ln -s /usr/bin/true /usr/bin/pulseaudio
 
 echo "::endgroup::"
