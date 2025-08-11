@@ -38,11 +38,6 @@ PKGS_TO_UNINSTALL=(
     gamemode
 )
 
-dnf5 -y swap --repo copr:copr.fedorainfracloud.org:bazzite-org:bazzite \
-    ibus ibus
-
-dnf5 versionlock add ibus
-
 dnf5 install -y "${PKGS_TO_INSTALL[@]}"
 dnf5 remove -y "${PKGS_TO_UNINSTALL[@]}"
 

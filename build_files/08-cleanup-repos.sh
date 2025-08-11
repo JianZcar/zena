@@ -25,7 +25,9 @@ COPRS_TO_DISABLE=(
     atim/heroic-games-launcher
 )
 
-dnf5 -y copr disable "${COPRS_TO_DISABLE[@]}"
+for copr in "${COPRS_TO_DISABLE[@]}"; do
+    dnf5 -y copr disable "$copr"
+done
 
 dnf5 config-manager setopt "*tailscale*".enabled=false
 dnf5 config-manager setopt "terra-mesa".enabled=false
