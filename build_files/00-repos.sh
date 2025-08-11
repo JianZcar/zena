@@ -8,6 +8,10 @@ RELEASE="$(rpm -E %fedora)"
 mkdir -p /var/roothome
 
 COPRS=(
+    bazzite-org/bazzite
+    bazzite-org/bazzite-multilib
+    bazzite-org/LatencyFleX
+    bazzite-org/obs-vkcapture
     ublue-os/packages
     ublue-os/staging 
     ublue-os/akmods 
