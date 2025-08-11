@@ -61,9 +61,6 @@ PKGS_TO_LOCK=(
     switcheroo-control
 )
 
-if [ ${#PKGS_TO_LOCK[@]} -gt 0 ]; then
-    dnf5 versionlock add "${PKGS_TO_LOCK[@]}"
-fi
-
+dnf5 versionlock add "${PKGS_TO_LOCK[@]}"
 
 echo "::endgroup::"

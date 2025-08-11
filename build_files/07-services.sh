@@ -10,17 +10,12 @@ services=(
   tailscaled.service
 )
 
-for service in "${services[@]}"; do
-  systemctl enable "$service"
-done
-
 user_services=(
   opentabletdriver.service
   zena-first-boot-gui.service
 )
 
-for service in "${user_services[@]}"; do
-  systemctl --global enable "$service"
-done
+systemctl enable "${services[@]}"
+systemctl --global enable "$user_services"
 
 echo "::endgroup::"

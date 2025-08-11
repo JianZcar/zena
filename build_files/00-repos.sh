@@ -20,7 +20,6 @@ for COPR in "${COPRS[@]}"; do
     dnf5 -y copr enable "$COPR"
     dnf5 -y config-manager setopt "copr:copr.fedorainfracloud.org:${COPR////:}.priority=50"
 done
-unset COPR
 
 # Add Terra repo (custom repopath)
 dnf5 -y install --nogpgcheck \

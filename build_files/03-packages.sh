@@ -84,12 +84,8 @@ PKGS_TO_INSTALL=(
 PKGS_TO_UNINSTALL=(
 )
 
-if [ ${#PKGS_TO_INSTALL[@]} -gt 0 ]; then
-    dnf5 -y install "${PKGS_TO_INSTALL[@]}"
-fi
-if [ ${#PKGS_TO_UNINSTALL[@]} -gt 0 ]; then
-    dnf5 -y remove "${PKGS_TO_UNINSTALL[@]}"
-fi
+dnf5 -y install "${PKGS_TO_INSTALL[@]}"
+# dnf5 -y remove "${PKGS_TO_UNINSTALL[@]}"
 
 for i in {1..5}; do
   dnf5 -y install "$(curl -s https://api.github.com/repos/bazzite-org/cicpoffs/releases/latest | jq -r '.assets[] | select(.name|test(".*rpm$")) | .browser_download_url')" && break || sleep 5

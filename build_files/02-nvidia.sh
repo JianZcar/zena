@@ -19,7 +19,7 @@ MULTILIB_PKGS_TO_INSTALL=(
     mesa-vulkan-drivers.i686
 )
 
-dnf5 install -y "${MULTILIB_PKGS[@]}"
+dnf5 install -y "${MULTILIB_PKGS_TO_INSTALL[@]}"
 
 dnf5 config-manager setopt fedora-nvidia.enabled=true nvidia-container-toolkit.enabled=true
 dnf5 config-manager setopt fedora-multimedia.enabled=false
