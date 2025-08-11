@@ -29,11 +29,6 @@ dnf5 -y install --nogpgcheck \
     --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' \
     terra-release terra-release-extras
 
-# Install RPMFusion repos
-dnf5 -y install \
-    "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-${RELEASE}.noarch.rpm" \
-    "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-${RELEASE}.noarch.rpm"
-
 REPOFILES=(
     https://negativo17.org/repos/fedora-nvidia.repo
     https://negativo17.org/repos/fedora-multimedia.repo

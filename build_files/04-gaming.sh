@@ -29,9 +29,6 @@ PKGS_TO_INSTALL=(
     libobs_vkcapture.i686
     libobs_vkcapture.x86_64
     VK_hdr_layer
-
-    # Miscellaneous
-    dbus-x11
 )
 
 PKGS_TO_UNINSTALL=(

@@ -7,74 +7,71 @@ set -ouex pipefail
 shopt -s nullglob
 
 PKGS_TO_INSTALL=(
-  # Development
-  nvim
-  ripgrep
-  tree-sitter
-  udica
+    # Development
+    nvim
+    ripgrep
+    tree-sitter
+    udica
 
-  # Shell & Dotfiles
-  fish
-  stow
+    # Shell & Dotfiles
+    fish
+    stow
 
-  # System Utilities
-  btop
-  duf
-  fastfetch
-  glow
-  gum
-  p7zip
-  p7zip-plugins
-  rar
-  topgrade
+    # System Utilities
+    btop
+    duf
+    fastfetch
+    glow
+    gum
+    p7zip
+    p7zip-plugins
+    rar
+    topgrade
 
-  # File System & Storage
-  btrfs-assistant # BTRFS GUI tool
-  duperemove
-  f3 # Flash memory tester
-  lzip
-  snapper # BTRFS snapshot management
+    # File System & Storage
+    btrfs-assistant # BTRFS GUI tool
+    duperemove
+    f3 # Flash memory tester
+    lzip
+    snapper # BTRFS snapshot management
 
-  # Hardware & Drivers
-  ddcutil # DDC/CI control for monitors
-  i2c-tools
-  input-remapper
-  iwd # iNet Wireless Daemon
-  libcec # HDMI CEC library
-  lm_sensors
+    # Hardware & Drivers
+    ddcutil # DDC/CI control for monitors
+    i2c-tools
+    input-remapper
+    iwd # iNet Wireless Daemon
+    libcec # HDMI CEC library
+    lm_sensors
 
-  # Display & Graphics
-  cage # Wayland compositor for single applications
-  extest.i686 # X extension tester
-  vulkan-tools
-  wlr-randr # Wayland output management
-  xrandr
-  xwininfo
+    # Display & Graphics
+    cage # Wayland compositor for single applications
+    extest.i686 # X extension tester
+    vulkan-tools
+    wlr-randr # Wayland output management
+    xrandr
+    xwininfo
 
-  pipewire-alsa.i686
+    pipewire-alsa.i686
 
-  # Networking
-  tailscale
+    # Networking
+    tailscale
 
-  # Virtualization
-  edk2-ovmf # UEFI firmware for QEMU
-  virglrenderer
-  virt-viewer
-  libvirt
-  qemu
+    # Virtualization
+    edk2-ovmf # UEFI firmware for QEMU
+    virglrenderer
+    virt-viewer
+    libvirt
+    qemu
 
-  # Miscellaneous
-  ublue-brew
-  ublue-os-media-automount-udev
-  cpulimit
-  firewall-config
-  lsb_release
-  openssh-askpass
-  stress-ng # Stress test system
-  wmctrl
-  xdotool
-  yad # Dialogs for shell scripts
-  ydotool # Simulate keyboard/mouse input
+    # Miscellaneous
+    ublue-brew
+    ublue-os-media-automount-udev
+    cpulimit
+    firewall-config
+    lsb_release
+    openssh-askpass
+    stress-ng # Stress test system
+    wmctrl
 )
 
 PKGS_TO_UNINSTALL=(
@@ -84,13 +81,12 @@ dnf5 -y install "${PKGS_TO_INSTALL[@]}"
 # dnf5 -y remove "${PKGS_TO_UNINSTALL[@]}"
 
 for i in {1..5}; do
-  dnf5 -y install "$(curl -s https://api.github.com/repos/bazzite-org/cicpoffs/releases/latest | jq -r '.assets[] | select(.name|test(".*rpm$")) | .browser_download_url')" && break || sleep 5
+    dnf5 -y install "$(curl -s https://api.github.com/repos/bazzite-org/cicpoffs/releases/latest | jq -r '.assets[] | select(.name|test(".*rpm$")) | .browser_download_url')" && break || sleep 5
 done
 
 for i in {1..5}; do
-  dnf5 -y install "$(curl -s https://api.github.com/repos/OpenTabletDriver/OpenTabletDriver/releases/latest | jq -r '.assets[] | select(.name|test(".*rpm$")) | .browser_download_url')" && break || sleep 5
+    dnf5 -y install "$(curl -s https://api.github.com/repos/OpenTabletDriver/OpenTabletDriver/releases/latest | jq -r '.assets[] | select(.name|test(".*rpm$")) | .browser_download_url')" && break || sleep 5
 done
-
 
 curl -Lo /usr/bin/installcab https://raw.githubusercontent.com/bazzite-org/steam-proton-mf-wmv/master/installcab.py
 chmod +x /usr/bin/installcab

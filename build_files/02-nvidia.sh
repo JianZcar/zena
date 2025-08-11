@@ -14,7 +14,6 @@ dnf5 install -y "${AKMODNV_PATH}"/ublue-os/ublue-os-nvidia-addons-*.rpm
 
 MULTILIB_PKGS_TO_INSTALL=(
     mesa-dri-drivers.i686
-    mesa-filesystem.i686
     mesa-libEGL.i686
     mesa-libGL.i686
     mesa-libgbm.i686
