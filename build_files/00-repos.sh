@@ -10,6 +10,7 @@ mkdir -p /var/roothome
 COPRS=(
     ublue-os/packages
     ublue-os/staging 
+    ublue-os/akmods 
 
     atim/heroic-games-launcher
 )
