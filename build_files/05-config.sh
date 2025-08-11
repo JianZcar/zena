@@ -4,6 +4,8 @@ echo "::group:: ===$(basename "$0")==="
 
 set -ouex pipefail
 
+/ctx/helper/config-apply.sh
+
 mkdir -p /etc/xdg/autostart
 mkdir -p /etc/zena
 cp -r /ctx/first-boot /etc/zena/
