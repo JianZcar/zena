@@ -95,10 +95,13 @@ jobs:
           sep-annotations: " "
 
       - name: Prepare build args file
+        env:
+          DEFAULT_TAG: ${{ env.DEFAULT_TAG }}
+          DATE: ${{ steps.date.outputs.date }}
         run: |
-          cat <<'EOF' >>build_args.txt
-          VERSION_TAG=${{ env.DEFAULT_TAG }}.{{date 'YYYYMMDD'}}
-          VERSION_DATE=${{date 'YYYYMMDD'}}
+          cat <<EOF > build_args.txt
+          VERSION_TAG=${DEFAULT_TAG}.${DATE}
+          VERSION_DATE=${DATE}
           EOF
         
       - name: Build image
