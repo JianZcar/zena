@@ -11,8 +11,7 @@ COPY build_files /
 
 FROM ghcr.io/jianzcar/fedora-gnome:stable AS base
 
-ARG VERSION_TAG=${VERSION_TAG}
-ARG VERSION_DATE=${VERSION_DATE}
+ARG DEFAULT_TAG=${DEFAULT_TAG}
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
