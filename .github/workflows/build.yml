@@ -109,7 +109,7 @@ jobs:
         run: |
           # Builds image in root store as root, to be picked up by Rechunker
           sudo buildah bud \
-            --build-arg-file build_args.txt
+            --build-arg-file build_args.txt \
             --format docker \
             --tag "localhost/${{ env.IMAGE_NAME }}:${{ env.DEFAULT_TAG }}" \
             --file Containerfile \
