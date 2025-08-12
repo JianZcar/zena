@@ -19,7 +19,7 @@ env:
   IMAGE_LOGO_URL: "https://avatars.githubusercontent.com/u/120078124?s=200&v=4"  # Put your own image here for a fancy profile on https://artifacthub.io/!
   IMAGE_NAME: "${{ github.event.repository.name }}"  # output image name, usually same as repo name
   IMAGE_REGISTRY: "ghcr.io/${{ github.repository_owner }}"  # do not edit
-  DEFAULT_TAG: "latest"
+  DEFAULT_TAG: "${{ github.ref_name == 'main' && 'stable' || github.ref_name == 'testing' && 'testing' || github.ref_name }}"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref || github.run_id }}-${{ inputs.brand_name}}-${{ inputs.stream_name }}
@@ -73,8 +73,6 @@ jobs:
             type=raw,value=${{ env.DEFAULT_TAG }}
             type=raw,value=${{ env.DEFAULT_TAG }}.{{date 'YYYYMMDD'}}
             type=raw,value={{date 'YYYYMMDD'}}
-            type=raw,value=stable,enable=${{ github.ref_name == 'main' }}
-            type=raw,value=testing,enable=${{ github.ref_name == 'testing' }}
             type=sha,enable=${{ github.event_name == 'pull_request' }}
             type=ref,event=pr
           labels: |
@@ -95,12 +93,20 @@ jobs:
             containers.bootc=1
           sep-tags: " "
           sep-annotations: " "
-      
+
+      - name: Prepare build args file
+        run: |
+          cat <<'EOF' >>build_args.txt
+          VERSION_TAG=${{ env.DEFAULT_TAG }}.{{date 'YYYYMMDD'}}
+          VERSION_DATE=${{date 'YYYYMMDD'}}
+          EOF
+        
       - name: Build image
         id: build_image
         run: |
           # Builds image in root store as root, to be picked up by Rechunker
           sudo buildah bud \
+            --build-arg-file build_args.txt
             --format docker \
             --tag "localhost/${{ env.IMAGE_NAME }}:${{ env.DEFAULT_TAG }}" \
             --file Containerfile \

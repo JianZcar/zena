@@ -11,6 +11,9 @@ COPY build_files /
 
 FROM ghcr.io/jianzcar/fedora-gnome:stable AS base
 
+ARG VERSION_TAG=${VERSION_TAG}
+ARG VERSION_DATE=${VERSION_DATE}
+
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
@@ -89,9 +92,16 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    /ctx/10-finalize.sh && \
+    /ctx/10-image-info.sh && \
     /ctx/helper/cleanup.sh
     
+RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
+    --mount=type=cache,dst=/var/cache \
+    --mount=type=cache,dst=/var/log \
+    --mount=type=tmpfs,dst=/tmp \
+    /ctx/11-finalize.sh && \
+    /ctx/helper/cleanup.sh
+
 ### LINTING
 ## Verify final image and contents are correct.
 RUN bootc container lint

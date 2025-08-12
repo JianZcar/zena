@@ -6,6 +6,7 @@ set -ouex pipefail
 
 # Define repositories and the packages to be swapped from them
 declare -A PKGS_TO_SWAP=(
+    ["terra"]="neovim"
     ["terra-extras"]="switcheroo-control gnome-shell"
     ["terra-mesa"]="mesa-filesystem"
 )
