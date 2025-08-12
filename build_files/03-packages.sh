@@ -7,12 +7,6 @@ set -ouex pipefail
 shopt -s nullglob
 
 PKGS_TO_INSTALL=(
-    # Development
-    nvim
-    ripgrep
-    tree-sitter
-    udica
-
     # Shell & Dotfiles
     fish
     stow
@@ -31,14 +25,12 @@ PKGS_TO_INSTALL=(
     # File System & Storage
     btrfs-assistant # BTRFS GUI tool
     duperemove
-    f3 # Flash memory tester
     lzip
     snapper # BTRFS snapshot management
 
     # Hardware & Drivers
     ddcutil # DDC/CI control for monitors
     i2c-tools
-    input-remapper
     iwd # iNet Wireless Daemon
     libcec # HDMI CEC library
     lm_sensors
