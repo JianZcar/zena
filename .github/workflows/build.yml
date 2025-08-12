@@ -96,8 +96,8 @@ jobs:
 
       - name: Prepare build args file
         env:
-          DEFAULT_TAG: ${{ env.DEFAULT_TAG }}
-          DATE: ${{ steps.date.outputs.date }}
+          DEFAULT_TAG: ${{ env.DEFAULT_TAG }}.{{date 'YYYYMMDD'}}
+          DATE: ${{date 'YYYYMMDD'}}
         run: |
           cat <<EOF > build_args.txt
           VERSION_TAG=${DEFAULT_TAG}.${DATE}
