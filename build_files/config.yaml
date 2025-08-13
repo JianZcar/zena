@@ -85,11 +85,6 @@
 
     [video]
     panel_power_savings=1
-
-- path: /usr/lib/bootc/kargs.d/02-nvidia.toml
-  content: |
-    kargs = ["nvidia.NVreg_EnableGpuFirmware=0"]
-    match-architectures = ["x86_64"]
     
 - path: /etc/pipewire/pipewire.conf.d/virtual-channels.conf
   content: |
