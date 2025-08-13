@@ -71,7 +71,7 @@ class ProgressApp(Gtk.Application):
                         break
 
                 # Update progress estimate
-                setup_stages = ["[1/4]", "[2/4]", "[3/4]", "[4/4]"]
+                setup_stages = ["[1/3]", "[2/3]", "[3/3]"]
                 progress = sum(1 for s in setup_stages if any(
                     s in line for line in lines)) / len(setup_stages)
                 self.progress.set_fraction(progress)

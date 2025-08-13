@@ -20,13 +20,10 @@ fi
 
 log ":: Zena Setup Started"
 
-log "[1/4] Enabling third-party repositories..."
-/usr/bin/fedora-third-party enable
+log "[1/3] Rebasing to Zena..."
+rpm-ostree rebase ostree-unverified-registry:ghcr.io/jianzcar/zena:stable >/dev/null 2>&1 || true
 
-log "[2/4] Rebasing to Zena..."
-rpm-ostree rebase ostree-unverified-registry:ghcr.io/jianzcar/zena:latest >/dev/null 2>&1 || true
-
-log "[3/4] Installing Flatpaks..."
+log "[2/3] Installing Flatpaks..."
 
 flatpaks=(
   # System & Utilities
@@ -84,7 +81,7 @@ for app in "${flatpaks[@]}"; do
 done
 flatpak remote-modify --disable fedora
 
-log "[4/4] Regenerating GRUB config..."
+log "[3/3] Regenerating GRUB config..."
 grub2-mkconfig -o /boot/grub2/grub.cfg
 
 log ":: Setup complete"
