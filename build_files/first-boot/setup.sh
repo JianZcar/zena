@@ -79,7 +79,6 @@ flatpaks=(
 for app in "${flatpaks[@]}"; do
   flatpak install -y --system flathub "$app"
 done
-flatpak remote-modify --disable fedora
 
 log "[3/3] Regenerating GRUB config..."
 grub2-mkconfig -o /boot/grub2/grub.cfg
