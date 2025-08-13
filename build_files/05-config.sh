@@ -30,9 +30,4 @@ cp --no-dereference --preserve=links /usr/lib64/libdrm.so.2 /usr/lib64/libdrm.so
 
 sed -i 's@\[Desktop Entry\]@\[Desktop Entry\]\nNoDisplay=true@g' /usr/share/applications/btop.desktop
 
-cat > /usr/lib/bootc/kargs.d/01-mem-sleep.toml <<EOF
-kargs = ["nvidia.NVreg_EnableGpuFirmware=0"]
-match-architectures = ["x86_64"]
-EOF
-
 echo "::endgroup::"
