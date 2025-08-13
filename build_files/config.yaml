@@ -178,6 +178,7 @@
     [Unit]
     Description=Zena First Boot Setup
     After=multi-user.target
+    ConditionPathExists=!/var/lib/zena-done
 
     [Service]
     Type=oneshot
@@ -193,6 +194,7 @@
     Description=Zena First Boot Progress GUI
     After=graphical-session.target
     PartOf=graphical-session.target
+    ConditionPathExists=!/var/lib/zena-done
 
     [Service]
     Type=simple
