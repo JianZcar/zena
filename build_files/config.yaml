@@ -86,10 +86,10 @@
     [video]
     panel_power_savings=1
 
-- path: /etc/systemd/sleep.conf.d/mem-deep.conf
+- path: /usr/lib/bootc/kargs.d/02-nvidia.toml
   content: |
-    [Sleep]
-    MemorySleepMode=deep
+    kargs = ["nvidia.NVreg_EnableGpuFirmware=0"]
+    match-architectures = ["x86_64"]
     
 - path: /etc/pipewire/pipewire.conf.d/virtual-channels.conf
   content: |
