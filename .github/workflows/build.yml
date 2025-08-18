@@ -19,7 +19,7 @@ env:
   IMAGE_LOGO_URL: "https://avatars.githubusercontent.com/u/120078124?s=200&v=4"  # Put your own image here for a fancy profile on https://artifacthub.io/!
   IMAGE_NAME: "${{ github.event.repository.name }}"  # output image name, usually same as repo name
   IMAGE_REGISTRY: "ghcr.io/${{ github.repository_owner }}"  # do not edit
-  DEFAULT_TAG: "${{ github.ref_name == 'main' && 'stable' || github.ref_name == 'testing' && 'testing' || github.ref_name }}"
+  DEFAULT_TAG: "${{ github.ref_name == 'main' && 'stable' || github.ref_name == 'testing' && 'testing' || 'stable' }}"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref || github.run_id }}-${{ inputs.brand_name}}-${{ inputs.stream_name }}
