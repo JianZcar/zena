@@ -12,6 +12,7 @@ PKGS_TO_INSTALL=(
     stow
 
     # System Utilities
+    distrobox 
     btop
     duf
     fastfetch
@@ -42,6 +43,7 @@ PKGS_TO_INSTALL=(
     wlr-randr # Wayland output management
     xrandr
     xwininfo
+    mesa-libGLU 
 
     pipewire-alsa.i686
 
