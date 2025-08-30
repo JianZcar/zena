@@ -8,6 +8,7 @@ shopt -s nullglob
 
 PKGS_TO_INSTALL=(
     # Shell & Dotfiles
+    starship
     fish
     stow
 

@@ -17,6 +17,7 @@ COPRS=(
     ublue-os/akmods 
 
     atim/heroic-games-launcher
+    atim/starship
 )
 
 for COPR in "${COPRS[@]}"; do
