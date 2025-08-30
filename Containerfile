@@ -1,10 +1,10 @@
 ARG FEDORA_VERSION=42
-ARG KERNEL_VERSION=6.16.4-101.bazzite.fc42.x86_64
+ARG ARCH=x86_64
 ARG KERNEL_FLAVOR=bazzite
 ARG BASE_IMAGE_NAME=silverblue
 
-FROM ghcr.io/ublue-os/akmods:${KERNEL_FLAVOR}-${FEDORA_VERSION}-${KERNEL_VERSION} AS akmods
-FROM ghcr.io/ublue-os/akmods-nvidia-open:${KERNEL_FLAVOR}-${FEDORA_VERSION}-${KERNEL_VERSION} AS nvidia
+FROM ghcr.io/ublue-os/akmods:${KERNEL_FLAVOR}-${FEDORA_VERSION}-${ARCH} AS akmods
+FROM ghcr.io/ublue-os/akmods-nvidia-open:${KERNEL_FLAVOR}-${FEDORA_VERSION}-${ARCH} AS nvidia
 
 FROM scratch AS ctx
 COPY build_files /
