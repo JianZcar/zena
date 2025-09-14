@@ -12,7 +12,8 @@
   content: |
     [Lenovo Ideapad Gaming 3]
     MatchUdevType=keyboard
-    MatchName="ITE Tech. Inc. ITE Device(8176) Keyboard"
+    MatchVendor=048d
+    MatchProduct=c976
     AttrKeyboardIntegration=internal
 
 - path: /usr/lib/tuned/profiles/throughput-performance-bazzite/tuned.conf
