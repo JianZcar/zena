@@ -8,6 +8,13 @@
         - org.gnome.Nautilus.desktop
         - page.kramo.Cartridges.desktop
 
+- path: /etc/share/libinput/zz1-00-lenovo.quirks
+  content: |
+    [Lenovo Ideapad Gaming 3]
+    MatchUdevType=keyboard
+    MatchName="ITE Tech. Inc. ITE Device(8176) Keyboard"
+    AttrKeyboardIntegration=internal
+
 - path: /usr/lib/tuned/profiles/throughput-performance-bazzite/tuned.conf
   content: |
     #
@@ -85,7 +92,7 @@
 
     [video]
     panel_power_savings=1
-    
+
 - path: /etc/pipewire/pipewire.conf.d/virtual-channels.conf
   content: |
     context.modules = [
