@@ -8,7 +8,7 @@
         - org.gnome.Nautilus.desktop
         - page.kramo.Cartridges.desktop
 
-- path: /etc/share/libinput/zz1-00-lenovo.quirks
+- path: /usr/share/libinput/zz1-00-lenovo.quirks
   content: |
     [Lenovo Ideapad Gaming 3]
     MatchUdevType=keyboard
