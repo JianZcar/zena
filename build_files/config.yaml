@@ -12,8 +12,8 @@
   content: |
     [Lenovo Ideapad Gaming 3]
     MatchUdevType=keyboard
-    MatchVendor=048d
-    MatchProduct=c976
+    MatchVendor=0x048D
+    MatchProduct=0xC976
     AttrKeyboardIntegration=internal
 
 - path: /usr/lib/tuned/profiles/throughput-performance-bazzite/tuned.conf
