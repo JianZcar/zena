@@ -13,7 +13,7 @@ PKGS_TO_INSTALL=(
     stow
 
     # System Utilities
-    distrobox 
+    distrobox
     btop
     duf
     fastfetch
@@ -44,7 +44,7 @@ PKGS_TO_INSTALL=(
     wlr-randr # Wayland output management
     xrandr
     xwininfo
-    mesa-libGLU 
+    mesa-libGLU
 
     pipewire-alsa.i686
 
@@ -82,6 +82,10 @@ done
 for i in {1..5}; do
     dnf5 -y install "$(curl -s https://api.github.com/repos/OpenTabletDriver/OpenTabletDriver/releases/latest | jq -r '.assets[] | select(.name|test(".*rpm$")) | .browser_download_url')" && break || sleep 5
 done
+
+curl -L -o /tmp/nvim.tar.gz https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+tar --no-same-owner --no-same-permissions --no-overwrite-dir -xvzf /tmp/nvim.tar.gz -C /opt
+sudo ln -sf /opt/nvim-linux-x86_64/bin/nvim /usr/bin/nvim
 
 curl -Lo /usr/bin/installcab https://raw.githubusercontent.com/bazzite-org/steam-proton-mf-wmv/master/installcab.py
 chmod +x /usr/bin/installcab
