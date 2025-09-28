@@ -8,6 +8,7 @@ services=(
     ublue-os-media-automount.service
     zena-first-boot.service
     tailscaled.service
+    keyd
 )
 
 user_services=(

@@ -12,6 +12,8 @@ PKGS_TO_INSTALL=(
     fish
     stow
 
+    keyd
+
     # System Utilities
     distrobox
     btop
@@ -65,7 +67,6 @@ PKGS_TO_INSTALL=(
     firewall-config
     lsb_release
     openssh-askpass
-    stress-ng # Stress test system
     wmctrl
 )
 

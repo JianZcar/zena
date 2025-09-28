@@ -13,11 +13,13 @@ COPRS=(
     bazzite-org/LatencyFleX
     bazzite-org/obs-vkcapture
     ublue-os/packages
-    ublue-os/staging 
-    ublue-os/akmods 
+    ublue-os/staging
+    ublue-os/akmods
 
     atim/heroic-games-launcher
     atim/starship
+
+    alternateved/keyd
 )
 
 for COPR in "${COPRS[@]}"; do
@@ -52,5 +54,5 @@ dnf5 -y config-manager setopt "*akmods*".priority=2
 eval "$(/ctx/helper/dnf5-setopt.sh setopt '*negativo17*' priority=3 exclude='mesa-* *xone*')"
 
 dnf5 -y config-manager setopt "*rpmfusion*".priority=4 "*rpmfusion*".exclude="mesa-*"
-dnf5 -y config-manager setopt "terra-mesa".priority=5 "terra-mesa".enabled=true 
+dnf5 -y config-manager setopt "terra-mesa".priority=5 "terra-mesa".enabled=true
 dnf5 -y config-manager setopt "terra-nvidia".enabled=false

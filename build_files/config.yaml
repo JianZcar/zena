@@ -8,12 +8,17 @@
         - org.gnome.Nautilus.desktop
         - page.kramo.Cartridges.desktop
 
-- path: /usr/share/libinput/zz1-00-lenovo.quirks
+- path: /usr/share/libinput/zz1-00-zena.quirks
   content: |
     [Lenovo Ideapad Gaming 3]
     MatchUdevType=keyboard
     MatchVendor=0x048D
     MatchProduct=0xC976
+    AttrKeyboardIntegration=internal
+
+    [Serial Keyboards]
+    MatchUdevType=keyboard
+    MatchName=keyd*keyboard
     AttrKeyboardIntegration=internal
 
 - path: /usr/lib/tuned/profiles/throughput-performance-bazzite/tuned.conf
