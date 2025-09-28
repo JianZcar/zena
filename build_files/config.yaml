@@ -21,6 +21,16 @@
     MatchName=keyd*keyboard
     AttrKeyboardIntegration=internal
 
+- path: /etc/keyd/default.conf
+  content: |
+    [ids]
+
+    *
+
+    [main]
+    capslock = overload(control, esc)
+    esc = capslock
+
 - path: /usr/lib/tuned/profiles/throughput-performance-bazzite/tuned.conf
   content: |
     #
