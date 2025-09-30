@@ -29,7 +29,8 @@
 
     [main]
     
-    capslock = overloadi(esc, overloadt2(control, capslock, 200), 150)
+    capslock = overloadt2(overloadt2(control, capslock, 1000), esc, 150)
+
 
 - path: /usr/lib/tuned/profiles/throughput-performance-bazzite/tuned.conf
   content: |
