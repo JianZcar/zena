@@ -28,9 +28,7 @@
     *
 
     [main]
-    overload_tap_timeout = 250
-    capslock = overload(control, esc)
-    esc = capslock
+    capslock = overloadi(esc, overloadt2(control, capslock, 200), 150)
 
 - path: /usr/lib/tuned/profiles/throughput-performance-bazzite/tuned.conf
   content: |
