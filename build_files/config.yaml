@@ -24,12 +24,14 @@
 - path: /etc/keyd/default.conf
   content: |
     [ids]
-
     *
 
     [main]
-    
     capslock = overloadt2(control, esc, 150)
+
+    [shift]
+    leftshift = capslock
+    rightshift = capslock
 
 
 - path: /usr/lib/tuned/profiles/throughput-performance-bazzite/tuned.conf
