@@ -27,7 +27,7 @@
     *
 
     [main]
-    capslock = overloadt2(control, esc, 200)
+    capslock = overloadt2(control, esc, 500)
 
     [shift]
     leftshift = capslock
