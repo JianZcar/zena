@@ -11,7 +11,7 @@ mkdir -p /etc/zena
 cp -r /ctx/first-boot /etc/zena/
 
 sed -i 's/#UserspaceHID.*/UserspaceHID=true/' /etc/bluetooth/input.conf
-sed -i 's/^#SCX_FLAGS=/SCX_FLAGS=/' /etc/default/scx
+# sed -i 's/^#SCX_FLAGS=/SCX_FLAGS=/' /etc/default/scx
 
 sed -i 's/ --xdg-runtime=\\"${XDG_RUNTIME_DIR}\\"//g' /usr/bin/btrfs-assistant-launcher
 sed -i 's|grub_probe} --target=device /`|grub_probe} --target=device /sysroot`|g' /usr/bin/grub2-mkconfig
