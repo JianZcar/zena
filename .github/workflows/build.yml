@@ -100,8 +100,7 @@ jobs:
         run: |
           RECHUNK_REF="${{ steps.rechunk.outputs.ref }}"
           echo "Rechunk ref: $RECHUNK_REF"
-          skopeo copy "$RECHUNK_REF" docker-archive:image.tar
-          sudo chown $(id -u):$(id -g) image.tar
+          sudo skopeo copy "$RECHUNK_REF" docker-archive:image.tar
 
       - name: Upload image artifact
         uses: actions/upload-artifact@v4
