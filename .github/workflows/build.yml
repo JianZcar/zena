@@ -101,7 +101,7 @@ jobs:
         run: |
           RECHUNK_REF="${{ steps.rechunk.outputs.ref }}"
           echo "Rechunk ref: ${RECHUNK_REF}"
-          skopeo copy "${RECHUNK_REF}" "docker-archive:image.tar"
+          sudo skopeo copy "${RECHUNK_REF}" "docker-archive:image.tar"
 
       - name: Upload image artifact
         uses: actions/upload-artifact@v4
@@ -146,7 +146,7 @@ jobs:
           for tag in $TAGS; do
             TARGET="docker://${IMAGE_REGISTRY}/${IMAGE_NAME}:$tag"
             echo "Pushing ${TARGET} from docker-archive:image.tar"
-            skopeo copy --dest-creds "${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}" \
+            sudo skopeo copy --dest-creds "${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}" \
               "docker-archive:image.tar" \
               "$TARGET"
           done
