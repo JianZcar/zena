@@ -91,11 +91,16 @@ jobs:
           skip_compression: false
           version: ${{ steps.set_tags.outputs.tags }}
 
-      - name: Save as tar
+      - name: Set up skopeo
+        uses: warjiang/setup-skopeo@v0.1.3
+        with:
+          version: latest
+
+      - name: Save rechunked OCI layout to docker-archive
         run: |
           RECHUNK_REF="${{ steps.rechunk.outputs.ref }}"
-          sudo podman pull "$RECHUNK_REF"
-          sudo podman save --format docker-archive -o image.tar "$RECHUNK_REF"
+          echo "Rechunk ref: $RECHUNK_REF"
+          skopeo copy "$RECHUNK_REF" docker-archive:image.tar
           sudo chown $(id -u):$(id -g) image.tar
 
       - name: Upload image artifact
