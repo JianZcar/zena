@@ -43,7 +43,7 @@ jobs:
           echo "IMAGE_NAME=${IMAGE_NAME,,}" >> ${GITHUB_ENV}
 
       - name: Checkout
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
+        uses: actions/checkout@v4
 
       - name: Maximize build space
         uses: ublue-os/remove-unwanted-software@cc0becac701cf642c8f0a6613bbdaf5dc36b259e
@@ -96,15 +96,12 @@ jobs:
         with:
           version: latest
 
-      - name: Save and Clean
+      - name: Save rechunked image to docker-archive
+        id: save_archive
         run: |
           RECHUNK_REF="${{ steps.rechunk.outputs.ref }}"
-          echo "Rechunk ref: $RECHUNK_REF"
-          sudo skopeo copy "$RECHUNK_REF" docker-archive:image.tar
-          sudo podman rmi "localhost/${IMAGE_NAME}:${DEFAULT_TAG}" || true
-          sudo podman system prune -a -f --volumes || true
-          sudo buildah rm $(buildah containers -q) || true
-          sudo buildah rmi --all || true
+          echo "Rechunk ref: ${RECHUNK_REF}"
+          skopeo copy "${RECHUNK_REF}" "docker-archive:image.tar"
 
       - name: Upload image artifact
         uses: actions/upload-artifact@v4
@@ -112,11 +109,16 @@ jobs:
           name: image-tar
           path: image.tar
 
+      - name: Cleanup container storage
+        run: |
+          sudo podman system prune -a -f --volumes || true
+
   push:
     name: Push
     runs-on: ubuntu-24.04
     needs: build
     if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    timeout-minutes: 120
     permissions:
       contents: read
       packages: write
@@ -129,32 +131,24 @@ jobs:
           name: image-tar
           path: .
 
-      - name: Load image into podman
-        id: load
-        run: |
-          sudo podman load -i image.tar
-          echo "rechunk_ref=${{ needs.build_rechunk.outputs.rechunk_ref }}" >> $GITHUB_OUTPUT
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@184bdaa0721073962dff0199f1fb9940f07167d1
+      - name: Set up skopeo
+        uses: warjiang/setup-skopeo@v0.1.3
         with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          version: latest
 
-      - name: Tag & Push to GHCR
+      - name: Push image from archive via skopeo
         env:
-          TAGS: ${{ needs.build_rechunk.outputs.tags }}
+          TAGS: ${{ needs.build.outputs.tags }}
           IMAGE_NAME: ${{ env.IMAGE_NAME }}
           IMAGE_REGISTRY: ${{ env.IMAGE_REGISTRY }}
-          RECHUNK_REF: ${{ needs.build_rechunk.outputs.rechunk_ref }}
         run: |
+          # push directly from the docker-archive artifact to GHCR (no podman load)
           for tag in $TAGS; do
-            TARGET="${IMAGE_REGISTRY}/${IMAGE_NAME}:$tag"
-            echo "Tagging ${RECHUNK_REF} -> ${TARGET}"
-            sudo podman tag "${RECHUNK_REF}" "${TARGET}"
-            echo "Pushing ${TARGET}"
-            sudo podman push "${TARGET}"
+            TARGET="docker://${IMAGE_REGISTRY}/${IMAGE_NAME}:$tag"
+            echo "Pushing ${TARGET} from docker-archive:image.tar"
+            skopeo copy --dest-creds "${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}" \
+              "docker-archive:image.tar" \
+              "$TARGET"
           done
 
       - name: Install Cosign (for signing)
@@ -162,11 +156,15 @@ jobs:
 
       - name: Sign images with Cosign (optional)
         env:
-          TAGS: ${{ needs.build_rechunk.outputs.tags }}
+          TAGS: ${{ needs.build.outputs.tags }}
           IMAGE_NAME: ${{ env.IMAGE_NAME }}
           IMAGE_REGISTRY: ${{ env.IMAGE_REGISTRY }}
           COSIGN_PRIVATE_KEY: ${{ secrets.SIGNING_SECRET }}
         run: |
+          if [ -z "${COSIGN_PRIVATE_KEY}" ]; then
+            echo "COSIGN_PRIVATE_KEY not set; skipping signing."
+            exit 0
+          fi
           for tag in $TAGS; do
             IMAGE_FULL="${IMAGE_REGISTRY}/${IMAGE_NAME}:$tag"
             echo "Signing ${IMAGE_FULL}"
