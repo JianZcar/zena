@@ -96,11 +96,15 @@ jobs:
         with:
           version: latest
 
-      - name: Save rechunked OCI layout to docker-archive
+      - name: Save and Clean
         run: |
           RECHUNK_REF="${{ steps.rechunk.outputs.ref }}"
           echo "Rechunk ref: $RECHUNK_REF"
           sudo skopeo copy "$RECHUNK_REF" docker-archive:image.tar
+          sudo podman rmi "localhost/${IMAGE_NAME}:${DEFAULT_TAG}" || true
+          sudo podman system prune -a -f --volumes || true
+          sudo buildah rm $(buildah containers -q) || true
+          sudo buildah rmi --all || true
 
       - name: Upload image artifact
         uses: actions/upload-artifact@v4
