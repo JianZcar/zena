@@ -165,7 +165,7 @@ jobs:
           done
 
       - name: Install Cosign (for signing)
-        uses: sigstore/cosign-installer@d7543c93d881b35a8faa02e8e3605f69b7a1ce62
+        uses: sigstore/cosign-installer@faadad0cce49287aee09b3a48701e75088a2c6ad
 
       - name: Login to GHCR for Cosign
         run: |
