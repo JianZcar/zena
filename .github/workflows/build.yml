@@ -142,37 +142,52 @@ jobs:
           version: latest
 
       - name: Push image from archive via skopeo
+        id: push_image
         env:
           TAGS: ${{ needs.build.outputs.tags }}
-          IMAGE_NAME: ${{ env.IMAGE_NAME }}
-          IMAGE_REGISTRY: ${{ env.IMAGE_REGISTRY }}
+          IMAGE_NAME: ${{ github.event.repository.name }}
+          IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
         run: |
-          # push directly from the docker-archive artifact to GHCR (no podman load)
+          IMAGE_NAME_LC=$(echo "${IMAGE_NAME}" | tr '[:upper:]' '[:lower:]')
+          IMAGE_REGISTRY_LC=$(echo "${IMAGE_REGISTRY}" | tr '[:upper:]' '[:lower:]')
+          echo "image_name=${IMAGE_NAME_LC}" >> $GITHUB_OUTPUT
+          echo "image_registry=${IMAGE_REGISTRY_LC}" >> $GITHUB_OUTPUT
+
           for tag in $TAGS; do
-            TARGET="docker://${IMAGE_REGISTRY}/${IMAGE_NAME}:$tag"
+            TARGET="docker://${IMAGE_REGISTRY_LC}/${IMAGE_NAME_LC}:${tag}"
             echo "Pushing ${TARGET} from docker-archive:image.tar"
             sudo skopeo copy --dest-creds "${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}" \
               "docker-archive:image.tar" \
               "$TARGET"
+
+            DIGEST=$(skopeo inspect --creds "${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}" "docker://${IMAGE_REGISTRY_LC}/${IMAGE_NAME_LC}:${tag}" | jq -r .Digest)
+            echo "digest_${tag}=${DIGEST}" >> $GITHUB_OUTPUT
+            echo "Published ${IMAGE_REGISTRY_LC}/${IMAGE_NAME_LC}@${DIGEST}"
           done
 
       - name: Install Cosign (for signing)
         uses: sigstore/cosign-installer@d7543c93d881b35a8faa02e8e3605f69b7a1ce62
 
-      - name: Sign images with Cosign (optional)
+      - name: Login to GHCR for Cosign
+        run: |
+          cosign login ghcr.io -u "${{ github.actor }}" -p "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Sign images with Cosign
         env:
           TAGS: ${{ needs.build.outputs.tags }}
-          IMAGE_NAME: ${{ env.IMAGE_NAME }}
-          IMAGE_REGISTRY: ${{ env.IMAGE_REGISTRY }}
           COSIGN_PRIVATE_KEY: ${{ secrets.SIGNING_SECRET }}
+          IMAGE_NAME: ${{ steps.push_image.outputs.image_name }}
+          IMAGE_REGISTRY: ${{ steps.push_image.outputs.image_registry }}
         run: |
           if [ -z "${COSIGN_PRIVATE_KEY}" ]; then
             echo "COSIGN_PRIVATE_KEY not set; skipping signing."
             exit 0
           fi
+
           for tag in $TAGS; do
-            IMAGE_FULL="${IMAGE_REGISTRY}/${IMAGE_NAME}:$tag"
+            DIGEST_VAR="digest_${tag}"
+            DIGEST=$(eval echo "\${${DIGEST_VAR}}")
+            IMAGE_FULL="${IMAGE_REGISTRY}/${IMAGE_NAME}@${DIGEST}"
             echo "Signing ${IMAGE_FULL}"
             cosign sign -y --key env://COSIGN_PRIVATE_KEY "${IMAGE_FULL}"
           done
-
