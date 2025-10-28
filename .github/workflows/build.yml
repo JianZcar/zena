@@ -148,6 +148,8 @@ jobs:
           IMAGE_NAME: ${{ github.event.repository.name }}
           IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
         run: |
+          set -euo pipefail
+
           IMAGE_NAME_LC=$(echo "${IMAGE_NAME}" | tr '[:upper:]' '[:lower:]')
           IMAGE_REGISTRY_LC=$(echo "${IMAGE_REGISTRY}" | tr '[:upper:]' '[:lower:]')
           echo "image_name=${IMAGE_NAME_LC}" >> $GITHUB_OUTPUT
@@ -159,10 +161,7 @@ jobs:
             sudo skopeo copy --dest-creds "${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}" \
               "docker-archive:image.tar" \
               "$TARGET"
-
-            DIGEST=$(skopeo inspect --creds "${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}" "docker://${IMAGE_REGISTRY_LC}/${IMAGE_NAME_LC}:${tag}" | jq -r .Digest)
-            echo "digest_${tag}=${DIGEST}" >> $GITHUB_OUTPUT
-            echo "Published ${IMAGE_REGISTRY_LC}/${IMAGE_NAME_LC}@${DIGEST}"
+            echo "Published ${IMAGE_REGISTRY_LC}/${IMAGE_NAME_LC}:${tag}"
           done
 
       - name: Install Cosign (for signing)
@@ -185,9 +184,7 @@ jobs:
           fi
 
           for tag in $TAGS; do
-            DIGEST_VAR="digest_${tag}"
-            DIGEST=$(eval echo "\${${DIGEST_VAR}}")
-            IMAGE_FULL="${IMAGE_REGISTRY}/${IMAGE_NAME}@${DIGEST}"
+            IMAGE_FULL="${IMAGE_REGISTRY}/${IMAGE_NAME}:${tag}"
             echo "Signing ${IMAGE_FULL}"
             cosign sign -y --key env://COSIGN_PRIVATE_KEY "${IMAGE_FULL}"
           done
