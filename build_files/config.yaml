@@ -16,24 +16,6 @@
     MatchProduct=0xC976
     AttrKeyboardIntegration=internal
 
-    [Serial Keyboards]
-    MatchUdevType=keyboard
-    MatchName=keyd*keyboard
-    AttrKeyboardIntegration=internal
-
-- path: /etc/keyd/default.conf
-  content: |
-    [ids]
-    *
-
-    [main]
-    capslock = overloadt2(control, esc, 500)
-
-    [shift]
-    leftshift = capslock
-    rightshift = capslock
-
-
 - path: /usr/lib/tuned/profiles/throughput-performance-bazzite/tuned.conf
   content: |
     #

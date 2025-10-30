@@ -12,8 +12,6 @@ PKGS_TO_INSTALL=(
     fish
     stow
 
-    keyd
-
     # System Utilities
     distrobox
     btop

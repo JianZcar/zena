@@ -2,13 +2,12 @@
 
 echo "::group:: ===$(basename "$0")==="
 
-set -euxo pipefail
+set -ouex pipefail
 
 services=(
     ublue-os-media-automount.service
     zena-first-boot.service
     tailscaled.service
-    keyd
 )
 
 user_services=(
