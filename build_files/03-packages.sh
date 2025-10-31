@@ -30,7 +30,6 @@ PKGS_TO_INSTALL=(
     snapper # BTRFS snapshot management
 
     # Hardware & Drivers
-    scrcpy
     ddcutil # DDC/CI control for monitors
     i2c-tools
     iwd # iNet Wireless Daemon

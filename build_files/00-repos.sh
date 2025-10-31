@@ -18,8 +18,6 @@ COPRS=(
 
     atim/heroic-games-launcher
     atim/starship
-
-    zeno/scrcpy
 )
 
 for COPR in "${COPRS[@]}"; do
