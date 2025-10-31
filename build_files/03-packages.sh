@@ -17,7 +17,6 @@ PKGS_TO_INSTALL=(
     btop
     duf
     fastfetch
-    glow
     gum
     p7zip
     p7zip-plugins
@@ -31,6 +30,7 @@ PKGS_TO_INSTALL=(
     snapper # BTRFS snapshot management
 
     # Hardware & Drivers
+    scrcpy
     ddcutil # DDC/CI control for monitors
     i2c-tools
     iwd # iNet Wireless Daemon
