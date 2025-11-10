@@ -26,7 +26,7 @@ on:
 env:
   IMAGE_NAME: ${{ github.event.repository.name }}
   IMAGE_REGISTRY: "ghcr.io/${{ github.repository_owner }}"
-  DEFAULT_TAG: "latest"
+  DEFAULT_TAG: "stable"
   BIB_IMAGE: "ghcr.io/lorbuschris/bootc-image-builder:20250608"
 
 concurrency:
