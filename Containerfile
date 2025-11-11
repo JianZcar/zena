@@ -1,10 +1,9 @@
 ARG FEDORA_VERSION=43
 ARG ARCH=x86_64
-ARG KERNEL_FLAVOR=bazzite
 ARG BASE_IMAGE_NAME=silverblue
 
-FROM ghcr.io/ublue-os/akmods:${KERNEL_FLAVOR}-${FEDORA_VERSION}-${ARCH} AS akmods
-FROM ghcr.io/ublue-os/akmods-nvidia-open:${KERNEL_FLAVOR}-${FEDORA_VERSION}-${ARCH} AS nvidia
+FROM ghcr.io/bazzite-org/kernel-bazzite:latest-f${FEDORA_VERSION}-${ARCH} AS kernel
+FROM ghcr.io/bazzite-org/nvidia-drivers:latest-f${FEDORA_VERSION}-${ARCH} AS nvidia
 
 FROM scratch AS ctx
 COPY build_files /
@@ -24,8 +23,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    --mount=type=bind,from=akmods,src=/kernel-rpms,dst=/tmp/kernel-rpms \
-    --mount=type=bind,from=akmods,src=/rpms,dst=/tmp/akmods-rpms \
+    --mount=type=bind,from=kernel,src=/,dst=/rpms/kernel
     /ctx/01-kernel.sh && \
     /ctx/helper/cleanup.sh
 
@@ -33,8 +31,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    --mount=type=bind,from=nvidia,src=/kernel-rpms,dst=/tmp/kernel-rpms \
-    --mount=type=bind,from=nvidia,src=/rpms,dst=/tmp/akmods-rpms \
+    --mount=type=bind,from=nvidia,src=/,dst=/rpms/nvidia
     /ctx/02-nvidia.sh && \
     /ctx/helper/cleanup.sh
 
