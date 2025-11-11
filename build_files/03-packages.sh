@@ -64,6 +64,7 @@ PKGS_TO_INSTALL=(
     wmctrl
 
     tuned
+    tuned-ppd
 )
 
 PKGS_TO_UNINSTALL=(
