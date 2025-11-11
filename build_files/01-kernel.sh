@@ -37,7 +37,7 @@ for pkg in "${pkgs[@]}"; do
     PKG_PAT+=("/rpms/kernel/${pkg}-6"*)
 done
 
-dnf5 -y install ${PKG_PAT[@]} --nodeps
+dnf5 -y install ${PKG_PAT[@]} --no-allow-downgrade
 
 dnf5 versionlock add $pkgs
 
