@@ -24,12 +24,10 @@ dnf5 install -y \
     /rpms/nvidia/nvidia-modprobe-5* \
     /rpms/nvidia/nvidia-persistenced-5* \
     /rpms/nvidia/xorg-x11* \
-    /rpms/nvidia/nvidia-container-toolkit-1* \
-    /rpms/nvidia/nvidia-container-toolkit-base-1* \
     /rpms/nvidia/libnvidia-container1-1* \
     /rpms/nvidia/libnvidia-container-tools-1*
 
-dnf5 install -y nvidia-container-toolkit-selinux
+dnf5 install -y nvidia-container-toolkit
 
 semodule --verbose --install /usr/share/selinux/packages/nvidia-container.pp
 
