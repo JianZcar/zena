@@ -4,6 +4,7 @@ ARG BASE_IMAGE_NAME=silverblue
 
 FROM ghcr.io/bazzite-org/kernel-bazzite:latest-f${FEDORA_VERSION}-${ARCH} AS kernel
 FROM ghcr.io/bazzite-org/nvidia-drivers:latest-f${FEDORA_VERSION}-${ARCH} AS nvidia
+FROM ghcr.io/ublue-os/akmods-nvidia-open:bazzite-${FEDORA_VERSION}-${ARCH} AS akmod-nvidia
 
 FROM scratch AS ctx
 COPY build_files /
@@ -32,6 +33,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
     --mount=type=bind,from=nvidia,src=/,dst=/rpms/nvidia \
+    --mount=type=bind,from=akmod-nvidia,src=/rpms,dst=/tmp/akmods-rpms \
     /ctx/02-nvidia.sh && \
     /ctx/helper/cleanup.sh
 

@@ -4,15 +4,12 @@ echo "::group:: ===$(basename "$0")==="
 
 set -ouex pipefail
 
+: "${AKMODNV_PATH:=/tmp/akmods-rpms}"
+dnf5 install -y "${AKMODNV_PATH}"/ublue-os/ublue-os-nvidia-addons-*.rpm
+
 dnf5 -y install \
-    egl-wayland.x86_64 \
-    egl-wayland.i686 \
     egl-wayland2.x86_64 \
     egl-wayland2.i686 && \
-
-RELEASE=$(rpm -E %fedora)
-
-dnf copr enable @ai-ml/nvidia-container-toolkit
 
 dnf5 install -y \
     /rpms/nvidia/libnvidia-cfg-* \
@@ -24,10 +21,11 @@ dnf5 install -y \
     /rpms/nvidia/nvidia-modprobe-5* \
     /rpms/nvidia/nvidia-persistenced-5* \
     /rpms/nvidia/xorg-x11* \
+    /rpms/nvidia/nvidia-container-toolkit-1* \
+    /rpms/nvidia/nvidia-container-toolkit-base-1* \
     /rpms/nvidia/libnvidia-container1-1* \
-    /rpms/nvidia/libnvidia-container-tools-1*
-
-dnf5 install -y nvidia-container-toolkit
+    /rpms/nvidia/libnvidia-container-tools-1* \
+    supergfxctl
 
 semodule --verbose --install /usr/share/selinux/packages/nvidia-container.pp
 
