@@ -23,7 +23,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    --mount=type=bind,from=kernel,src=/,dst=/rpms/kernel
+    --mount=type=bind,from=kernel,src=/,dst=/rpms/kernel \
     /ctx/01-kernel.sh && \
     /ctx/helper/cleanup.sh
 
@@ -31,7 +31,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    --mount=type=bind,from=nvidia,src=/,dst=/rpms/nvidia
+    --mount=type=bind,from=nvidia,src=/,dst=/rpms/nvidia \
     /ctx/02-nvidia.sh && \
     /ctx/helper/cleanup.sh
 
