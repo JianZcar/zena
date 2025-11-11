@@ -4,7 +4,13 @@ echo "::group:: ===$(basename "$0")==="
 
 set -ouex pipefail
 
-FRELEASE=$(rpm -E %fedora)
+dnf5 -y install \
+    egl-wayland.x86_64 \
+    egl-wayland.i686 \
+    egl-wayland2.x86_64 \
+    egl-wayland2.i686 && \
+
+RELEASE=$(rpm -E %fedora)
 
 dnf5 install -y \
     /rpms/nvidia/libnvidia-cfg-* \
@@ -21,7 +27,6 @@ dnf5 install -y \
     /rpms/nvidia/libnvidia-container1-1* \
     /rpms/nvidia/libnvidia-container-tools-1*
 
-systemctl enable ublue-nvctk-cdi.service
 semodule --verbose --install /usr/share/selinux/packages/nvidia-container.pp
 
 # Universal Blue specific Initramfs fixes
@@ -30,5 +35,9 @@ cp /etc/modprobe.d/nvidia-modeset.conf /usr/lib/modprobe.d/nvidia-modeset.conf
 sed -i 's@omit_drivers@force_drivers@g' /usr/lib/dracut/dracut.conf.d/99-nvidia.conf
 # as we need forced load, also mustpre-load intel/amd iGPU else chromium web browsers fail to use hardware acceleration
 sed -i 's@ nvidia @ i915 amdgpu nvidia @g' /usr/lib/dracut/dracut.conf.d/99-nvidia.conf
+
+rm -f /usr/share/vulkan/icd.d/nouveau_icd.*.json
+
+ln -s libnvidia-ml.so.1 /usr/lib64/libnvidia-ml.so
 
 echo "::endgroup::"
