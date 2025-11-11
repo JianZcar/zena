@@ -44,7 +44,9 @@ dnf5 versionlock add $pkgs
 pushd /usr/lib/kernel/install.d
 mv -f 05-rpmostree.install.bak 05-rpmostree.install
 mv -f 50-dracut.install.bak 50-dracut.install
-popddnf5 -y install /tmp/akmods-rpms/kmods/*v4l2loopback*.rpm
+popd
+
+dnf5 -y install /tmp/akmods-rpms/kmods/*v4l2loopback*.rpm
 
 dnf5 -y config-manager setopt "*rpmfusion*".enabled=false
 dnf5 -y copr enable bieszczaders/kernel-cachyos-addons
