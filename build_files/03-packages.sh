@@ -62,6 +62,8 @@ PKGS_TO_INSTALL=(
     lsb_release
     openssh-askpass
     wmctrl
+
+    tuned
 )
 
 PKGS_TO_UNINSTALL=(
