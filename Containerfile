@@ -9,7 +9,7 @@ FROM ghcr.io/ublue-os/akmods-nvidia-open:${KERNEL_FLAVOR}-${FEDORA_VERSION}-${AR
 FROM scratch AS ctx
 COPY build_files /
 
-FROM ghcr.io/jianzcar/fedora-gnome:stable AS base
+FROM ghcr.io/jianzcar/dms-niri:stable AS base
 
 ARG DEFAULT_TAG=${DEFAULT_TAG}
 
@@ -93,7 +93,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=tmpfs,dst=/tmp \
     /ctx/10-image-info.sh && \
     /ctx/helper/cleanup.sh
-    
+
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \

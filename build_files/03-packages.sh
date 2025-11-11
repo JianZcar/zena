@@ -30,10 +30,7 @@ PKGS_TO_INSTALL=(
     snapper # BTRFS snapshot management
 
     # Hardware & Drivers
-    ddcutil # DDC/CI control for monitors
     i2c-tools
-    iwd # iNet Wireless Daemon
-    libcec # HDMI CEC library
     lm_sensors
 
     # Display & Graphics
