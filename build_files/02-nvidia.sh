@@ -12,6 +12,8 @@ dnf5 -y install \
 
 RELEASE=$(rpm -E %fedora)
 
+dnf copr enable @ai-ml/nvidia-container-toolkit
+
 dnf5 install -y \
     /rpms/nvidia/libnvidia-cfg-* \
     /rpms/nvidia/libnvidia-fbc-* \
@@ -26,6 +28,8 @@ dnf5 install -y \
     /rpms/nvidia/nvidia-container-toolkit-base-1* \
     /rpms/nvidia/libnvidia-container1-1* \
     /rpms/nvidia/libnvidia-container-tools-1*
+
+dnf5 install -y nvidia-container-toolkit-selinux
 
 semodule --verbose --install /usr/share/selinux/packages/nvidia-container.pp
 
