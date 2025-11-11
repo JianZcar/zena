@@ -6,7 +6,7 @@ set -ouex pipefail
 
 # Define repositories and the packages to be swapped from them
 declare -A PKGS_TO_SWAP=(
-    ["terra-extras"]="switcheroo-control gnome-shell"
+    ["terra-extras"]="switcheroo-control"
     ["terra-mesa"]="mesa-filesystem"
 )
 
@@ -18,9 +18,6 @@ unset -v PKGS_TO_SWAP repo package
 
 # Lock versions for critical system packages
 PKGS_TO_LOCK=(
-    # GNOME & Display
-    gnome-shell
-    mutter
     xorg-x11-server-Xwayland
 
     # Pipewire
