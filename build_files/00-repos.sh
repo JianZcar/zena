@@ -10,12 +10,12 @@ mkdir -p /var/roothome
 COPRS=(
     bazzite-org/bazzite
     bazzite-org/bazzite-multilib
-    bazzite-org/LatencyFleX
     bazzite-org/obs-vkcapture
     ublue-os/packages
     ublue-os/staging
     ublue-os/akmods
 
+    kylegospo/LatencyFleX
     atim/heroic-games-launcher
     atim/starship
 )
