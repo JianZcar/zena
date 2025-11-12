@@ -6,7 +6,6 @@ set -ouex pipefail
 
 # Define repositories and the packages to be swapped from them
 declare -A PKGS_TO_SWAP=(
-    ["terra-extras"]="switcheroo-control"
     ["terra-mesa"]="mesa-filesystem"
 )
 
@@ -54,8 +53,6 @@ PKGS_TO_LOCK=(
     fwupd-plugin-modem-manager
     fwupd-plugin-uefi-capsule-data
 
-    # Other
-    switcheroo-control
 )
 
 dnf5 versionlock add "${PKGS_TO_LOCK[@]}"
