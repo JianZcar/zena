@@ -1,3 +1,13 @@
+- gschema:
+    id: org.gnome.shell
+    filename: zz1-00-extensions.gschema.override
+    settings:
+      favorite-apps:
+        - app.zen_browser.zen.desktop
+        - org.gnome.Ptyxis.desktop
+        - org.gnome.Nautilus.desktop
+        - page.kramo.Cartridges.desktop
+
 - path: /usr/share/libinput/zz1-00-zena.quirks
   content: |
     [Lenovo Ideapad Gaming 3]
@@ -5,6 +15,7 @@
     MatchVendor=0x048D
     MatchProduct=0xC976
     AttrKeyboardIntegration=internal
+
 
 - path: /usr/lib/tuned/profiles/throughput-performance-bazzite/tuned.conf
   content: |

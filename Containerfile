@@ -1,6 +1,5 @@
 ARG FEDORA_VERSION=43
 ARG ARCH=x86_64
-ARG BASE_IMAGE_NAME=silverblue
 
 FROM ghcr.io/bazzite-org/kernel-bazzite:latest-f${FEDORA_VERSION}-${ARCH} AS kernel
 FROM ghcr.io/bazzite-org/nvidia-drivers:latest-f${FEDORA_VERSION}-${ARCH} AS nvidia
@@ -9,7 +8,7 @@ FROM ghcr.io/ublue-os/akmods-nvidia-open:bazzite-${FEDORA_VERSION}-${ARCH} AS ak
 FROM scratch AS ctx
 COPY build_files /
 
-FROM ghcr.io/jianzcar/dms-niri:stable AS base
+FROM ghcr.io/jianzcar/fedora-gnome:stable AS base
 
 ARG DEFAULT_TAG=${DEFAULT_TAG}
 
