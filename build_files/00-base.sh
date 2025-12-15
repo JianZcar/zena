@@ -85,8 +85,6 @@ packages=(
   dbus-glib
   glib2
   shadow
-
-  chaotic-aur/bootc
 )
 pacman -S --noconfirm "${packages[@]}"
 
