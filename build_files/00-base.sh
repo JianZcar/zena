@@ -155,6 +155,16 @@ packages=(
 )
 pacman -S --noconfirm "${packages[@]}"
 
+cat <<'EOF' > /etc/sudoers.d/00-sudo-config
+%wheel ALL=(ALL:ALL) ALL
+
+Defaults pwfeedback
+Defaults secure_path="/usr/local/bin:/usr/bin:/bin:/home/linuxbrew/.linuxbrew/bin"
+Defaults env_keep += "EDITOR VISUAL PATH"
+Defaults timestamp_timeout=0
+EOF
+chmod 440 /etc/sudoers.d/00-sudo-config
+
 cat <<'EOF' > /usr/libexec/group-fix
 #!/bin/sh
 
