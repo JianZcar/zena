@@ -134,19 +134,19 @@ account    include      greetd
 session    include      greetd
 EOF
 
-groupadd -r greeter
-useradd -r -g greeter -d /var/lib/greeter -s /sbin/nologin greeter
+useradd -M -G video,input -s /usr/bin/nologin greeter || true
 
 system_services=(
-    greetd
+  greetd
 )
 systemctl enable "${system_services[@]}"
 
 user_services=(
-    dms
-    dsearch
-    gnome-keyring-daemon.socket
-    gnome-keyring-daemon.service
+  niri
+  dms
+  dsearch
+  gnome-keyring-daemon.socket
+  gnome-keyring-daemon.service
 )
 systemctl --global enable "${user_services[@]}"
 
