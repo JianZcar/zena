@@ -20,6 +20,7 @@ EOF
 
 pacman-key --init
 pacman -Syu --noconfirm
+pacman -S --noconfirm reflector
 
 pacman-key --recv-keys F3B607488DB35A47 --keyserver keyserver.ubuntu.com
 pacman-key --lsign-key F3B607488DB35A47
@@ -86,6 +87,50 @@ packages=(
   shadow
 
   chaotic-aur/bootc
+)
+pacman -S --noconfirm "${packages[@]}"
+
+# Drivers
+packages=(
+  intel-ucode
+
+  mesa
+  lib32-mesa
+  vulkan-intel
+  lib32-vulkan-intel
+  intel-media-driver
+  libva-intel-driver
+
+  nvidia-utils
+  nvidia-dkms
+  lib32-nvidia-utils
+  nvidia-settings
+  opencl-nvidia
+  lib32-opencl-nvidia
+
+  vulkan-icd-loader
+  lib32-vulkan-icd-loader
+  vulkan-tools
+
+  libglvnd
+  lib32-libglvnd
+  mesa-utils
+)
+pacman -S --noconfirm "${packages[@]}"
+
+# Media/Install utilities/Media drivers
+packages=(
+  librsvg
+  libglvnd
+  qt6-multimedia-ffmpeg
+  plymouth
+  acpid
+  dmidecode
+  mesa-utils
+  ntfs-3g
+  vulkan-tools
+  wayland-utils
+  playerctl
 )
 pacman -S --noconfirm "${packages[@]}"
 
