@@ -34,21 +34,28 @@ jobs:
 
     outputs:
       tags: ${{ steps.set_tags.outputs.tags }}
-      rechunk_ref: ${{ steps.rechunk.outputs.ref }}
 
     steps:
       - name: Prepare environment
         run: |
           echo "IMAGE_REGISTRY=${IMAGE_REGISTRY,,}" >> ${GITHUB_ENV}
           echo "IMAGE_NAME=${IMAGE_NAME,,}" >> ${GITHUB_ENV}
-          
+
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Maximize build space
-        uses: ublue-os/remove-unwanted-software@cc0becac701cf642c8f0a6613bbdaf5dc36b259e
-        with:
-          remove-codeql: true
+      # - name: Maximize build space
+      #   uses: ublue-os/remove-unwanted-software@cc0becac701cf642c8f0a6613bbdaf5dc36b259e
+      #   with:
+      #     remove-codeql: true
+      #
+      # - name: Mount BTRFS for podman storage
+      #   id: container-storage-action
+      #   uses: ublue-os/container-storage-action@911baca08baf30c8654933e9e9723cb399892140
+      #   continue-on-error: true
+      #   with:
+      #     target-dir: /var/lib/containers
+      #     mount-opts: compress-force=zstd:2
 
       - name: Get current date (UTC)
         id: date
@@ -64,44 +71,21 @@ jobs:
           echo "TAGS=$TAGS" >> $GITHUB_ENV
           echo "tags=$TAGS" >> $GITHUB_OUTPUT
 
-      - name: Prepare build args file
-        env:
-          DEFAULT_TAG: ${{ env.DEFAULT_TAG }}
-        run: |
-          cat <<EOF > build_args.txt
-          DEFAULT_TAG=${DEFAULT_TAG}
-          EOF
-
-      - name: Build image (buildah)
+      - name: Build image
         id: build_image
         run: |
           sudo buildah bud \
-            --build-arg-file build_args.txt \
             --format docker \
-            --tag "localhost/${{ env.IMAGE_NAME }}:${{ env.DEFAULT_TAG }}" \
+            --tag "${{ env.IMAGE_NAME }}:${{ env.DEFAULT_TAG }}" \
+            --label containers.bootc=1 \
+            --label ostree.bootable=1 \
             --file Containerfile
 
-      - name: Run Rechunker
-        id: rechunk
-        uses: hhd-dev/rechunk@v1.2.4
-        with:
-          rechunk: 'ghcr.io/hhd-dev/rechunk:v1.2.3'
-          ref: "localhost/${{ env.IMAGE_NAME }}:${{ env.DEFAULT_TAG }}"
-          prev-ref: "${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.DEFAULT_TAG }}"
-          skip_compression: false
-          version: ${{ steps.set_tags.outputs.tags }}
-
-      - name: Set up skopeo
-        uses: warjiang/setup-skopeo@v0.1.3
-        with:
-          version: latest
-
-      - name: Save rechunked image to docker-archive
-        id: save_archive
+      - name: Save image to docker-archive
         run: |
-          RECHUNK_REF="${{ steps.rechunk.outputs.ref }}"
-          echo "Rechunk ref: ${RECHUNK_REF}"
-          sudo skopeo copy "${RECHUNK_REF}" "docker-archive:image.tar"
+          sudo buildah push \
+            "${{ env.IMAGE_NAME }}:${{ env.DEFAULT_TAG }}" \
+            "docker-archive:image.tar"
 
       - name: Upload image artifact
         uses: actions/upload-artifact@v5
@@ -141,20 +125,15 @@ jobs:
         with:
           version: latest
 
-      - name: Push image from archive via skopeo
-        id: push_image
+      - name: Push image via skopeo
         env:
           TAGS: ${{ needs.build.outputs.tags }}
           IMAGE_NAME: ${{ github.event.repository.name }}
           IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
         run: |
           set -euo pipefail
-
           IMAGE_NAME_LC=$(echo "${IMAGE_NAME}" | tr '[:upper:]' '[:lower:]')
           IMAGE_REGISTRY_LC=$(echo "${IMAGE_REGISTRY}" | tr '[:upper:]' '[:lower:]')
-          echo "image_name=${IMAGE_NAME_LC}" >> $GITHUB_OUTPUT
-          echo "image_registry=${IMAGE_REGISTRY_LC}" >> $GITHUB_OUTPUT
-
           for tag in $TAGS; do
             TARGET="docker://${IMAGE_REGISTRY_LC}/${IMAGE_NAME_LC}:${tag}"
             echo "Pushing ${TARGET} from docker-archive:image.tar"
@@ -164,27 +143,22 @@ jobs:
             echo "Published ${IMAGE_REGISTRY_LC}/${IMAGE_NAME_LC}:${tag}"
           done
 
-      - name: Install Cosign (for signing)
+      - name: Install Cosign
         uses: sigstore/cosign-installer@faadad0cce49287aee09b3a48701e75088a2c6ad
 
       - name: Login to GHCR for Cosign
         run: |
           cosign login ghcr.io -u "${{ github.actor }}" -p "${{ secrets.GITHUB_TOKEN }}"
 
-      - name: Sign images with Cosign
-        env:
-          TAGS: ${{ needs.build.outputs.tags }}
-          COSIGN_PRIVATE_KEY: ${{ secrets.SIGNING_SECRET }}
-          IMAGE_NAME: ${{ steps.push_image.outputs.image_name }}
-          IMAGE_REGISTRY: ${{ steps.push_image.outputs.image_registry }}
+      - name: Sign container image
+        if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
         run: |
-          if [ -z "${COSIGN_PRIVATE_KEY}" ]; then
-            echo "COSIGN_PRIVATE_KEY not set; skipping signing."
-            exit 0
-          fi
-
-          for tag in $TAGS; do
-            IMAGE_FULL="${IMAGE_REGISTRY}/${IMAGE_NAME}:${tag}"
-            echo "Signing ${IMAGE_FULL}"
-            cosign sign -y --key env://COSIGN_PRIVATE_KEY "${IMAGE_FULL}"
+          set -euo pipefail
+          IMAGE_FULL="${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}"
+          for tag in ${{ needs.build.outputs.tags }}; do
+            echo "Signing ${IMAGE_FULL}:${tag}"
+            cosign sign -y --key env://COSIGN_PRIVATE_KEY "${IMAGE_FULL}:${tag}"
           done
+        env:
+          COSIGN_PRIVATE_KEY: ${{ secrets.SIGNING_SECRET }}
+          COSIGN_EXPERIMENTAL: false

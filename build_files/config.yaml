@@ -1,20 +1,230 @@
-- gschema:
-    id: org.gnome.shell
-    filename: zz1-00-extensions.gschema.override
-    settings:
-      favorite-apps:
-        - app.zen_browser.zen.desktop
-        - org.gnome.Ptyxis.desktop
-        - org.gnome.Nautilus.desktop
-        - page.kramo.Cartridges.desktop
+- path: /etc/nvidia/nvidia-application-profiles-rc.d/50-limit-free-buffer-pool-in-wayland-compositors.json
+  content: |
+    {
+        "rules": [
+            {
+                "pattern": {
+                    "feature": "procname",
+                    "matches": "niri"
+                },
+                "profile": "Limit Free Buffer Pool On Wayland Compositors"
+            }
+        ],
+        "profiles": [
+            {
+                "name": "Limit Free Buffer Pool On Wayland Compositors",
+                "settings": [
+                    {
+                        "key": "GLVidHeapReuseRatio",
+                        "value": 0
+                    }
+                ]
+            }
+        ]
+    }
 
-- path: /usr/share/libinput/zz1-00-zena.quirks
+- path: /usr/lib/systemd/zram-generator.conf
+  content: |
+    [zram0]
+    zram-size = min(ram, 8192)
+
+- path: /usr/lib/systemd/system-preset/91-resolved-default.preset
+  content: |
+    enable systemd-resolved.service
+
+- path: /usr/lib/tmpfiles.d/resolved-default.conf
+  content: |
+    L /etc/resolv.conf - - - - ../run/systemd/resolve/stub-resolv.conf
+
+- path: /etc/greetd/config.toml
+  content: |
+    [general]
+    service = "greetd-spawn"
+
+    [terminal]
+    vt = 1
+
+    [default_session]
+    command = "dms-greeter --command niri -C /etc/greetd/niri.kdl"
+    user = "greeter"
+
+- path: /etc/greetd/greetd-spawn.pam_env.conf
+  content: |
+    XDG_SESSION_TYPE DEFAULT=wayland OVERRIDE=wayland
+
+- path: /etc/pam.d/greetd-spawn
+  content: |
+    auth       include      greetd
+    auth       required     pam_env.so conffile=/etc/greetd/greetd-spawn.pam_env.conf
+    account    include      greetd
+    session    include      greetd
+
+- path: /etc/systemd/system/podman-tcp.service
+  content: |
+    [Unit]
+    Description=Podman TCP socket
+    After=network.target
+    StartLimitIntervalSec=0
+
+    [Service]
+    Type=simple
+    Restart=always
+    RestartSec=1
+    ExecStart=/usr/bin/podman system service --time=0 tcp://127.0.0.1:37017
+
+    [Install]
+    WantedBy=multi-user.target
+
+- path: /etc/greetd/niri.kdl
+  content: |
+    hotkey-overlay {
+        skip-at-startup
+    }
+
+    environment {
+        DMS_RUN_GREETER "1"
+    }
+
+    gestures {
+      hot-corners {
+        off
+      }
+    }
+
+    layout {
+      background-color "#000000"
+    }
+
+- path: /usr/lib/systemd/user/dms.service
+  content: |
+    [Unit]
+    Description=Shell Service
+    PartOf=graphical-session.target
+    After=graphical-session.target
+
+    [Service]
+    ExecStart=dms run
+    Restart=on-failure
+    RestartSec=1
+
+    [Install]
+    WantedBy=graphical-session.target
+
+- path: /usr/share/libinput/zz1-00-lenovo.quirks
   content: |
     [Lenovo Ideapad Gaming 3]
     MatchUdevType=keyboard
     MatchVendor=0x048D
     MatchProduct=0xC976
     AttrKeyboardIntegration=internal
+
+- path: /etc/xdg/mimeapps.list
+  content: |
+    [Default Applications]
+    # URI handlers
+    x-scheme-handler/http=dms-open.desktop
+    x-scheme-handler/https=dms-open.desktop
+    x-scheme-handler/ftp=dms-open.desktop
+    x-scheme-handler/mailto=dms-open.desktop
+
+    # Web & documents
+    text/html=dms-open.desktop
+    application/xhtml+xml=dms-open.desktop
+    text/plain=dms-open.desktop
+    application/xml=dms-open.desktop
+    text/xml=dms-open.desktop
+    application/pdf=dms-open.desktop
+
+    # Common archives
+    application/zip=dms-open.desktop
+    application/x-tar=dms-open.desktop
+    application/gzip=dms-open.desktop
+    application/x-bzip2=dms-open.desktop
+
+    # Common image formats
+    image/jpeg=dms-open.desktop
+    image/png=dms-open.desktop
+    image/gif=dms-open.desktop
+    image/webp=dms-open.desktop
+    image/svg+xml=dms-open.desktop
+    image/bmp=dms-open.desktop
+
+    # Common audio formats
+    audio/mpeg=dms-open.desktop
+    audio/ogg=dms-open.desktop
+    audio/flac=dms-open.desktop
+    audio/wav=dms-open.desktop
+
+    # Common video formats
+    video/mp4=dms-open.desktop
+    video/webm=dms-open.desktop
+    video/ogg=dms-open.desktop
+    video/x-msvideo=dms-open.desktop
+
+- path: /usr/local/bin/offload-launch
+  content: |
+    #!/usr/bin/env bash
+
+    watch_file="/run/nvidia-offload"
+    conf_file="$HOME/.config/offload-launch.conf"
+
+    [ -f "$watch_file" ] || exec "$@"
+    [ "$(cat "$watch_file" 2>/dev/null)" = "1" ] || exec "$@"
+    [ -f "$conf_file" ] || exec "$@"
+
+    enable_nvidia=0
+
+    while IFS= read -r raw_line || [ -n "$raw_line" ]; do
+        line="${raw_line%%#*}"
+        line="${line#"${line%%[![:space:]]*}"}"
+        line="${line%"${line##*[![:space:]]}"}"
+        [ -z "$line" ] && continue
+
+        for arg in "$@"; do
+            case "$arg" in
+                $line)
+                    enable_nvidia=1
+                    break 2
+                    ;;
+            esac
+        done
+    done < "$conf_file"
+
+    if [ "$enable_nvidia" -eq 1 ]; then
+        export __NV_PRIME_RENDER_OFFLOAD=1
+        export __GLX_VENDOR_LIBRARY_NAME=nvidia
+        export __VK_LAYER_NV_optimus=NVIDIA_only
+    fi
+
+    exec "$@"
+  permissions: "755"
+
+- path: /usr/lib/tuned/profiles/throughput-performance-bazzite/script.sh
+  content: |
+    #!/usr/bin/env bash
+
+    . /usr/lib/tuned/functions
+
+    start() {
+        file="/run/nvidia-offload"
+
+        if command -v nvidia-smi &> /dev/null; then
+            echo 1 | tee "$file"
+        else
+            echo 0 | tee "$file"
+        fi
+
+        return 0
+    }
+
+    stop() {
+        file="/run/nvidia-offload"
+        echo 0 | tee "$file"
+        return 0
+    }
+
+    process "$@"
+  permissions: "755"
 
 - path: /usr/lib/tuned/profiles/throughput-performance-bazzite/tuned.conf
   content: |
@@ -45,6 +255,9 @@
     vm.dirty_background_bytes = 134217728
     vm.page-cluster = 0
 
+    [script]
+    script=/usr/lib/tuned/profiles/throughput-performance-bazzite/script.sh
+
 - path: /usr/lib/tuned/profiles/balanced-bazzite/tuned.conf
   content: |
     #
@@ -73,6 +286,9 @@
     vm.dirty_bytes = 268435456
     vm.dirty_background_bytes = 134217728
     vm.page-cluster = 0
+
+    [script]
+    script=/usr/lib/tuned/profiles/balanced-bazzite/script.sh
 
 - path: /usr/lib/tuned/profiles/balanced-battery-bazzite/tuned.conf
   content: |
@@ -172,39 +388,6 @@
     ExecStart=otd-daemon
     Restart=always
     RestartSec=3
-
-    [Install]
-    WantedBy=graphical-session.target
-
-- path: /etc/systemd/system/zena-first-boot.service
-  content: |
-    [Unit]
-    Description=Zena First Boot Setup
-    After=multi-user.target
-    ConditionPathExists=!/var/lib/zena-done
-
-    [Service]
-    Type=oneshot
-    ExecStart=/etc/zena/first-boot/setup.sh
-    RemainAfterExit=true
-
-    [Install]
-    WantedBy=multi-user.target
-
-- path: /usr/lib/systemd/user/zena-first-boot-gui.service
-  content: |
-    [Unit]
-    Description=Zena First Boot Progress GUI
-    After=graphical-session.target
-    PartOf=graphical-session.target
-    ConditionPathExists=!/var/lib/zena-done
-
-    [Service]
-    Type=simple
-    ExecStart=/etc/zena/first-boot/setup.py
-    Restart=on-failure
-    Environment=XDG_RUNTIME_DIR=%t
-    Environment=GDK_BACKEND=wayland
 
     [Install]
     WantedBy=graphical-session.target
