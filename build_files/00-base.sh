@@ -93,25 +93,19 @@ packages=(
   intel-ucode
 
   mesa
-  lib32-mesa
   vulkan-intel
-  lib32-vulkan-intel
   intel-media-driver
   libva-intel-driver
 
   nvidia-utils
   nvidia-dkms
-  lib32-nvidia-utils
   nvidia-settings
   opencl-nvidia
-  lib32-opencl-nvidia
 
   vulkan-icd-loader
-  lib32-vulkan-icd-loader
   vulkan-tools
 
   libglvnd
-  lib32-libglvnd
   mesa-utils
 )
 pacman -S --noconfirm "${packages[@]}"
