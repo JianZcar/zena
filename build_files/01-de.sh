@@ -29,6 +29,7 @@ packages=(
   evince
   ffmpegthumbnailer
   gnome-epub-thumbnailer
+  libgsf
 
   wl-clipboard
   cliphist
@@ -51,8 +52,6 @@ AUR_PKGS=(
   quickshell-git
   dsearch-git
   greetd-dms-greeter-git
-  papers-thumbnailer
-  gsf-office-thumbnailer
   raw-thumbnailer
 )
 AUR_PKGS_STR="${AUR_PKGS[*]}"
