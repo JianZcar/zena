@@ -134,6 +134,9 @@ account    include      greetd
 session    include      greetd
 EOF
 
+groupadd -r greeter
+useradd -r -g greeter -d /var/lib/greeter -s /sbin/nologin greeter
+
 system_services=(
     greetd
 )
