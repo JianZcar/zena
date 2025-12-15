@@ -69,7 +69,6 @@ pacman -S --noconfirm $(pacman -Qq)
 packages=(
   base
   dracut
-  paru
 
   linux-cachyos-bore
   linux-cachyos-bore-headers
