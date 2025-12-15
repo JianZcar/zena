@@ -135,6 +135,7 @@ packages=(
   sudo
   bash
   bash-completion
+  git
   jq
   less
   lsof
