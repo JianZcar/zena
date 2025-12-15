@@ -98,7 +98,6 @@ packages=(
   libva-intel-driver
 
   nvidia-utils
-  nvidia-dkms
   nvidia-settings
   opencl-nvidia
 
