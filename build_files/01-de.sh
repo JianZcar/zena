@@ -59,12 +59,7 @@ AUR_PKGS_STR="${AUR_PKGS[*]}"
 
 su - build -c "
 set -xeuo pipefail
-cd \$HOME
-git clone https://aur.archlinux.org/paru-bin.git --single-branch /tmp/paru
-cd /tmp/paru
-makepkg -si --noconfirm
 paru -S --noconfirm --needed $AUR_PKGS_STR
-rm -rf /tmp/paru-bin
 "
 rm -f /etc/sudoers.d/99-build-aur
 userdel -r build
