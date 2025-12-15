@@ -8,7 +8,7 @@ shopt -s nullglob
 
 packages=(
   chaotic-aur/niri-git
-  chaotic-aur/xwayland-satellite-git
+  xwayland-satellite
 
   chaotic-aur/dms-shell-git
   chaotic-aur/matugen-git
@@ -48,7 +48,6 @@ echo "build ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/99-build-aur
 chmod 0440 /etc/sudoers.d/99-build-aur
 
 AUR_PKGS=(
-  xwayland-satellite-git
   quickshell-git
   dsearch-git
   greetd-dms-greeter-git
