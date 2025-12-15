@@ -40,7 +40,7 @@ packages=(
   nautilus-python
 )
 
-pacman -Sy --noconfirm --needed base-devel
+pacman -Sy --noconfirm --needed base-devel rust
 useradd -m -s /bin/bash build
 usermod -L build
 
@@ -61,7 +61,7 @@ paru -S --noconfirm --needed $AUR_PKGS_STR
 "
 rm -f /etc/sudoers.d/99-build-aur
 userdel -r build
-pacman -Rns --noconfirm $(pacman -Qgq base-devel)
+pacman -Rns --noconfirm $(pacman -Qgq base-devel) rust
 
 pacman -S --noconfirm "${packages[@]}"
 
