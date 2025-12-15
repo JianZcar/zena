@@ -4,6 +4,8 @@ echo "::group:: ===$(basename "$0")==="
 
 set -ouex pipefail
 
+shopt -s nullglob
+
 cat << 'EOF' > /usr/share/libalpm/hooks/package-cleanup.hook
 [Trigger]
 Operation = Install
@@ -85,6 +87,8 @@ packages=(
   dbus-glib
   glib2
   shadow
+
+  power-profiles-daemon
 )
 pacman -S --noconfirm "${packages[@]}"
 
@@ -113,6 +117,7 @@ pacman -S --noconfirm "${packages[@]}"
 packages=(
   librsvg
   libglvnd
+  qt6-multimedia
   qt6-multimedia-ffmpeg
   plymouth
   acpid
