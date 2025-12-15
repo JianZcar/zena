@@ -10,13 +10,10 @@ packages=(
   chaotic-aur/niri-git
   chaotic-aur/xwayland-satellite-git
 
-  chaotic-aur/quickshell-git
   chaotic-aur/dms-shell-git
-  chaotic-aur/dsearch-git
   chaotic-aur/matugen-git
 
   greetd
-  chaotic-aur/greetd-dms-greeter-git
 
   gnome-keyring
 
@@ -31,10 +28,7 @@ packages=(
   glycin
   evince
   ffmpegthumbnailer
-  papers-thumbnailer
   gnome-epub-thumbnailer
-  gsf-office-thumbnailer
-  chaotic-aur/raw-thumbnailer
 
   wl-clipboard
   cliphist
@@ -44,6 +38,38 @@ packages=(
   nautilus
   nautilus-python
 )
+
+pacman -Sy --noconfirm --needed base-devel
+useradd -m -s /bin/bash build
+usermod -L build
+
+echo "build ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/99-build-aur
+chmod 0440 /etc/sudoers.d/99-build-aur
+
+AUR_PKGS=(
+  xwayland-satellite-git
+  quickshell-git
+  dsearch-git
+  greetd-dms-greeter-git
+  papers-thumbnailer
+  gsf-office-thumbnailer
+  raw-thumbnailer
+)
+AUR_PKGS_STR="${AUR_PKGS[*]}"
+
+su - build -c "
+set -xeuo pipefail
+cd \$HOME
+git clone https://aur.archlinux.org/paru-bin.git /tmp/paru-bin
+cd /tmp/paru-bin
+makepkg -si --noconfirm
+paru -S --noconfirm --needed $AUR_PKGS_STR
+rm -rf /tmp/paru-bin
+"
+rm -f /etc/sudoers.d/99-build-aur
+userdel -r build
+pacman -Rns --noconfirm $(pacman -Qgq base-devel)
+
 pacman -S --noconfirm "${packages[@]}"
 
 cat > /etc/nvidia/nvidia-application-profiles-rc.d/50-limit-free-buffer-pool-in-wayland-compositors.json << 'EOF'
