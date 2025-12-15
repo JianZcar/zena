@@ -69,6 +69,7 @@ pacman -S --noconfirm $(pacman -Qq)
 packages=(
   base
   dracut
+  chaotic-aur/bootc
 
   linux-cachyos-bore
   linux-cachyos-bore-headers
