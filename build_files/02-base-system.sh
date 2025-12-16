@@ -41,8 +41,8 @@ ExecStart=/usr/libexec/group-fix /etc/group
 ExecStart=/usr/libexec/group-fix /etc/gshadow
 ExecStart=systemd-sysusers
 
-[Install] WantedBy=default.target
-WantedBy=multi-user.target
+[Install]
+WantedBy=default.target multi-user.target
 EOF
 
 cat <<'EOF' > /usr/lib/systemd/system-preset/01-group-fix.preset
