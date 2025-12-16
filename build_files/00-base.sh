@@ -190,6 +190,11 @@ packages=(
 )
 pacman -S --noconfirm "${packages[@]}"
 
+packages=(
+  flatpak-git
+)
+pacman -S --noconfirm "${packages[@]}"
+
 cat <<'EOF' > /etc/sudoers.d/00-sudo-config
 %wheel ALL=(ALL:ALL) ALL
 
@@ -233,6 +238,11 @@ EOF
 cat <<'EOF' > /usr/lib/systemd/system-preset/01-group-fix.preset
 enable group-fix.service
 EOF
+
+curl -Lo /etc/flatpak/remotes.d/flathub.flatpakrepo https://dl.flathub.org/repo/flathub.flatpakrepo && \
+echo "Default=true" | tee -a /etc/flatpak/remotes.d/flathub.flatpakrepo > /dev/null
+flatpak remote-add --if-not-exists --system flathub /etc/flatpak/remotes.d/flathub.flatpakrepo
+flatpak remote-modify --system --enable flathub
 
 system_services=(
   group-fix
