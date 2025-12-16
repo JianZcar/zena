@@ -239,6 +239,7 @@ system_services=(
   group-fix
   NetworkManager
   bluetooth
+  firewalld
 )
 systemctl enable "${system_services[@]}"
 
