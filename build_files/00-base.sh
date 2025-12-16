@@ -234,12 +234,10 @@ cat <<'EOF' > /usr/lib/systemd/system-preset/01-group-fix.preset
 enable group-fix.service
 EOF
 
-systemctl enable group-fix
-
 system_services=(
-  systemd-logind
-  systemd-resolved
   group-fix
+  systemd-homed
+  systemd-resolved
   NetworkManager
   bluetooth
   firewalld
