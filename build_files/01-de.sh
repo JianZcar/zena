@@ -59,6 +59,7 @@ su - build -c "
 set -xeuo pipefail
 paru -S --noconfirm --needed $AUR_PKGS_STR
 "
+
 rm -f /etc/sudoers.d/99-build-aur
 userdel -r build
 pacman -Rns --noconfirm base-devel paru rust
@@ -110,7 +111,6 @@ layout {
 }
 EOF
 
-mkdir -p /etc/greetd
 cat > /etc/greetd/config.toml << 'EOF'
 [general]
 service = "greetd-spawn"

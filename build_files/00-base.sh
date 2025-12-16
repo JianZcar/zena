@@ -114,6 +114,35 @@ packages=(
 )
 pacman -S --noconfirm "${packages[@]}"
 
+# Network Drivers
+packages=(
+  libmtp
+  nss-mdns
+  samba
+  smbclient
+  networkmanager
+  firewalld
+  udiskie
+  udisks2
+  bluez
+)
+pacman -S --noconfirm "${packages[@]}"
+
+# Audio Drivers
+packages=(
+  pipewire
+  pipewire-pulse
+  pipewire-zeroconf
+  pipewire-ffado
+  pipewire-libcamera
+  sof-firmware
+  wireplumber
+  alsa-firmware
+  pipewire-audio
+  linux-firmware-intel
+)
+pacman -S --noconfirm "${packages[@]}"
+
 # Media/Install utilities/Media drivers
 packages=(
   librsvg
