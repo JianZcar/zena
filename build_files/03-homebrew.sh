@@ -7,9 +7,9 @@ set -ouex pipefail
 shopt -s nullglob
 
 curl -s https://api.github.com/repos/ublue-os/packages/releases/latest \
-    | jq -r '.assets[] | select(.name | test("homebrew-x86_64.*\.tar\.zst")) | .browser_download_url' \
+    | jq -r '.assets[] | select(.name | test("homebrew-x86_64.*\\.tar\\.zst")) | .browser_download_url' \
     | xargs -I {} wget -O /usr/share/homebrew.tar.zst {}
-    
+
 cat << 'EOF' > /etc/profile.d/brew.sh
 [[ -d /home/linuxbrew/.linuxbrew && $- == *i* ]] && \
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
@@ -32,7 +32,7 @@ ExecStart=/usr/bin/chown -R 1000:1000 /var/home/linuxbrew
 ExecStart=/usr/bin/rm -rf /tmp/homebrew
 ExecStart=/usr/bin/touch /etc/.linuxbrew
 
-[Install] 
+[Install]
 WantedBy=multi-user.target
 EOF
 
