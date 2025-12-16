@@ -195,11 +195,6 @@ packages=(
 )
 pacman -S --noconfirm "${packages[@]}"
 
-curl -Lo /etc/flatpak/remotes.d/flathub.flatpakrepo https://dl.flathub.org/repo/flathub.flatpakrepo && \
-echo "Default=true" | tee -a /etc/flatpak/remotes.d/flathub.flatpakrepo > /dev/null
-flatpak remote-add --if-not-exists --system flathub /etc/flatpak/remotes.d/flathub.flatpakrepo
-flatpak remote-modify --system --enable flathub
-
 curl -s https://api.github.com/repos/ublue-os/packages/releases/latest \
     | jq -r '.assets[] | select(.name | test("homebrew-x86_64.*\\.tar\\.zst")) | .browser_download_url' \
     | xargs -I {} wget -O /usr/share/homebrew.tar.zst {}
