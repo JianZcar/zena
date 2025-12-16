@@ -88,6 +88,7 @@ packages=(
   dbus-glib
   glib2
   shadow
+  polkit
 
   power-profiles-daemon
 )
@@ -125,6 +126,12 @@ packages=(
   udiskie
   udisks2
   bluez
+  bluez‑utils
+  bluetooth‑utils
+  iw
+  wpa_supplicant
+  wireless_tools
+  rfkill
 )
 pacman -S --noconfirm "${packages[@]}"
 
@@ -229,5 +236,13 @@ enable group-fix.service
 EOF
 
 systemctl enable group-fix
+
+system_services=(
+  group-fix
+  NetworkManager
+  bluetooth
+  polkit
+)
+systemctl enable "${system_services[@]}"
 
 echo "::endgroup::"
