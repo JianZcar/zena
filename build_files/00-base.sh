@@ -88,6 +88,7 @@ packages=(
   dbus-glib
   glib2
   shadow
+  polkit
 
   power-profiles-daemon
 )
