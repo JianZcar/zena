@@ -67,7 +67,7 @@ pacman -Rns --noconfirm base-devel paru rust
 
 pacman -S --noconfirm "${packages[@]}"
 
-cat > /etc/nvidia/nvidia-application-profiles-rc.d/50-limit-free-buffer-pool-in-wayland-compositors.json << 'EOF'
+cat << 'EOF' > /etc/nvidia/nvidia-application-profiles-rc.d/50-limit-free-buffer-pool-in-wayland-compositors.json
 {
     "rules": [
         {
@@ -92,7 +92,7 @@ cat > /etc/nvidia/nvidia-application-profiles-rc.d/50-limit-free-buffer-pool-in-
 }
 EOF
 
-cat > /etc/greetd/niri.kdl << 'EOF'
+cat << 'EOF' > /etc/greetd/niri.kdl
 input {
     keyboard {
         numlock
@@ -125,7 +125,7 @@ layout {
 }
 EOF
 
-cat > /etc/greetd/config.toml << 'EOF'
+cat << 'EOF' > /etc/greetd/config.toml
 [terminal]
 vt = 1
 

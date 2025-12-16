@@ -37,7 +37,7 @@ pacman -U --noconfirm \
   'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' \
   'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
 
-cat <<EOF > /tmp/cachyos-repos
+cat << 'EOF' > /tmp/cachyos-repos
 [cachyos-v3]
 Include = /etc/pacman.d/cachyos-v3-mirrorlist
 
@@ -52,7 +52,7 @@ Include = /etc/pacman.d/cachyos-mirrorlist
 
 EOF
 
-cat <<EOF >> /etc/pacman.conf
+cat << 'EOF' >> /etc/pacman.conf
 
 [chaotic-aur]
 Include = /etc/pacman.d/chaotic-mirrorlist
@@ -193,9 +193,17 @@ pacman -S --noconfirm "${packages[@]}"
 packages=(
   flatpak-git
 )
-pacman -S --noconfirm "${packages[@]}"
 
-cat <<'EOF' > /etc/sudoers.d/00-sudo-config
+curl -Lo /etc/flatpak/remotes.d/flathub.flatpakrepo https://dl.flathub.org/repo/flathub.flatpakrepo && \
+echo "Default=true" | tee -a /etc/flatpak/remotes.d/flathub.flatpakrepo > /dev/null
+flatpak remote-add --if-not-exists --system flathub /etc/flatpak/remotes.d/flathub.flatpakrepo
+flatpak remote-modify --system --enable flathub
+
+curl -s https://api.github.com/repos/ublue-os/packages/releases/latest \
+    | jq -r '.assets[] | select(.name | test("homebrew-x86_64.*\\.tar\\.zst")) | .browser_download_url' \
+    | xargs -I {} wget -O /usr/share/homebrew.tar.zst {}
+
+cat << 'EOF' > /etc/sudoers.d/00-sudo-config
 %wheel ALL=(ALL:ALL) ALL
 
 Defaults pwfeedback
@@ -205,7 +213,7 @@ Defaults timestamp_timeout=0
 EOF
 chmod 440 /etc/sudoers.d/00-sudo-config
 
-cat <<'EOF' > /usr/libexec/group-fix
+cat << 'EOF' > /usr/libexec/group-fix
 #!/bin/sh
 
 cat /usr/lib/sysusers.d/*.conf \
@@ -218,7 +226,7 @@ cat /usr/lib/sysusers.d/*.conf \
 EOF
 chmod +x /usr/libexec/group-fix
 
-cat <<'EOF' > /usr/lib/systemd/system/group-fix.service
+cat << 'EOF' > /usr/lib/systemd/system/group-fix.service
 [Unit]
 Description=Fix system groups
 Wants=local-fs.target
@@ -239,10 +247,31 @@ cat <<'EOF' > /usr/lib/systemd/system-preset/01-group-fix.preset
 enable group-fix.service
 EOF
 
-curl -Lo /etc/flatpak/remotes.d/flathub.flatpakrepo https://dl.flathub.org/repo/flathub.flatpakrepo && \
-echo "Default=true" | tee -a /etc/flatpak/remotes.d/flathub.flatpakrepo > /dev/null
-flatpak remote-add --if-not-exists --system flathub /etc/flatpak/remotes.d/flathub.flatpakrepo
-flatpak remote-modify --system --enable flathub
+cat << 'EOF' > /etc/profile.d/brew.sh
+[[ -d /home/linuxbrew/.linuxbrew && $- == *i* ]] && \
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+EOF
+
+cat << 'EOF' > /usr/lib/systemd/system/brew-setup.service
+[Unit]
+Description=Setup Homebrew from tarball
+After=local-fs.target
+ConditionPathExists=!/var/home/linuxbrew/.linuxbrew
+ConditionPathExists=/usr/share/homebrew.tar.zst
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/mkdir -p /tmp/homebrew
+ExecStart=/usr/bin/mkdir -p /var/home/linuxbrew
+ExecStart=/usr/bin/tar --zstd -xf /usr/share/homebrew.tar.zst -C /tmp/homebrew
+ExecStart=/usr/bin/cp -R -n /tmp/homebrew/linuxbrew/.linuxbrew /var/home/linuxbrew
+ExecStart=/usr/bin/chown -R 1000:1000 /var/home/linuxbrew
+ExecStart=/usr/bin/rm -rf /tmp/homebrew
+ExecStart=/usr/bin/touch /etc/.linuxbrew
+
+[Install]
+WantedBy=multi-user.target
+EOF
 
 system_services=(
   group-fix
@@ -251,6 +280,8 @@ system_services=(
   NetworkManager
   bluetooth
   firewalld
+
+  brew-setup
 )
 systemctl enable "${system_services[@]}"
 
