@@ -237,6 +237,8 @@ EOF
 systemctl enable group-fix
 
 system_services=(
+  systemd-logind
+  systemd-resolved
   group-fix
   NetworkManager
   bluetooth
