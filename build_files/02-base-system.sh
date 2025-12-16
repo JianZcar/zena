@@ -1,0 +1,52 @@
+#!/bin/bash
+
+echo "::group:: ===$(basename "$0")==="
+
+set -ouex pipefail
+
+shopt -s nullglob
+
+cat << 'EOF' > /etc/sudoers.d/00-sudo-config
+%wheel ALL=(ALL:ALL) ALL
+
+Defaults pwfeedback
+Defaults secure_path="/usr/local/bin:/usr/bin:/bin:/home/linuxbrew/.linuxbrew/bin"
+Defaults env_keep += "EDITOR VISUAL PATH"
+Defaults timestamp_timeout=0
+EOF
+chmod 440 /etc/sudoers.d/00-sudo-config
+
+cat << 'EOF' > /usr/libexec/group-fix
+#!/bin/sh
+
+cat /usr/lib/sysusers.d/*.conf \
+  | grep -e "^g" \
+  | grep -v -e "^#" \
+  | awk "NF" \
+  | awk '{print $2}' \
+  | grep -v -e "wheel" -e "root" -e "sudo" \
+  | xargs -I{} sed -i "/{}/d" "$1"
+EOF
+chmod +x /usr/libexec/group-fix
+
+cat << 'EOF' > /usr/lib/systemd/system/group-fix.service
+[Unit]
+Description=Fix system groups
+Wants=local-fs.target
+After=local-fs.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/libexec/group-fix /etc/group
+ExecStart=/usr/libexec/group-fix /etc/gshadow
+ExecStart=systemd-sysusers
+
+[Install] WantedBy=default.target
+WantedBy=multi-user.target
+EOF
+
+cat <<'EOF' > /usr/lib/systemd/system-preset/01-group-fix.preset
+enable group-fix.service
+EOF
+
+echo "::endgroup::"
