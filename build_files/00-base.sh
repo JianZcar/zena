@@ -193,6 +193,7 @@ pacman -S --noconfirm "${packages[@]}"
 packages=(
   flatpak-git
 )
+pacman -S --noconfirm "${packages[@]}"
 
 curl -Lo /etc/flatpak/remotes.d/flathub.flatpakrepo https://dl.flathub.org/repo/flathub.flatpakrepo && \
 echo "Default=true" | tee -a /etc/flatpak/remotes.d/flathub.flatpakrepo > /dev/null
