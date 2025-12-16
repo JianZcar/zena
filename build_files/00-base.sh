@@ -126,8 +126,7 @@ packages=(
   udiskie
   udisks2
   bluez
-  bluez‑utils
-  bluetooth‑utils
+  bluez-utils
   iw
   wpa_supplicant
   wireless_tools
