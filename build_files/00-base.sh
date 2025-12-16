@@ -88,7 +88,6 @@ packages=(
   dbus-glib
   glib2
   shadow
-  polkit
 
   power-profiles-daemon
 )
@@ -240,7 +239,6 @@ system_services=(
   group-fix
   NetworkManager
   bluetooth
-  polkit
 )
 systemctl enable "${system_services[@]}"
 
