@@ -32,7 +32,7 @@ jobs:
         uses: osbuild/bootc-image-builder-action@main
         with:
           config-file: ./iso.toml
-          image: ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:stable
+          image: ghcr.io/jianzcar/zena:stable
           types: anaconda-iso
           rootfs: btrfs
           additional-args: --use-librepo=True
