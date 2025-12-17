@@ -33,7 +33,7 @@ jobs:
         with:
           config-file: ./iso.toml
           image: ghcr.io/jianzcar/zena:stable
-          types: anaconda-iso
+          types: bootc‑installer
           rootfs: btrfs
           additional-args: --use-librepo=True
 
