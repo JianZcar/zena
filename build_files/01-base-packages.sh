@@ -10,7 +10,6 @@ shopt -s nullglob
 packages=(
   base
   dracut
-  chaotic-aur/bootc
 
   linux-cachyos-bore
   linux-cachyos-bore-headers
@@ -18,6 +17,7 @@ packages=(
   linux-firmware
 
   ostree
+  bootc
   systemd
   btrfs-progs
   e2fsprogs
@@ -134,18 +134,10 @@ pacman -S --noconfirm "${packages[@]}"
 packages=(
   cachyos-settings
   flatpak-git
-
-  # To satisfy Anaconda Installer
-  rpm-tools
-  dnf
 )
 pacman -S --noconfirm "${packages[@]}"
 
-# Initialize rpm
-mkdir -p /var/lib/rpm && rpm --initdb
-mkdir -p /etc/pki/entitlement-host
-
-# For AUR packages
+# For AUR packages to be remove later
 pacman -Sy --noconfirm --needed base-devel paru rust
 
 echo "::endgroup::"

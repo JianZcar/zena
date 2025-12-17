@@ -7,11 +7,11 @@ set -ouex pipefail
 shopt -s nullglob
 
 packages=(
-  chaotic-aur/niri-git
+  niri-git
   xwayland-satellite
 
-  chaotic-aur/dms-shell-git
-  chaotic-aur/matugen-git
+  dms-shell-git
+  matugen-git
 
   greetd
 
