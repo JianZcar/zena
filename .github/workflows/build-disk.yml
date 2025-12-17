@@ -6,6 +6,7 @@ on:
 jobs:
   build_release:
     name: Build and release disk image
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
       packages: read
