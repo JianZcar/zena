@@ -65,11 +65,4 @@ mv /tmp/cachyos-repos /etc/pacman.conf
 pacman -Sy --noconfirm pacman
 pacman -S --noconfirm $(pacman -Qq)
 
-# Make a build user for AUR
-useradd -m -s /bin/bash build
-usermod -L build
-
-echo "build ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/99-build-aur
-chmod 0440 /etc/sudoers.d/99-build-aur
-
 echo "::endgroup::"
