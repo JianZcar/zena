@@ -141,6 +141,9 @@ packages=(
 )
 pacman -S --noconfirm "${packages[@]}"
 
+# Initialize rpm
+mkdir -p /var/lib/rpm && rpm --initdb
+
 # For AUR packages
 pacman -Sy --noconfirm --needed base-devel paru rust
 
