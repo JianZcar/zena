@@ -33,7 +33,7 @@ jobs:
         with:
           config-file: ./iso.toml
           image: ghcr.io/jianzcar/zena:stable
-          types: bootc‑installer
+          types: bootc-installer
           rootfs: btrfs
           additional-args: --use-librepo=True
 
