@@ -41,13 +41,6 @@ packages=(
   bazaar
 )
 
-pacman -Sy --noconfirm --needed base-devel paru rust
-useradd -m -s /bin/bash build
-usermod -L build
-
-echo "build ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/99-build-aur
-chmod 0440 /etc/sudoers.d/99-build-aur
-
 AUR_PKGS=(
   quickshell-git
   dsearch-git

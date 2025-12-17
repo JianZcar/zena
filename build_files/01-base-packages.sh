@@ -132,8 +132,12 @@ packages=(
 pacman -S --noconfirm "${packages[@]}"
 
 packages=(
+  cachyos-settings
   flatpak-git
 )
 pacman -S --noconfirm "${packages[@]}"
+
+# For AUR packages
+pacman -Sy --noconfirm --needed base-devel paru rust
 
 echo "::endgroup::"
