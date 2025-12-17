@@ -15,6 +15,7 @@ system_services=(
   firewalld
 
   brew-setup
+  update-bootc-remote
 )
 systemctl enable "${system_services[@]}"
 

@@ -56,4 +56,22 @@ cat <<'EOF' > /usr/lib/systemd/system-preset/01-group-fix.preset
 enable group-fix.service
 EOF
 
+cat << 'EOF' > /usr/lib/systemd/system/update-bootc-remote.service
+[Unit]
+Description=Bootc switch to remote Zena image
+Requires=local-fs.target
+After=local-fs.target containers-storage.service multi-user.target
+ConditionPathExists=/usr/bin/bootc
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/bootc switch --mutate-in-place --transport registry ghcr.io/jianzcar/zena:stable
+StandardOutput=journal+console
+StandardError=journal+console
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
 echo "::endgroup::"
