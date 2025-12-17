@@ -134,6 +134,11 @@ pacman -S --noconfirm "${packages[@]}"
 packages=(
   cachyos-settings
   flatpak-git
+
+  # To satisfy Anaconda Installer
+  rpm-tools
+  dnf
+  dnf5
 )
 pacman -S --noconfirm "${packages[@]}"
 
