@@ -137,7 +137,6 @@ packages=(
 
   # To satisfy Anaconda Installer
   rpm-tools
-  dnf
   dnf5
 )
 pacman -S --noconfirm "${packages[@]}"
