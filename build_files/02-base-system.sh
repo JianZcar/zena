@@ -74,4 +74,27 @@ RemainAfterExit=yes
 WantedBy=multi-user.target
 EOF
 
+cat << 'EOF' > /usr/lib/systemd/system-preset/01-update-bootc-remote.preset
+enable update-bootc-remote.service
+EOF
+
+cat << 'EOF' > /usr/lib/systemd/system/dms-greeter-cache.service
+[Unit]
+Description=Create /var/cache/dms-greeter
+Wants=local-fs.target
+After=local-fs.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/mkdir -p /var/cache/dms-greeter
+RemainAfterExit=yes
+
+[Install]
+WantedBy=default.target multi-user.target
+EOF
+
+cat << 'EOF' > /usr/lib/systemd/system-preset/01-dms-greeter-cache.preset
+enable dms-greeter-cache.service
+EOF
+
 echo "::endgroup::"
