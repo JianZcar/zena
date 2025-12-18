@@ -14,8 +14,9 @@ system_services=(
   bluetooth
   firewalld
 
-  brew-setup
+  dms-greeter-cache
   update-bootc-remote
+  brew-setup
 )
 systemctl enable "${system_services[@]}"
 

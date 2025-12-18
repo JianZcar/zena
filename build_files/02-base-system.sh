@@ -83,6 +83,7 @@ cat << 'EOF' > /usr/lib/systemd/system/dms-greeter-cache.service
 Description=Create /var/cache/dms-greeter
 Wants=local-fs.target
 After=local-fs.target
+ConditionPathExists=!/var/cache/dms-greeter
 
 [Service]
 Type=oneshot
