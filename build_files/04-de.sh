@@ -143,4 +143,8 @@ systemctl --global enable "${user_services[@]}"
 
 echo "Arch" | tee "/etc/hostname"
 
+cat << 'EOF' > /etc/machine-info
+PRETTY_HOSTNAME="Arch (zena)"
+EOF
+
 echo "::endgroup::"
