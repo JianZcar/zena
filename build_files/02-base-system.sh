@@ -85,7 +85,9 @@ cat << 'EOF' > /usr/libexec/initial-install
 mkdir -p /var/cache/dms-greeter
 systemctl set-default graphical.target
 touch /var/init
-( sleep 2 && systemctl reboot ) &
+
+systemd-run --on-active=2s --description="Delayed Reboot" systemctl reboot
+
 exit 0
 EOF
 chmod +x /usr/libexec/initial-install
