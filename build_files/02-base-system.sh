@@ -66,8 +66,6 @@ ConditionPathExists=/usr/bin/bootc
 [Service]
 Type=oneshot
 ExecStart=/usr/bin/bootc switch --mutate-in-place --transport registry ghcr.io/jianzcar/zena:stable
-StandardOutput=journal+console
-StandardError=journal+console
 RemainAfterExit=yes
 
 [Install]
