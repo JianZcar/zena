@@ -23,6 +23,11 @@ Defaults timestamp_timeout=0
 EOF
 chmod 440 /etc/sudoers.d/00-sudo-config
 
+cat << 'EOF' > /etc/profile.d/brew.sh
+[[ -d /home/linuxbrew/linuxbrew && $- == *i* ]] && \
+eval "$(/home/linuxbrew/linuxbrew/bin/brew shellenv)"
+EOF
+
 cat << 'EOF' > /usr/libexec/group-fix
 #!/bin/sh
 
@@ -61,15 +66,13 @@ cat << 'EOF' > /usr/lib/systemd/system/update-bootc-remote.service
 Description=Bootc switch to remote Zena image
 Requires=local-fs.target
 After=local-fs.target containers-storage.service multi-user.target
-ConditionPathExists=/usr/bin/bootc
 
 [Service]
 Type=oneshot
 ExecStart=/usr/bin/bootc switch --mutate-in-place --transport registry ghcr.io/jianzcar/zena:stable
-RemainAfterExit=yes
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target multi-user.target
 EOF
 
 cat << 'EOF' > /usr/lib/systemd/system-preset/01-update-bootc-remote.preset

@@ -16,7 +16,6 @@ system_services=(
 
   dms-greeter-cache
   update-bootc-remote
-  brew-setup
 )
 systemctl enable "${system_services[@]}"
 
