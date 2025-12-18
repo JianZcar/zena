@@ -7,7 +7,7 @@ set -ouex pipefail
 shopt -s nullglob
 
 packages=(
-  niri-git
+  niri
   xwayland-satellite
 
   dms-shell-git
