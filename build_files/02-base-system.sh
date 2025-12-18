@@ -64,15 +64,15 @@ EOF
 cat << 'EOF' > /usr/lib/systemd/system/update-bootc-remote.service
 [Unit]
 Description=Bootc switch to remote Zena image
-Requires=local-fs.target
-After=local-fs.target containers-storage.service multi-user.target
+Wants=network-online.target
+After=network-online.target
 
 [Service]
 Type=oneshot
 ExecStart=/usr/bin/bootc switch --mutate-in-place --transport registry ghcr.io/jianzcar/zena:stable
 
 [Install]
-WantedBy=default.target multi-user.target
+WantedBy=multi-user.target
 EOF
 
 cat << 'EOF' > /usr/lib/systemd/system-preset/01-update-bootc-remote.preset
