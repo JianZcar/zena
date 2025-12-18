@@ -13,7 +13,7 @@ packages=(
 
   linux-cachyos-bore
   linux-cachyos-bore-headers
-  linux-cachyos-bore-nvidia
+  linux-cachyos-bore-nvidia-open
   linux-firmware
 
   ostree
