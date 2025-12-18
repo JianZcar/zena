@@ -79,16 +79,27 @@ cat << 'EOF' > /usr/lib/systemd/system-preset/01-update-bootc-remote.preset
 enable update-bootc-remote.service
 EOF
 
-cat << 'EOF' > /usr/lib/systemd/system/dms-greeter-cache.service
+cat << 'EOF' > /usr/libexec/initial-install
+#!/bin/bash
+
+mkdir -p /var/cache/dms-greeter
+systemctl set-default graphical.target
+touch /var/init
+( sleep 2 && systemctl reboot ) &
+exit 0
+EOF
+chmod +x /usr/libexec/initial-install
+
+cat << 'EOF' > /usr/lib/systemd/system/initial-install.service
 [Unit]
-Description=Create /var/cache/dms-greeter
+Description=Initial-Installation fixes
 Wants=local-fs.target
 After=local-fs.target
-ConditionPathExists=!/var/cache/dms-greeter
+ConditionPathExists=!/var/init
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/mkdir -p /var/cache/dms-greeter
+ExecStart=/usr/libexec/initial-install
 
 [Install]
 WantedBy=default.target multi-user.target
