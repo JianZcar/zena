@@ -140,6 +140,7 @@ user_services=(
   gnome-keyring-daemon.service
 )
 systemctl --global enable "${user_services[@]}"
+systemctl set-default graphical.target
 
 echo "Arch" | tee "/etc/hostname"
 
