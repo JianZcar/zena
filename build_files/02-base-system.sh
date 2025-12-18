@@ -105,8 +105,8 @@ ExecStart=/usr/libexec/initial-install
 WantedBy=default.target multi-user.target
 EOF
 
-cat << 'EOF' > /usr/lib/systemd/system-preset/01-dms-greeter-cache.preset
-enable dms-greeter-cache.service
+cat << 'EOF' > /usr/lib/systemd/system-preset/01-initial-install.preset
+enable initial-install.service
 EOF
 
 echo "::endgroup::"
