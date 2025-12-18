@@ -89,7 +89,6 @@ ConditionPathExists=!/var/cache/dms-greeter
 [Service]
 Type=oneshot
 ExecStart=/usr/bin/mkdir -p /var/cache/dms-greeter
-RemainAfterExit=yes
 
 [Install]
 WantedBy=default.target multi-user.target
