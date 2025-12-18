@@ -141,4 +141,6 @@ user_services=(
 )
 systemctl --global enable "${user_services[@]}"
 
+echo "Arch" | tee "/etc/hostname"
+
 echo "::endgroup::"
