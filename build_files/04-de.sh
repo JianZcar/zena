@@ -6,6 +6,9 @@ set -ouex pipefail
 
 shopt -s nullglob
 
+mkdir -p /etc/skel/.config/niri
+cp -a /ctx/niri/. /etc/skel/.config/niri/
+
 packages=(
   niri
   xwayland-satellite
@@ -53,11 +56,6 @@ su - build -c "
 set -xeuo pipefail
 paru -S --noconfirm --needed $AUR_PKGS_STR
 "
-
-rm -f /etc/sudoers.d/99-build-aur
-userdel -r build
-pacman -Rns --noconfirm base-devel paru rust
-
 pacman -S --noconfirm "${packages[@]}"
 
 cat << 'EOF' > /etc/nvidia/nvidia-application-profiles-rc.d/50-limit-free-buffer-pool-in-wayland-compositors.json
@@ -140,12 +138,5 @@ user_services=(
   gnome-keyring-daemon.service
 )
 systemctl --global enable "${user_services[@]}"
-systemctl set-default graphical.target
-
-echo "Arch" | tee "/etc/hostname"
-
-cat << 'EOF' > /etc/machine-info
-PRETTY_HOSTNAME="Arch (zena)"
-EOF
 
 echo "::endgroup::"

@@ -69,7 +69,7 @@ After=network-online.target
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/bootc switch --mutate-in-place --transport registry ghcr.io/jianzcar/zena:stable
+ExecStart=/usr/bin/bootc switch ghcr.io/zerixal/zena:stable
 
 [Install]
 WantedBy=multi-user.target
@@ -84,10 +84,22 @@ cat << 'EOF' > /usr/libexec/initial-install
 
 mkdir -p /var/cache/dms-greeter
 systemctl set-default graphical.target
+
+timedatectl set-local-rtc 0
+timedatectl set-ntp true
+
+uid=1000
+username=$(getent passwd "$uid" | cut -d: -f1)
+home="/home/$username"
+cp -af /etc/skel/. "$home/"
+chown -R "$username:$username" "$home"
+
+hostnamectl set-hostname zena --static
+hostnamectl set-hostname "Zena Arch" --pretty
+
 touch /var/init
 
-systemd-run --on-active=2s --description="Delayed Reboot" systemctl reboot
-
+systemd-run --on-active=2s --description="Reboot" systemctl reboot
 exit 0
 EOF
 chmod +x /usr/libexec/initial-install
