@@ -16,7 +16,7 @@ on:
 env:
   IMAGE_NAME: "zena"
   IMAGE_REGISTRY: "ghcr.io/zerixal"
-  DEFAULT_TAG: "${{ github.ref_name == 'main' && 'stable' || github.ref_name == 'testing' && 'testing' || 'stable' }}"
+  DEFAULT_TAG: "${{ github.ref_name == 'main' && 'latest' || github.ref_name == 'testing' && 'testing' || 'latest' }}"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref || github.run_id }}-${{ inputs.brand_name}}-${{ inputs.stream_name }}

@@ -84,7 +84,7 @@ chown -R "$username:$username" "$home"
 hostnamectl set-hostname zena --static
 hostnamectl set-hostname "Zena Arch" --pretty
 
-bootc switch --mutate-in-place --transport registry ghcr.io/zerixal/zena:stable
+bootc switch --mutate-in-place --transport registry ghcr.io/zerixal/zena:latest
 
 touch /var/init
 systemd-run --on-active=2s --description="Reboot" systemctl reboot
