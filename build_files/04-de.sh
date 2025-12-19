@@ -8,6 +8,7 @@ shopt -s nullglob
 
 mkdir -p /etc/skel/.config/niri
 cp -a /ctx/niri/. /etc/skel/.config/niri/
+cp -a /ctx/ghostty/. /etc/skel/.config/ghostty/
 
 packages=(
   niri

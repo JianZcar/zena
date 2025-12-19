@@ -15,7 +15,6 @@ system_services=(
   firewalld
 
   initial-install
-  update-bootc-remote
 )
 systemctl enable "${system_services[@]}"
 

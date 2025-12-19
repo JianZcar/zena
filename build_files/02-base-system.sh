@@ -61,29 +61,16 @@ cat <<'EOF' > /usr/lib/systemd/system-preset/01-group-fix.preset
 enable group-fix.service
 EOF
 
-cat << 'EOF' > /usr/lib/systemd/system/update-bootc-remote.service
-[Unit]
-Description=Bootc switch to remote Zena image
-Wants=network-online.target
-After=network-online.target
-
-[Service]
-Type=oneshot
-ExecStart=/usr/bin/bootc switch ghcr.io/zerixal/zena:stable
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-cat << 'EOF' > /usr/lib/systemd/system-preset/01-update-bootc-remote.preset
-enable update-bootc-remote.service
-EOF
-
 cat << 'EOF' > /usr/libexec/initial-install
 #!/bin/bash
 
 mkdir -p /var/cache/dms-greeter
 systemctl set-default graphical.target
+
+if bootc status --format=json \
+     | jq -e '.status.rollback.image.image.image != "ghcr.io/zerixal/zena-installer:latest"' >/dev/null; then
+  exit 0
+fi
 
 timedatectl set-local-rtc 0
 timedatectl set-ntp true
@@ -97,8 +84,9 @@ chown -R "$username:$username" "$home"
 hostnamectl set-hostname zena --static
 hostnamectl set-hostname "Zena Arch" --pretty
 
-touch /var/init
+bootc switch --mutate-in-place --transport registry ghcr.io/zerixal/zena:stable
 
+touch /var/init
 systemd-run --on-active=2s --description="Reboot" systemctl reboot
 exit 0
 EOF
