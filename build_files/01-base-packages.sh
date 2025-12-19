@@ -137,6 +137,12 @@ packages=(
 )
 pacman -S --noconfirm "${packages[@]}"
 
+mkdir -p /etc/flatpak/remotes.d/
+curl -Lo /etc/flatpak/remotes.d/flathub.flatpakrepo https://dl.flathub.org/repo/flathub.flatpakrepo && \
+echo "Default=true" | tee -a /etc/flatpak/remotes.d/flathub.flatpakrepo > /dev/null
+flatpak remote-add --if-not-exists --system flathub /etc/flatpak/remotes.d/flathub.flatpakrepo
+flatpak remote-modify --system --enable flathub
+
 # For AUR packages to be remove later
 pacman -Sy --noconfirm --needed base-devel paru rust
 
