@@ -16,3 +16,9 @@ I like the arch logo its cool
     *   **Nautilus File Manager:** The intuitive and user-friendly file manager from GNOME.
 
 ## How to Install
+**From an existing bootc os** 
+   ```bash
+   sudo bootc switch ghcr.io/jianzcar/zena:latest
+   ```
+**ISO**
+   WIP
