@@ -2,6 +2,8 @@
 
 Zena is a opinionated, immutable operating system based on Arch Linux, designed for exceptional performance, enhanced security, and streamlined user experience. It leverages modern containerization and image-based deployment techniques to provide a robust, predictable, and efficient computing environment.
 
+I like the arch logo its cool
+
 ## Features
 
 *   **Immutable Core:** Built on `bootc`, `ostree`, and `composefs`, Zena OS provides a highly stable and predictable system with a read-only root filesystem, enhancing security and reliability.
