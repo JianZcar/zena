@@ -1,6 +1,6 @@
 # Zena OS
 
-Zena is a custom-built, immutable operating system based on Arch Linux, designed for exceptional performance, enhanced security, and a highly streamlined user experience. It leverages modern containerization and image-based deployment techniques to provide a robust, predictable, and efficient computing environment.
+Zena is a opinionated, immutable operating system based on Arch Linux, designed for exceptional performance, enhanced security, and streamlined user experience. It leverages modern containerization and image-based deployment techniques to provide a robust, predictable, and efficient computing environment.
 
 ## Features
 
