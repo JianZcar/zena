@@ -16,6 +16,8 @@ system_services=(
 
   initial-install
   update-bootc-remote
+
+  podman.socket
 )
 systemctl enable "${system_services[@]}"
 

@@ -134,6 +134,7 @@ pacman -S --noconfirm "${packages[@]}"
 packages=(
   cachyos-settings
   flatpak-git
+  podman
 )
 pacman -S --noconfirm "${packages[@]}"
 
