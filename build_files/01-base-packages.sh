@@ -134,21 +134,6 @@ pacman -S --noconfirm "${packages[@]}"
 packages=(
   cachyos-settings
   flatpak-git
-  archiso
-  arch-install-scripts
-  dosfstools
-  e2fsprogs
-  findutils
-  grub
-  gzip
-  libarchive
-  libisoburn
-  mtools
-  openssl
-  pacman
-  sed
-  squashfs-tools
-  awk
 )
 pacman -S --noconfirm "${packages[@]}"
 
