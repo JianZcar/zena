@@ -134,8 +134,6 @@ pacman -S --noconfirm "${packages[@]}"
 packages=(
   cachyos-settings
   flatpak-git
-
-  # For making a iso installer. will be remove once i figure out how to make a installer and automate the process
   archiso
   arch-install-scripts
   dosfstools
