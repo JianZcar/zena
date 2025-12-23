@@ -71,10 +71,19 @@ jobs:
           echo "TAGS=$TAGS" >> $GITHUB_ENV
           echo "tags=$TAGS" >> $GITHUB_OUTPUT
 
+      - name: Prepare build args file
+        env:
+          DEFAULT_TAG: ${{ env.DEFAULT_TAG }}
+        run: |
+          cat <<EOF > build_args.txt
+          VERSION_ID=${DATE}
+          EOF
+
       - name: Build image
         id: build_image
         run: |
           sudo buildah bud \
+            --build-arg-file build_args.txt \
             --format docker \
             --tag "${{ env.IMAGE_NAME }}:${{ env.DEFAULT_TAG }}" \
             --label "org.opencontainers.image.title=Zena OS" \
