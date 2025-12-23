@@ -73,7 +73,7 @@ jobs:
 
       - name: Prepare build args file
         env:
-          DEFAULT_TAG: ${{ env.DEFAULT_TAG }}
+          DATE: ${{ env.DATE }}
         run: |
           cat <<EOF > build_args.txt
           VERSION_ID=${DATE}
