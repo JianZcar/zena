@@ -150,7 +150,7 @@ packages=(
 pacman -S --noconfirm "${packages[@]}"
 
 aur_packages=(
-  bootupd
+  bootupd-git
 )
 aur_packages_str="${aur_packages[*]}"
 
