@@ -72,11 +72,9 @@ jobs:
           echo "tags=$TAGS" >> $GITHUB_OUTPUT
 
       - name: Prepare build args file
-        env:
-          DATE: ${{ env.DATE }}
         run: |
           cat <<EOF > build_args.txt
-          VERSION_ID=${DATE}
+          VERSION_ID=${{ steps.date.outputs.short_date }}
           EOF
 
       - name: Build image
