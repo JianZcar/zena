@@ -79,7 +79,7 @@ jobs:
             --tag "${{ env.IMAGE_NAME }}:${{ env.DEFAULT_TAG }}" \
             --label org.opencontainers.image.title=Zena OS \
             --label org.opencontainers.image.description=Bootc Image of Zena OS \
-            --label org.opencontainers.image.authors=Jian Zcar Esteban <esteban.jianzcar@outlook.com> \
+            --label org.opencontainers.image.authors=Jian Zcar Esteban esteban.jianzcar@outlook.com \
             --label org.opencontainers.image.url=https://github.com/Zerixal/Zena \
             --label org.opencontainers.image.version=${{ env.DATE }} \
             --label ostree.bootable=1 \
