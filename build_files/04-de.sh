@@ -45,17 +45,17 @@ packages=(
   bazaar
 )
 
-AUR_PKGS=(
+aur_packages=(
   quickshell-git
   dsearch-git
   greetd-dms-greeter-git
   raw-thumbnailer
 )
-AUR_PKGS_STR="${AUR_PKGS[*]}"
+aur_packages_str="${aur_packages[*]}"
 
 su - build -c "
 set -xeuo pipefail
-paru -S --noconfirm --needed $AUR_PKGS_STR
+paru -S --noconfirm --needed $aur_packages_str
 "
 pacman -S --noconfirm "${packages[@]}"
 
