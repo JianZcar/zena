@@ -146,18 +146,24 @@ packages=(
   cachyos-settings
   flatpak-git
   podman
+
+  efibootmgr
+  gcc-libs
+  glibc
+  grub
 )
 pacman -S --noconfirm "${packages[@]}"
 
-aur_packages=(
-  bootupd-git
-)
-aur_packages_str="${aur_packages[*]}"
-
-su - build -c "
-set -xeuo pipefail
-paru -S --noconfirm --needed $aur_packages_str
-"
+# Bootupd cant be build
+# aur_packages=(
+#   bootupd
+# )
+# aur_packages_str="${aur_packages[*]}"
+#
+# su - build -c "
+# set -xeuo pipefail
+# paru -S --noconfirm --needed $aur_packages_str
+# "
 
 mkdir -p /etc/flatpak/remotes.d/
 curl -Lo /etc/flatpak/remotes.d/flathub.flatpakrepo https://dl.flathub.org/repo/flathub.flatpakrepo && \

@@ -1,7 +1,12 @@
+# Install precompiled binary of bootupd
+FROM quay.io/fedora/fedora:43 AS bootupd-build
+RUN dnf install -y bootupd
+
 FROM scratch AS ctx
 COPY build_files /
 
 FROM docker.io/archlinux/archlinux:latest
+COPY --from=bootupd-build /usr/bin/bootupd /usr/bin/bootupd
 
 ARG VERSION_ID=${VERSION_ID}
 ENV DRACUT_NO_XATTR=1
