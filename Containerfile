@@ -7,6 +7,10 @@ COPY build_files /
 
 FROM docker.io/archlinux/archlinux:latest
 
+COPY --from=bootupd-build /usr/libexec/bootupd /usr/libexec/bootupd
+COPY --from=bootupd-build /usr/lib/bootupd /usr/lib/bootupd
+COPY --from=bootupd-build /usr/bin/bootupctl /usr/bin/bootupctl
+
 ARG VERSION_ID=${VERSION_ID}
 ENV DRACUT_NO_XATTR=1
 
@@ -25,8 +29,6 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
     /ctx/01-packages.sh
-
-COPY --from=bootupd-build /usr/bin/bootupd /usr/bin/bootupd
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
