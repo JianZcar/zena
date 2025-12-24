@@ -32,6 +32,9 @@ packages=(
   polkit
 
   power-profiles-daemon
+
+  grub
+  efibootmgr
 )
 pacman -S --noconfirm "${packages[@]}"
 
