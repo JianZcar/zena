@@ -10,6 +10,7 @@ FROM docker.io/archlinux/archlinux:latest
 COPY --from=bootupd-build /usr/libexec/bootupd /usr/libexec/bootupd
 COPY --from=bootupd-build /usr/lib/bootupd /usr/lib/bootupd
 COPY --from=bootupd-build /usr/bin/bootupctl /usr/bin/bootupctl
+RUN ln -s /usr/libexec/bootupd /usr/bin/bootupd
 
 ARG VERSION_ID=${VERSION_ID}
 ENV DRACUT_NO_XATTR=1
