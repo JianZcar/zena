@@ -1,24 +1,12 @@
 # Zena OS
 
-Zena is a opinionated, immutable operating system based on Arch Linux, designed for exceptional performance, enhanced security, and streamlined user experience. It leverages modern containerization and image-based deployment techniques to provide a robust, predictable, and efficient computing environment.
+Zena OS is a custom Fedora-based operating system designed for a unique and optimized user experience. Built with `bootc`, it leverages container technology for a robust and manageable system.
 
-I like the arch logo its cool
+## Key Features:
 
-## Features
+*   **Niri Compositor:** Enjoy a modern and efficient desktop environment powered by the `niri` Wayland compositor, offering a streamlined and performant graphical experience.
+*   **Dank Material Shell**: Provides a desktop GUI with features like dynamic bars and notification popups, enhancing the user's interactive experience.
+*   **Optimized Performance:** The OS includes custom configurations and optimizations for system performance, ensuring a smooth and responsive environment.
+*   **Container-Native:** Built on `bootc`, Zena OS embraces a container-native approach, providing immutable infrastructure benefits, easier updates, and reliable rollbacks.
 
-*   **Immutable Core:** Built on `bootc`, `ostree`, and `composefs`, Zena OS provides a highly stable and predictable system with a read-only root filesystem, enhancing security and reliability.
-*   **Performance-Optimized Kernel:** Utilizes the `linux-cachyos-bore` kernel, featuring the BORE scheduler for superior performance and responsiveness.
-*   **Modern Application Delivery:** Flatpak is fully integrated and Flathub is pre-configured, enabling easy and secure installation of sandboxed applications.
-*   **Customized Desktop Environment:**
-    *   **Niri Wayland Compositor:** A highly performant and modern Wayland compositor at the core of the desktop experience.
-    *   **Dank Material Shell:** a Wayland desktop shell and integrated desktop environment interface built with Quickshell and Go that provides window management, a launcher, widgets, notifications.
-    *   **Ghostty Terminal:** A fast and feature-rich terminal emulator for efficient command-line interaction.
-    *   **Nautilus File Manager:** The intuitive and user-friendly file manager from GNOME.
-
-## How to Install
-**From an existing bootc os** 
-   ```bash
-   sudo bootc switch ghcr.io/jianzcar/zena:latest
-   ```
-**ISO**
-   WIP
+*   **GAMING:** Coming soon...
