@@ -6,15 +6,24 @@ set -ouex pipefail
 
 dnf5 -y remove --no-autoremove kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra kernel-tools kernel-tools-libs
 
-dnf5 download --resolve \
+TMPDIR=$(mktemp -d)
+pushd "$TMPDIR"
+
+# Download the kernel RPMs (and dependencies) into /tmp
+dnf5 download --resolve --destdir "$TMPDIR" \
   kernel-cachyos \
   kernel-cachyos-devel-matched \
   kernel-cachyos-nvidia-open
 
-# Install the RPM files without running scripts
+# Install the RPM files without running scriptlets
 rpm -U --noscripts --notriggers *.rpm
 
-dnf5 versionlock add $packages
+popd
+rm -rf "$TMPDIR"
+
+dnf5 versionlock add kernel-cachyos \
+  kernel-cachyos-devel-matched \
+  kernel-cachyos-nvidia-open
 
 pushd /usr/lib/kernel/install.d
 mv -f 05-rpmostree.install.bak 05-rpmostree.install
