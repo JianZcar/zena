@@ -1,3 +1,5 @@
+ARG FEDORA_VERSION=43
+
 FROM scratch AS ctx
 COPY build_files /
 
