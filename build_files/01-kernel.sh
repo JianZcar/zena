@@ -12,7 +12,7 @@ packages=(
   kernel-cachyos-nvidia-open
 )
 
-rpm -i --noscripts -y ${packages[@]} --no-allow-downgrade
+rpm -U --noscripts --notriggers ${packages[@]}
 
 dnf5 versionlock add $packages
 
