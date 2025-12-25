@@ -12,6 +12,8 @@ if [ ! -d "/usr/lib/modules/$KVER" ]; then
   exit 1
 fi
 
+depmod -a "$KVER"
+
 # Generate initramfs right where bootc expects it
 /usr/bin/dracut \
   --no-hostonly \
