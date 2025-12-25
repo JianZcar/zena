@@ -6,13 +6,13 @@ set -ouex pipefail
 
 dnf5 -y remove --no-autoremove kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra kernel-tools kernel-tools-libs
 
-packages=(
-  kernel-cachyos
-  kernel-cachyos-devel-matched
+dnf5 download --resolve \
+  kernel-cachyos \
+  kernel-cachyos-devel-matched \
   kernel-cachyos-nvidia-open
-)
 
-rpm -U --noscripts --notriggers ${packages[@]}
+# Install the RPM files without running scripts
+rpm -U --noscripts --notriggers *.rpm
 
 dnf5 versionlock add $packages
 
