@@ -1,12 +1,27 @@
 #!/bin/bash
-
 echo "::group:: ===$(basename "$0")==="
-
 set -ouex pipefail
 
-QUALIFIED_KERNEL="$(dnf5 repoquery --installed --queryformat='%{evr}.%{arch}' "kernel${KERNEL_SUFFIX:+-${KERNEL_SUFFIX}}")"
-/usr/bin/dracut --no-hostonly --kver "$QUALIFIED_KERNEL" --reproducible --zstd -v --add ostree --add fido2 -f "/usr/lib/modules/$QUALIFIED_KERNEL/initramfs.img"
+# Find the kernel version that was unpacked
+KVER=$(ls /usr/lib/modules | head -n1)
+echo "Building initramfs for kernel version: $KVER"
 
-chmod 0600 /usr/lib/modules/"$QUALIFIED_KERNEL"/initramfs.img
+# Ensure the module directory exists
+if [ ! -d "/usr/lib/modules/$KVER" ]; then
+  echo "Error: modules missing for kernel $KVER"
+  exit 1
+fi
+
+# Generate initramfs right where bootc expects it
+/usr/bin/dracut \
+  --no-hostonly \
+  --kver "$KVER" \
+  --reproducible \
+  --zstd -v \
+  --add ostree --add fido2 \
+  -f "/usr/lib/modules/$KVER/initramfs.img"
+
+chmod 0600 "/usr/lib/modules/$KVER/initramfs.img"
 
 echo "::endgroup::"
+
