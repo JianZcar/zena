@@ -16,7 +16,7 @@ coprs=(
     ublue-os/flatpak-test
 
     bieszczaders/kernel-cachyos
-    yalter/niri-git
+    yalter/niri
     ulysg/xwayland-satellite
     avengemedia/danklinux
     avengemedia/dms-git
@@ -39,5 +39,5 @@ for repo in "${repos[@]}"; do
 done
 
 dnf5 -y install --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release
-echo "priority=1" | sudo tee -a /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:yalter:niri-git.repo
+echo "priority=1" | sudo tee -a /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:yalter:niri.repo
 echo "priority=2" | sudo tee -a /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:ulysg:xwayland-satellite.repo
