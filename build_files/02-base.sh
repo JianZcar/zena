@@ -42,11 +42,10 @@ packages=(
     fwupd
     man-db
     systemd-container
-    tuned
-    tuned-ppd
     unzip
     whois
     inotify-tools
+    power-profiles-daemon
 
     xdg-desktop-portal-gnome
     xdg-user-dirs

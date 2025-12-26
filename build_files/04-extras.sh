@@ -10,11 +10,6 @@ packages=(
     fish
     starship
     chezmoi
-
-    switcheroo-control
-    python3-gobject
-
-    @virtualization
 )
 dnf5 -y install "${packages[@]}"
 
