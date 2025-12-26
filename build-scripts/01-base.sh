@@ -26,8 +26,13 @@ packages=(
 
 # Uninstall
 packages=(
+  console-login-helper-messages
+  chrony
+  sssd*
+  qemu-user-static*
+  toolbox
 )
-# dnf5 -y remove "${packages[@]}"
+dnf5 -y remove "${packages[@]}"
 
 systemctl mask systemd-remount-fs
 systemctl set-default graphical.target
