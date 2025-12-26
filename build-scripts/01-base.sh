@@ -7,9 +7,12 @@ set -ouex pipefail
 shopt -s nullglob
 
 packages=(
-    fish
-    starship
-    chezmoi
+  @core
+  @multimedia
+  @base-graphical
+  @hardware-support
+  @container-management
+  @networkmanager-submodules
 )
 dnf5 -y install "${packages[@]}"
 
@@ -23,10 +26,5 @@ packages=(
 packages=(
 )
 # dnf5 -y remove "${packages[@]}"
-
-# Install Latest Stable NVIM
-curl -L -o /tmp/nvim.tar.gz https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
-tar --no-same-owner --no-same-permissions --no-overwrite-dir -xvzf /tmp/nvim.tar.gz -C /opt
-ln -sf /opt/nvim-linux-x86_64/bin/nvim /usr/bin/nvim
 
 echo "::endgroup::"
