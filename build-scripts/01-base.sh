@@ -6,6 +6,8 @@ set -ouex pipefail
 
 shopt -s nullglob
 
+# Clean /root
+rm -rf /root/*
 # Uninstall
 packages=(
   console-login-helper-messages
