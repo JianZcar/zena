@@ -19,8 +19,8 @@ dnf5 -y remove --no-autoremove \
 TMPDIR=$(mktemp -d)
 pushd "$TMPDIR"
 
-dnf5 download --resolve --destdir "$TMPDIR" "${packages[@]}"
-rpm -U --noscripts --notriggers ./*.rpm
+dnf5 download --arch x86_64 --resolve --destdir "$TMPDIR" "${packages[@]}"
+rpm -U --noscripts --notriggers *.rpm
 
 popd
 rm -rf "$TMPDIR"
