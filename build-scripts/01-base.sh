@@ -9,7 +9,7 @@ shopt -s nullglob
 packages=(
   @core
   @multimedia
-  # @base-graphical
+  @base-graphical
   @hardware-support
   @container-management
   @networkmanager-submodules
@@ -26,5 +26,8 @@ packages=(
 packages=(
 )
 # dnf5 -y remove "${packages[@]}"
+
+systemctl mask systemd-remount-fs
+systemctl set-default graphical.target
 
 echo "::endgroup::"
