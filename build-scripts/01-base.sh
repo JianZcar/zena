@@ -9,16 +9,10 @@ shopt -s nullglob
 packages=(
   @core
   @multimedia
-  @base-graphical
+  # @base-graphical
   @hardware-support
   @container-management
   @networkmanager-submodules
-
-  # Auth
-  pam
-  authselect
-  shadow-utils
-  login
 )
 dnf5 -y install "${packages[@]}"
 
@@ -32,7 +26,5 @@ packages=(
 packages=(
 )
 # dnf5 -y remove "${packages[@]}"
-
-authselect select local with-silent-lastlog --force
 
 echo "::endgroup::"
