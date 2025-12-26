@@ -13,6 +13,13 @@ packages=(
   @hardware-support
   @container-management
   @networkmanager-submodules
+
+  # Auth
+  pam
+  pam_unix
+  authselect
+  shadow-utils
+  login
 )
 dnf5 -y install "${packages[@]}"
 
