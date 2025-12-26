@@ -6,8 +6,6 @@ set -ouex pipefail
 
 shopt -s nullglob
 
-# Clean /root
-rm -rf /root/*
 # Uninstall
 packages=(
   console-login-helper-messages
@@ -18,9 +16,7 @@ packages=(
 dnf5 -y remove "${packages[@]}"
 
 packages=(
-  @core
   @multimedia
-  @base-graphical
   @hardware-support
   @container-management
   @networkmanager-submodules
