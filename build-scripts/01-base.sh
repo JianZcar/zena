@@ -10,7 +10,6 @@ shopt -s nullglob
 packages=(
   console-login-helper-messages
   chrony
-  sssd*
   qemu-user-static*
   toolbox
 )
@@ -23,8 +22,6 @@ packages=(
   @hardware-support
   @container-management
   @networkmanager-submodules
-
-  fedora-release-ostree-desktop
 )
 dnf5 -y install "${packages[@]}"
 
