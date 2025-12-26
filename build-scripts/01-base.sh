@@ -16,7 +16,6 @@ packages=(
 
   # Auth
   pam
-  pam_unix
   authselect
   shadow-utils
   login
@@ -33,5 +32,7 @@ packages=(
 packages=(
 )
 # dnf5 -y remove "${packages[@]}"
+
+authselect select local with-silent-lastlog --force
 
 echo "::endgroup::"
