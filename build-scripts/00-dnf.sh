@@ -4,6 +4,8 @@ echo "::group:: ===$(basename "$0")==="
 
 set -ouex pipefail
 
+shopt -s nullglob
+
 coprs=(
   bieszczaders/kernel-cachyos
 

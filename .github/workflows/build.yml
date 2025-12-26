@@ -106,8 +106,8 @@ jobs:
           ref: 'raw-img'
           prev-ref: '${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.DEFAULT_TAG }}'
           skip_compression: false
-          version: ${{ steps.metadata.outputs.tags }}
-          labels: ${{ steps.metadata.outputs.labels }}
+          version: '${{ steps.metadata.outputs.tags }}'
+          labels: '${{ steps.metadata.outputs.labels }}'
 
       - name: Load in podman and tag
         run: |
