@@ -13,6 +13,8 @@ packages=(
   @hardware-support
   @container-management
   @networkmanager-submodules
+
+  fedora-release-ostree-desktop
 )
 dnf5 -y install "${packages[@]}"
 
