@@ -38,26 +38,12 @@
 
 - path: /etc/greetd/config.toml
   content: |
-    [general]
-    service = "greetd-spawn"
-
     [terminal]
     vt = 1
 
     [default_session]
     command = "dms-greeter --command niri -C /etc/greetd/niri.kdl"
     user = "greeter"
-
-- path: /etc/greetd/greetd-spawn.pam_env.conf
-  content: |
-    XDG_SESSION_TYPE DEFAULT=wayland OVERRIDE=wayland
-
-- path: /etc/pam.d/greetd-spawn
-  content: |
-    auth       include      greetd
-    auth       required     pam_env.so conffile=/etc/greetd/greetd-spawn.pam_env.conf
-    account    include      greetd
-    session    include      greetd
 
 - path: /etc/systemd/system/podman-tcp.service
   content: |
@@ -94,21 +80,6 @@
     layout {
       background-color "#000000"
     }
-
-- path: /usr/lib/systemd/user/dms.service
-  content: |
-    [Unit]
-    Description=Shell Service
-    PartOf=graphical-session.target
-    After=graphical-session.target
-
-    [Service]
-    ExecStart=dms run
-    Restart=on-failure
-    RestartSec=1
-
-    [Install]
-    WantedBy=graphical-session.target
 
 - path: /usr/share/libinput/zz1-00-lenovo.quirks
   content: |
@@ -160,155 +131,6 @@
     video/webm=dms-open.desktop
     video/ogg=dms-open.desktop
     video/x-msvideo=dms-open.desktop
-
-- path: /usr/local/bin/offload-launch
-  content: |
-    #!/usr/bin/env bash
-
-    watch_file="/run/nvidia-offload"
-    conf_file="$HOME/.config/offload-launch.conf"
-
-    [ -f "$watch_file" ] || exec "$@"
-    [ "$(cat "$watch_file" 2>/dev/null)" = "1" ] || exec "$@"
-    [ -f "$conf_file" ] || exec "$@"
-
-    enable_nvidia=0
-
-    while IFS= read -r raw_line || [ -n "$raw_line" ]; do
-        line="${raw_line%%#*}"
-        line="${line#"${line%%[![:space:]]*}"}"
-        line="${line%"${line##*[![:space:]]}"}"
-        [ -z "$line" ] && continue
-
-        for arg in "$@"; do
-            case "$arg" in
-                $line)
-                    enable_nvidia=1
-                    break 2
-                    ;;
-            esac
-        done
-    done < "$conf_file"
-
-    if [ "$enable_nvidia" -eq 1 ]; then
-        export __NV_PRIME_RENDER_OFFLOAD=1
-        export __GLX_VENDOR_LIBRARY_NAME=nvidia
-        export __VK_LAYER_NV_optimus=NVIDIA_only
-    fi
-
-    exec "$@"
-  permissions: "755"
-
-- path: /usr/lib/tuned/profiles/throughput-performance-bazzite/script.sh
-  content: |
-    #!/usr/bin/env bash
-
-    . /usr/lib/tuned/functions
-
-    start() {
-        file="/run/nvidia-offload"
-
-        if command -v nvidia-smi &> /dev/null; then
-            echo 1 | tee "$file"
-        else
-            echo 0 | tee "$file"
-        fi
-
-        return 0
-    }
-
-    stop() {
-        file="/run/nvidia-offload"
-        echo 0 | tee "$file"
-        return 0
-    }
-
-    process "$@"
-  permissions: "755"
-
-- path: /usr/lib/tuned/profiles/throughput-performance-bazzite/tuned.conf
-  content: |
-    #
-    # tuned configuration
-    #
-
-    [main]
-    summary = General non-specialized tuned profile with added Bazzite tweaks
-    include = throughput-performance
-
-    [audio]
-    # See 17c869d
-    timeout=0
-
-    [sysctl]
-    # The swappiness parameter controls the tendency of the kernel to move
-    # processes out of physical memory and onto the swap disk.
-    # 0 tells the kernel to avoid swapping processes out of physical memory
-    # for as long as possible
-    # 100 tells the kernel to aggressively swap processes out of physical memory
-    # and move them to swap cache
-    vm.swappiness = 180
-
-    vm.watermark_boost_factor = 0
-    vm.watermark_scale_factor = 125
-    vm.dirty_bytes = 268435456
-    vm.dirty_background_bytes = 134217728
-    vm.page-cluster = 0
-
-    [script]
-    script=/usr/lib/tuned/profiles/throughput-performance-bazzite/script.sh
-
-- path: /usr/lib/tuned/profiles/balanced-bazzite/tuned.conf
-  content: |
-    #
-    # tuned configuration
-    #
-
-    [main]
-    summary = General non-specialized tuned profile with added Bazzite tweaks
-    include = balanced
-
-    [audio]
-    # See 17c869d
-    timeout=0
-
-    [sysctl]
-    # The swappiness parameter controls the tendency of the kernel to move
-    # processes out of physical memory and onto the swap disk.
-    # 0 tells the kernel to avoid swapping processes out of physical memory
-    # for as long as possible
-    # 100 tells the kernel to aggressively swap processes out of physical memory
-    # and move them to swap cache
-    vm.swappiness = 180
-
-    vm.watermark_boost_factor = 0
-    vm.watermark_scale_factor = 125
-    vm.dirty_bytes = 268435456
-    vm.dirty_background_bytes = 134217728
-    vm.page-cluster = 0
-
-    [script]
-    script=/usr/lib/tuned/profiles/balanced-bazzite/script.sh
-
-- path: /usr/lib/tuned/profiles/balanced-battery-bazzite/tuned.conf
-  content: |
-    #
-    # tuned configuration
-    #
-
-    [main]
-    summary = Balanced profile biased towards power savings changes for battery with added Bazzite tweaks
-    include = balanced-bazzite
-
-    [cpu]
-    energy_performance_preference=balance_power
-    boost=1
-
-    [audio]
-    timeout=10
-
-    [video]
-    panel_power_savings=1
 
 - path: /etc/pipewire/pipewire.conf.d/virtual-channels.conf
   content: |
