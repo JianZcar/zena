@@ -25,6 +25,10 @@ rpm -U --noscripts --notriggers *.rpm
 popd
 rm -rf "$TMPDIR"
 
+rpm --rebuilddb
+dnf5 clean all
+dnf5 makecache
+dnf5 check
 dnf5 distro-sync
 
 dnf5 versionlock add "${packages[@]}"
