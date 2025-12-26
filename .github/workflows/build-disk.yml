@@ -39,7 +39,7 @@ jobs:
 
       - name: Build ISO
         id: build-iso
-        uses: osbuild/bootc-image-builder-action@main
+        uses: osbuild/bootc-image-builder-action@v0.0.2
         with:
           config-file: ./iso.toml
           image: ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.DEFAULT_TAG }}
