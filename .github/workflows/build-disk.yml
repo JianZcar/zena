@@ -37,7 +37,7 @@ jobs:
         uses: osbuild/bootc-image-builder-action@main
         with:
           config-file: ./iso.toml
-          image: ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ DEFAULT_TAG }}
+          image: ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.DEFAULT_TAG }}
           types: anaconda-iso
           rootfs: btrfs
           additional-args: --use-librepo=True
