@@ -20,7 +20,7 @@ TMPDIR=$(mktemp -d)
 pushd "$TMPDIR"
 
 dnf5 download --resolve --destdir "$TMPDIR" "${packages[@]}"
-rpm -U --noscripts --notriggers *.rpm
+rpm -U --noscripts --notriggers ./*.rpm
 
 popd
 rm -rf "$TMPDIR"
