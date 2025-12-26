@@ -6,15 +6,6 @@ set -ouex pipefail
 
 shopt -s nullglob
 
-# Uninstall
-packages=(
-  console-login-helper-messages
-  chrony
-  qemu-user-static*
-  toolbox
-)
-dnf5 -y remove "${packages[@]}"
-
 packages=(
   @multimedia
   @hardware-support
@@ -26,8 +17,17 @@ dnf5 -y install "${packages[@]}"
 # Install install_weak_deps=false
 packages=(
 )
-
 # dnf5 -y install "${packages[@]}" --setopt=install_weak_deps=False
+
+# Uninstall
+packages=(
+  console-login-helper-messages
+  chrony
+  qemu-user-static*
+  toolbox
+)
+dnf5 -y remove "${packages[@]}"
+
 systemctl mask systemd-remount-fs
 systemctl set-default graphical.target
 
