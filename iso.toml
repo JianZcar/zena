@@ -1,3 +1,6 @@
+[customizations.bootloader]
+vendor = "fedora"
+
 [customizations.installer.kickstart]
 contents = """
 %post
