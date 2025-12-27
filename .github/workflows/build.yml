@@ -117,18 +117,36 @@ jobs:
             podman tag $IMAGE ${{ env.IMAGE_NAME }}:$tag
           done
 
-      - name: Push Image via Skopeo
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef
+        if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push To GHCR
         if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
         run: |
-          for tag in ${{ steps.metadata.outputs.tags }}; do
-            DEST="docker://${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}:$tag"
-            skopeo copy \
-              --retry-times 5 \
-              --src-creds "${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}" \
-              --dest-creds "${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}" \
-              "${{ steps.rechunk.outputs.ref }}" \
-              "$DEST"
+          set -euo pipefail
+
+          retries=5
+          delay=10
+
+          IMAGE_REF="${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}"
+
+          for attempt in $(seq 1 $retries); do
+            echo "Push attempt $attempt/$retries..."
+            if podman push "$IMAGE_REF:${{ steps.metadata.outputs.tags }}" --tls-verify=true; then
+              echo "Push succeeded"
+              exit 0
+            fi
+            echo "Push failed — retrying in $delay seconds..."
+            sleep $delay
           done
+
+          echo "Push failed after $retries attempts"
+          exit 1
 
       - name: Install Cosign
         uses: sigstore/cosign-installer@faadad0cce49287aee09b3a48701e75088a2c6ad
