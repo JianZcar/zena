@@ -114,7 +114,7 @@ jobs:
           IMAGE=$(podman pull ${{ steps.rechunk.outputs.ref }})
           sudo rm -rf ${{ steps.rechunk.outputs.output }}
           for tag in ${{ steps.metadata.outputs.tags }}; do
-            podman tag $IMAGE ${{ env.IMAGE_NAME }}:$tag
+            podman tag $IMAGE "${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}:$tag"
           done
 
       - name: Login to GitHub Container Registry
