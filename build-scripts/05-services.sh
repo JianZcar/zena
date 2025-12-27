@@ -37,9 +37,6 @@ mask_services=(
   logrotate.timer
 )
 
-timedatectl set-local-rtc 0
-timedatectl set-ntp true
-
 systemctl enable "${system_services[@]}"
 systemctl mask "${mask_services[@]}"
 systemctl --global enable "${user_services[@]}"
