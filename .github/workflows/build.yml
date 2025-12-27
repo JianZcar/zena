@@ -132,21 +132,29 @@ jobs:
 
           retries=5
           delay=10
-
           IMAGE_REF="${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}"
 
-          for attempt in $(seq 1 $retries); do
-            echo "Push attempt $attempt/$retries..."
-            if podman push "$IMAGE_REF:${{ steps.metadata.outputs.tags }}" --tls-verify=true; then
-              echo "Push succeeded"
-              exit 0
-            fi
-            echo "Push failed — retrying in $delay seconds..."
-            sleep $delay
+          # Loop through each tag
+          for tag in ${{ steps.metadata.outputs.tags }}; do
+            echo "Pushing tag: $tag"
+
+            for attempt in $(seq 1 $retries); do
+              echo "  Attempt $attempt/$retries for $tag..."
+              if podman push "$IMAGE_REF:$tag" --tls-verify=true; then
+                echo "  Push of $tag succeeded"
+                break
+              fi
+
+              if [ "$attempt" -lt "$retries" ]; then
+                echo "  Push of $tag failed — retrying in $delay seconds..."
+                sleep $delay
+              else
+                echo "  Push of $tag failed after $retries attempts"
+                exit 1
+              fi
+            done
           done
 
-          echo "Push failed after $retries attempts"
-          exit 1
 
       - name: Install Cosign
         uses: sigstore/cosign-installer@faadad0cce49287aee09b3a48701e75088a2c6ad
