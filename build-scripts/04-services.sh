@@ -11,7 +11,7 @@ add_wants_niri() {
 }
 
 system_services=(
-  auditd.service
+  # auditd.service
   greetd.service
   firewalld.service
   podman-tcp.service
