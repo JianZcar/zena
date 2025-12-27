@@ -13,7 +13,7 @@ add_wants_niri() {
 system_services=(
   # auditd.service
   greetd.service
-  firewalld.service
+  # firewalld.service
   podman-tcp.service
   podman.socket
   bootc-fetch-apply-updates.service
