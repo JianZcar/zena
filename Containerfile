@@ -7,7 +7,7 @@ FROM quay.io/fedora/fedora-bootc:${FEDORA_VERSION}
 
 ARG FEDORA_VERSION=${FEDORA_VERSION}
 
-COPY system_files/ /
+COPY system-files/ /
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=tmpfs,dst=/var \
