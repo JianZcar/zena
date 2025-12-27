@@ -124,7 +124,6 @@ jobs:
             DEST="docker://${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}:$tag"
             skopeo copy \
               --retry-times 5 \
-              --retry-delay 10s \
               --src-creds "${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}" \
               --dest-creds "${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}" \
               "docker://${{ steps.rechunk.outputs.ref }}" \
