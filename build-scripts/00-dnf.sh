@@ -9,10 +9,16 @@ shopt -s nullglob
 coprs=(
   bieszczaders/kernel-cachyos
 
+  ublue-os/packages
+
   yalter/niri
   ulysg/xwayland-satellite
   avengemedia/danklinux
   avengemedia/dms-git
+
+  atim/starship
+  scottames/ghostty
+  sneexy/zen-browser
 )
 
 repos=(

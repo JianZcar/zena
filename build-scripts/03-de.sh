@@ -7,25 +7,25 @@ set -ouex pipefail
 shopt -s nullglob
 
 packages=(
-  greetd
-  greetd-selinux
-
-  quickshell-git
-  dms
-  dms-greeter
-  danksearch
-  dgop
-
   gnome-keyring
   gnome-keyring-pam
 
-  wl-clipboard
+  greetd
+  dms-greeter
+  greetd-selinux
 
+  dms
+  dgop
+  danksearch
+  quickshell-git
+
+  adw-gtk3-theme
   xwayland-satellite
 
-  cliphist
-  matugen
   cava
+  matugen
+  cliphist
+  wl-clipboard
 )
 dnf5 -y install "${packages[@]}"
 

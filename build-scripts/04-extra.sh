@@ -7,33 +7,28 @@ set -ouex pipefail
 shopt -s nullglob
 
 packages=(
-  @fonts
-  @multimedia
-  @hardware-support
-  @container-management
-  @networkmanager-submodules
+  fish
+  starship
 
-  firewalld
+  bazaar
+  ghostty
+  nautilus
+  nautilus-python
+  firewall-config
 
-  ublue-brew
-  ublue-os-flatpak
+  zen-browser
 )
 dnf5 -y install "${packages[@]}"
 
 # Install install_weak_deps=false
 packages=(
 )
+
 # dnf5 -y install "${packages[@]}" --setopt=install_weak_deps=False
 
 # Uninstall
 packages=(
-  console-login-helper-messages
-  chrony
-  qemu-user-static*
-  toolbox
 )
-dnf5 -y remove "${packages[@]}"
-
-systemctl set-default graphical.target
+# dnf5 -y remove "${packages[@]}"
 
 echo "::endgroup::"

@@ -11,11 +11,12 @@ add_wants_niri() {
 }
 
 system_services=(
-  # auditd.service
-  greetd.service
-  # firewalld.service
-  podman-tcp.service
   podman.socket
+  greetd.service
+  firewalld.service
+  podman-tcp.service
+  systemd-timesyncd.service
+  systemd-resolved.service
   bootc-fetch-apply-updates.service
 )
 
@@ -35,6 +36,9 @@ mask_services=(
   logrotate.service
   logrotate.timer
 )
+
+timedatectl set-local-rtc 0
+timedatectl set-ntp true
 
 systemctl enable "${system_services[@]}"
 systemctl mask "${mask_services[@]}"
