@@ -1,0 +1,6 @@
+[terminal]
+vt = 1
+
+[default_session]
+command = "dms-greeter --command niri -C /etc/greetd/niri.kdl"
+user = "greeter"

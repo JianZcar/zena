@@ -7,6 +7,7 @@ set -ouex pipefail
 shopt -s nullglob
 
 packages=(
+  @fonts
   @multimedia
   @hardware-support
   @container-management
@@ -28,7 +29,6 @@ packages=(
 )
 dnf5 -y remove "${packages[@]}"
 
-systemctl mask systemd-remount-fs
 systemctl set-default graphical.target
 
 echo "::endgroup::"

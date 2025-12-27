@@ -1,0 +1,14 @@
+[Unit]
+Description=Podman TCP socket
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+ExecStart=/usr/bin/podman system service --time=0 tcp://127.0.0.1:37017
+
+[Install]
+WantedBy=multi-user.target
+

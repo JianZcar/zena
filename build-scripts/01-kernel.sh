@@ -4,6 +4,8 @@ echo "::group:: ===$(basename "$0")==="
 
 set -ouex pipefail
 
+shopt -s nullglob
+
 packages=(
   kernel-cachyos
   kernel-cachyos-devel-matched

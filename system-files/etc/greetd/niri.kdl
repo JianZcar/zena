@@ -1,0 +1,30 @@
+input {
+    keyboard {
+        numlock
+    }
+
+    touchpad {
+        tap
+        drag-lock
+        natural-scroll
+        scroll-method "edge"
+    }
+}
+
+hotkey-overlay {
+    skip-at-startup
+}
+
+environment {
+    DMS_RUN_GREETER "1"
+}
+
+gestures {
+  hot-corners {
+    off
+  }
+}
+
+layout {
+  background-color "#000000"
+}
