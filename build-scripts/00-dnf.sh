@@ -8,6 +8,7 @@ shopt -s nullglob
 
 coprs=(
   bieszczaders/kernel-cachyos
+  bieszczaders/kernel-cachyos-addons
 
   ublue-os/packages
 

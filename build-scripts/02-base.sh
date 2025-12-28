@@ -13,10 +13,23 @@ packages=(
   @container-management
   @networkmanager-submodules
 
+  ananicy-cpp
+  power-profiles-daemon
+  ksmtuned
+
+  # Optimization
+  cachyos-ananicy-rules
+  cachyos-ksm-settings
+  cachyos-settings
+  scx-scheds
+  scx-manager
+  scx-tools
+  scxctl
+
   firewalld
 
   ublue-brew
-  ublue-os-flatpak
+  flatpak
 )
 dnf5 -y install "${packages[@]}"
 
