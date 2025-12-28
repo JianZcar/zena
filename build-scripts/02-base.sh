@@ -30,7 +30,6 @@ packages=(
   scx-tools
   scxctl
 
-  nvidia-settings
   mesa*
   *vulkan*
 
