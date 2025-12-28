@@ -9,13 +9,13 @@ shopt -s nullglob
 system_services=(
   podman.socket
   greetd.service
+  chronyd.service
   firewalld.service
   brew-setup.service
   podman-tcp.service
+  zena-setup.service
   systemd-homed.service
   systemd-resolved.service
-  systemd-timesyncd.service
-  systemd-homed-firstboot.service
   bootc-fetch-apply-updates.service
 )
 

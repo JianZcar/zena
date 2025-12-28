@@ -36,6 +36,8 @@ packages=(
 
   git
   flatpak
+
+  gum
 )
 dnf5 -y install "${packages[@]}"
 
@@ -47,7 +49,6 @@ packages=(
 # Uninstall
 packages=(
   console-login-helper-messages
-  chrony
   qemu-user-static*
   toolbox
 )
