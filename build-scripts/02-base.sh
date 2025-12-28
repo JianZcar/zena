@@ -31,9 +31,6 @@ packages=(
   scxctl
 
   nvidia-settings
-  libnvidia-gl
-  libnvidia-egl-wayland
-  libnvidia-cuda
   mesa*
   *vulkan*
 
