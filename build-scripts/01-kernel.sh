@@ -7,9 +7,9 @@ set -ouex pipefail
 shopt -s nullglob
 
 packages=(
-  kernel-cachyos
-  kernel-cachyos-devel-matched
-  kernel-cachyos-nvidia-open
+  kernel-cachyos-lto
+  kernel-cachyos-lto-devel-matched
+  kernel-cachyos-lto-nvidia-open
 )
 
 dnf5 -y remove --no-autoremove \

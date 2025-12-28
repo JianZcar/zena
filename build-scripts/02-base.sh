@@ -24,10 +24,18 @@ packages=(
   cachyos-ananicy-rules
   cachyos-ksm-settings
   cachyos-settings
-  scx-scheds
+  ananicy-cpp
   scx-manager
+  scx-scheds
   scx-tools
   scxctl
+
+  nvidia-settings
+  libnvidia-gl
+  libnvidia-egl-wayland
+  libnvidia-cuda
+  mesa*
+  *vulkan*
 
   firewalld
 

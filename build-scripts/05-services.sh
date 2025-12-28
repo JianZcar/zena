@@ -14,6 +14,7 @@ system_services=(
   brew-setup.service
   podman-tcp.service
   zena-setup.service
+  ananicy-cpp.service
   systemd-homed.service
   systemd-resolved.service
   bootc-fetch-apply-updates.service
