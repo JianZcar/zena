@@ -15,4 +15,4 @@ TTYVHangup=yes
 ExecStart=/usr/libexec/zena-setup.sh
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=graphical.target
