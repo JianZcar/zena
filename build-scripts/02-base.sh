@@ -13,6 +13,9 @@ packages=(
   @container-management
   @networkmanager-submodules
 
+  xdg-user-dirs
+  xdg-user-dirs-gtk
+
   ananicy-cpp
   power-profiles-daemon
   ksmtuned
@@ -28,6 +31,10 @@ packages=(
 
   firewalld
 
+  man-db
+  man-pages
+
+  git
   flatpak
 )
 dnf5 -y install "${packages[@]}"

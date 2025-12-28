@@ -7,8 +7,10 @@ set -ouex pipefail
 shopt -s nullglob
 
 packages=(
+  gh
   fish
   starship
+  fastfetch
 
   bazaar
   ghostty

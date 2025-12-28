@@ -6,10 +6,6 @@ set -ouex pipefail
 
 shopt -s nullglob
 
-add_wants_niri() {
-  sed -i "s/\[Unit\]/\[Unit\]\nWants=$1/" "/usr/lib/systemd/user/niri.service"
-}
-
 system_services=(
   podman.socket
   greetd.service
