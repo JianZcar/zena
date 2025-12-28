@@ -14,6 +14,7 @@ system_services=(
   podman.socket
   greetd.service
   firewalld.service
+  brew-setup.service
   podman-tcp.service
   systemd-timesyncd.service
   systemd-resolved.service
