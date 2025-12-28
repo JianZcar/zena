@@ -1,6 +1,11 @@
 #!/bin/bash
 set -euo pipefail
 
+if getent passwd 1000 >/dev/null; then
+    touch /var/lib/zena-setup.done
+    exit 0
+fi
+
 trap '/usr/libexec/zena-setup.sh;' EXIT
 trap '/usr/libexec/zena-setup.sh;' SIGINT
 
@@ -147,6 +152,7 @@ setup() {
 
     trap '' EXIT
     trap '' SIGINT
+    touch /var/lib/zena-setup.done
     exit 0
 }
 

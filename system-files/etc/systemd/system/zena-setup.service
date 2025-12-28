@@ -1,8 +1,8 @@
 [Unit]
 Description=Zena Setup
 ConditionFirstBoot=yes
+ConditionPathExists=!/var/lib/zena-setup.done
 Before=greetd.service getty@tty1.service
-Before=systemd-user-sessions.service first-boot-complete.target
 After=home.mount systemd-homed.service
 
 [Service]
