@@ -1,8 +1,10 @@
 # Zena OS
 
-Zena OS is a custom Fedora-based operating system built with **bootc**. It uses an immutable, container-native approach and ships with **systemd-homed** for secure home directory management out of the box.
+Zena OS is a custom Fedora‑based operating system built with **bootc**. It uses an immutable, container‑native approach and ships with **systemd‑homed** for secure home directory management out of the box, and a **Cachy kernel compiled with Link‑Time Optimization (LTO)** for performance enhancements.
 
 ## Key Features
+
+* **Ships with a Cachy Kernel LTO Build:** The default kernel is compiled with **Link‑Time Optimization (LTO)** enabled, applying whole‑kernel compiler optimizations at link time to improve execution performance across system workloads. See the **CachyOS Kernel** documentation for details on how LTO contributes to performance improvements. [CachyOS Kernel Features (includes LTO)](https://wiki.cachyos.org/features/kernel)
 
 * **Systemd-Homed Enabled by Default**: User home directories are managed by `systemd-homed`, giving you secure, encrypted, and portable home directories with modern user identity management. systemd-homed simplifies account creation and supports multiple storage formats (including LUKS2 and fscrypt), and makes homes portable and easier to manage compared to traditional `/etc/passwd` home layouts.
 
