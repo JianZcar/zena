@@ -190,7 +190,7 @@ setup() {
     timedatectl set-timezone "$TIMEZONE"
 
     NEWPASSWORD="$PASSWORD" \
-    homectl create --password-change-now=true "$USERNAME" \
+    homectl create --password-change-now=false "$USERNAME" \
       --storage=luks \
       --fs-type=btrfs \
       --disk-size="$HOMESIZE" \

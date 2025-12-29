@@ -56,7 +56,8 @@ packages=(
 dnf5 -y remove "${packages[@]}"
 
 systemctl set-default graphical.target
-authselect enable-feature with-systemd-homed
+authselect select sssd with-systemd-homed with-faillock without-nullok
+authselect apply-changes
 
 curl -Lo /etc/flatpak/remotes.d/flathub.flatpakrepo https://dl.flathub.org/repo/flathub.flatpakrepo && \
 echo "Default=true" | tee -a /etc/flatpak/remotes.d/flathub.flatpakrepo > /dev/null
