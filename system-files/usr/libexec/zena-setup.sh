@@ -160,6 +160,6 @@ setup() {
     exit 0
 }
 
-sleep 10
+sleep 5
 clear
 main_menu

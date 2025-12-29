@@ -21,10 +21,8 @@ packages=(
   ksmtuned
 
   # Optimization
-  cachyos-ananicy-rules
   cachyos-ksm-settings
   cachyos-settings
-  ananicy-cpp
   scx-manager
   scx-scheds
   scx-tools
