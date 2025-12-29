@@ -22,7 +22,7 @@ TIMEZONE=""
 main_menu() {
     local choice=""
     while :; do
-        gum style --border rounded \
+        gum style --border thick \
           "Full name: $FULLNAME" \
           "Username:  $USERNAME" \
           "Home Size: $HOMESIZE" \
@@ -48,7 +48,7 @@ main_menu() {
                 ;;
             "Confirm")
                 if [[ -z "$FULLNAME" || -z "$USERNAME" || -z "$PASSWORD" || -z "$HOMESIZE" || -z "$TIMEZONE" ]]; then
-                    gum style --border rounded \
+                    gum style --border thick \
                       "Some fields are missing, please fill them in."
                     continue
                 fi
@@ -59,7 +59,7 @@ main_menu() {
                 ;;
             *)
                 clear
-                gum style --border rounded "Invalid choice." 2> /dev/null
+                gum style --border thick "Invalid choice." 2> /dev/null
                 ;;
         esac
     done
@@ -143,7 +143,7 @@ adjust_home_size() {
     suggested=$(( avail_gb * 75 / 100 ))
 
     while :; do
-        gum style --border rounded --padding "1" \
+        gum style --border thick \
           "Available Space: ${avail_gb}G" \
           "Suggested Home Size: ${suggested}G (about 75% of available)" \
           "Home size can be changed later using:" \
