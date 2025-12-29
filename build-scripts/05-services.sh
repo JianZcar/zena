@@ -28,12 +28,13 @@ user_services=(
 )
 
 mask_services=(
+  logrotate.timer
+  logrotate.service
+  ananicy-cpp.service
+  rpm-ostree-countme.timer
+  rpm-ostree-countme.service
   systemd-remount-fs.service
   flatpak-add-fedora-repos.service
-  rpm-ostree-countme.service
-  rpm-ostree-countme.timer
-  logrotate.service
-  logrotate.timer
 )
 
 systemctl enable "${system_services[@]}"

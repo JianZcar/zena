@@ -17,6 +17,7 @@ trap '/usr/libexec/zena-setup.sh;' SIGINT
 FULLNAME=""
 USERNAME=""
 PASSWORD=""
+HOMESIZE=""
 TIMEZONE=""
 main_menu() {
     local choice=""
@@ -24,10 +25,12 @@ main_menu() {
         gum style --border rounded \
           "Full name: $FULLNAME" \
           "Username:  $USERNAME" \
+          "Home Size: $HOMESIZE" \
           "Timezone:  $TIMEZONE"
 
         choice=$(gum choose \
           "Create Account" \
+          "Adjust Home size" \
           "Select Timezone" \
           "Confirm" \
           --limit 1)
@@ -37,11 +40,14 @@ main_menu() {
             "Create Account")
                 create_account
                 ;;
+            "Adjust Home size")
+                adjust_home_size
+                ;;
             "Select Timezone")
                 select_timezone
                 ;;
             "Confirm")
-                if [[ -z "$FULLNAME" || -z "$USERNAME" || -z "$PASSWORD" || -z "$TIMEZONE" ]]; then
+                if [[ -z "$FULLNAME" || -z "$USERNAME" || -z "$PASSWORD" || -z "$HOMESIZE" || -z "$TIMEZONE" ]]; then
                     gum style --border rounded \
                       "Some fields are missing, please fill them in."
                     continue
@@ -130,6 +136,44 @@ create_account() {
     done
 }
 
+adjust_home_size() {
+    local avail avail_gb suggested size
+    avail=$(df --output=avail /var/home | tail -n1)
+    avail_gb=$(( avail / 1024 / 1024 ))
+    suggested=$(( avail_gb * 75 / 100 ))
+
+    while :; do
+        gum style --border rounded --padding "1" \
+          "Available Space: ${avail_gb}G" \
+          "Suggested Home Size: ${suggested}G (about 75% of available)" \
+          "Home size can be changed later using:" \
+          "  homectl resize <username> <size>"
+
+        HOMESIZE=$(gum input --placeholder "Enter storage size for home (e.g., 20G)")
+
+        if [[ -z "$HOMESIZE" ]]; then
+            clear
+            gum style --border thick "Home size cannot be empty" 2> /dev/null
+            continue
+        fi
+
+        if [[ ! "$HOMESIZE" =~ ^[0-9]+G$ ]]; then
+            clear
+            gum style --border thick "Invalid format. Use integer followed by 'G', e.g., 20G." 2> /dev/null
+            continue
+        fi
+
+        size=${HOMESIZE%G}
+        if (( size > avail_gb )); then
+            clear
+            gum style --border thick "Entered size exceeds available space (${avail_gb}G)." 2> /dev/null
+            continue
+        fi
+
+        clear && break
+    done
+}
+
 select_timezone() {
     mapfile -t zones < <(timedatectl list-timezones)
 
@@ -149,7 +193,7 @@ setup() {
     homectl create --password-change-now=true "$USERNAME" \
       --storage=luks \
       --fs-type=btrfs \
-      --disk-size=75% \
+      --disk-size="$HOMESIZE" \
       --auto-resize-mode=shrink-and-grow \
       --member-of=wheel \
       --real-name="$FULLNAME"
@@ -160,6 +204,6 @@ setup() {
     exit 0
 }
 
-sleep 5
+sleep 10
 clear
 main_menu
