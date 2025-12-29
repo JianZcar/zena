@@ -6,6 +6,11 @@ if getent passwd 1000 >/dev/null; then
     exit 0
 fi
 
+if homectl list --json=short | jq -e '. | length > 0' >/dev/null; then
+    touch /var/lib/zena-setup.done
+    exit 0
+fi
+
 trap '/usr/libexec/zena-setup.sh;' EXIT
 trap '/usr/libexec/zena-setup.sh;' SIGINT
 
@@ -110,9 +115,9 @@ create_account() {
                 continue
             fi
 
-            if [[ ${#PASSWORD} -lt 6 ]]; then
+            if [[ ${#PASSWORD} -lt 8 ]]; then
                 clear
-                gum style --border thick "Password must be at least 6 characters long" 2> /dev/null
+                gum style --border thick "Password must be at least 8 characters long" 2> /dev/null
                 continue
             fi
             clear && break
@@ -137,9 +142,11 @@ select_timezone() {
 }
 
 setup() {
+    timedatectl set-local-rtc 0
+    timedatectl set-timezone "$TIMEZONE"
+
     NEWPASSWORD="$PASSWORD" \
     homectl create --password-change-now=true "$USERNAME" \
-      --uid=1000 \
       --storage=luks \
       --fs-type=btrfs \
       --disk-size=75% \
@@ -147,14 +154,12 @@ setup() {
       --member-of=wheel \
       --real-name="$FULLNAME"
 
-    timedatectl set-local-rtc 0
-    timedatectl set-timezone "$TIMEZONE"
-
     trap '' EXIT
     trap '' SIGINT
     touch /var/lib/zena-setup.done
     exit 0
 }
 
+sleep 10
 clear
 main_menu
