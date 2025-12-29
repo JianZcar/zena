@@ -16,7 +16,6 @@ packages=(
   xdg-user-dirs
   xdg-user-dirs-gtk
 
-  ananicy-cpp
   power-profiles-daemon
   ksmtuned
 

@@ -30,7 +30,6 @@ user_services=(
 mask_services=(
   logrotate.timer
   logrotate.service
-  ananicy-cpp.service
   rpm-ostree-countme.timer
   rpm-ostree-countme.service
   systemd-remount-fs.service
