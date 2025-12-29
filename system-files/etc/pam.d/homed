@@ -1,4 +1,0 @@
-auth     [success=done default=ignore] pam_systemd_home.so
-account  [success=done default=ignore] pam_systemd_home.so
-password sufficient pam_systemd_home.so
-session  optional   pam_systemd_home.so

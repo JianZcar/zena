@@ -196,7 +196,8 @@ setup() {
       --disk-size="$HOMESIZE" \
       --auto-resize-mode=shrink-and-grow \
       --member-of=wheel \
-      --real-name="$FULLNAME"
+      --real-name="$FULLNAME" \
+      --luks-extra-mount-options=defcontext=system_u:object_r:user_home_dir_t:s0
 
     trap '' EXIT
     trap '' SIGINT
