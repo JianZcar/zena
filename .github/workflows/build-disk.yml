@@ -62,11 +62,36 @@ jobs:
       - name: Upload ISO parts to GoFile
         id: upload_parts
         run: |
+          set -euo pipefail
+
+          MAX_RETRIES=5
+
           for part in ./iso_parts/*; do
             echo "Uploading $part ..."
-            URL=$(curl -s -F "file=@$part" https://upload.gofile.io/uploadfile | \
-                  python3 -c "import sys, json; print(json.load(sys.stdin)['data']['downloadPage'])")
-            echo "$URL"
+
+            for attempt in $(seq 1 $MAX_RETRIES); do
+              echo "Attempt $attempt/$MAX_RETRIES"
+
+              URL=$(
+                curl -s \
+                  -F "file=@$part" \
+                  https://upload.gofile.io/uploadfile | \
+                python3 -c "import sys, json; print(json.load(sys.stdin)['data']['downloadPage'])" \
+                || true
+              )
+
+              if [ -n "$URL" ]; then
+                echo "$URL"
+                break
+              fi
+
+              if [ "$attempt" -eq "$MAX_RETRIES" ]; then
+                echo "Upload failed after $MAX_RETRIES attempts for $part"
+                exit 1
+              fi
+
+              sleep 3
+            done
           done
 
       - name: Upload Artifact
