@@ -41,6 +41,6 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     /ctx/05-services.sh
 
 # for debugging purposes, will be remove.
-RUN echo "root:root" | chpasswd
+# RUN echo "root:root" | chpasswd
 
 RUN bootc container lint
