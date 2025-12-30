@@ -59,6 +59,8 @@ systemctl set-default graphical.target
 authselect select sssd with-systemd-homed with-faillock without-nullok
 authselect apply-changes
 
+useradd -u 350 --system --no-create-home --shell /usr/sbin/nologin linuxbrew
+
 curl -Lo /etc/flatpak/remotes.d/flathub.flatpakrepo https://dl.flathub.org/repo/flathub.flatpakrepo && \
 echo "Default=true" | tee -a /etc/flatpak/remotes.d/flathub.flatpakrepo > /dev/null
 flatpak remote-add --if-not-exists --system flathub /etc/flatpak/remotes.d/flathub.flatpakrepo

@@ -1,0 +1,240 @@
+#!/usr/bin/bash
+# Command wrapper
+# copyright 2022 richiedaze
+# SPDX-License-Identifier: LGPL-2.1-or-late
+
+# homectl command wrapper
+# - Added option to show homed records (keys).
+#   homectl show-keys
+# - Added sudo for commands that need it to run.
+#   homectl = sudo homectl
+# - Added default context to the LUKS mount flag for the create command.
+#   homectl create richiedaze $@ (single or multiple arguments)
+# - Added options to add or delete subuid/sudgid for podman containers.
+#   homectl with richiedaze [add-subids|del-subids|show-subuids]
+
+# Debug script
+#set -x
+
+declare amount="$#"
+    case $amount in # of arguments
+
+        0) # no arguments
+            /usr/bin/homectl
+            ;;
+
+        1) # has 1 argument
+        #echo "has ${amount} argument"
+
+        case $1 in # arguments
+
+            # Override Argument
+            deactivate-all)
+            sudo /usr/bin/homectl deactivate-all
+            ;;
+
+            # Override Argument
+            help|-h|--help)
+            /usr/bin/homectl help
+            ;;
+
+            # Override Argument
+            lock-all)
+            sudo /usr/bin/homectl lock-all
+            ;;
+
+            # Override Argument
+            rebalance)
+            sudo /usr/bin/homectl rebalance
+             ;;
+
+            # Override Argument
+            version|-V|--version)
+            /usr/bin/homectl --version
+            ;;
+
+            # Custom Argument
+            show-keys)
+            /usr/bin/ls -1aZ /var/lib/systemd/home
+            ;;
+
+            # Custom Argument
+            show-subids)
+            INCREMENT=0
+            SUB_UID_MIN=524288
+            SUB_UID_COUNT=65536
+
+            while true; do
+                FIRST=$(((SUB_UID_COUNT*INCREMENT)+SUB_UID_MIN))
+                LAST=$(((SUB_UID_COUNT*INCREMENT)+SUB_UID_MIN+SUB_UID_COUNT-1))
+                HOMED_USER="$(grep "$FIRST" /etc/subuid | /usr/bin/awk -F: '{print $1}')"
+
+                if ! /usr/bin/grep -q "$FIRST:$SUB_UID_COUNT" /etc/subuid; then
+                    break
+                fi
+
+                SUBIDS+=("$HOMED_USER $(id -g "$HOMED_USER") ($FIRST-$LAST)")
+
+                # Skip to the next unused subuid range
+                ((INCREMENT++));
+            done
+
+            # Show list of homed user's subids
+            for i in "${!SUBIDS[@]}" ; do
+                echo "${SUBIDS[$i]}"
+            done | column -t
+
+            ;;
+
+            *) # Bypass wrapper
+            /usr/bin/homectl "$@"
+            ;;
+
+            esac
+        ;;
+
+        2) # has 2 arguments
+        #echo "has ${amount} arguments"
+
+        case $1 in # arguments
+
+            # Override Argument
+            activate)
+            sudo /usr/bin/homectl activate "$2"
+            ;;
+
+            # Override Argument
+            authenticate)
+            sudo /usr/bin/homectl authenticate "$2"
+            ;;
+
+            # Override Argument
+            create)
+            sudo /usr/bin/homectl create "$2" \
+            --luks-extra-mount-options=defcontext=system_u:object_r:user_home_dir_t:s0
+            ;;
+
+            # Override Argument
+            deactivate)
+            sudo /usr/bin/homectl deactivate "$2"
+            ;;
+
+            # Override Argument
+            lock)
+            sudo /usr/bin/homectl lock "$2"
+            ;;
+
+            # Override Argument
+            unlock)
+            sudo /usr/bin/homectl unlock "$2"
+            ;;
+
+            *) # Bypass wrapper
+            /usr/bin/homectl "$@"
+            ;;
+
+        esac
+        ;;
+
+        *) # has multiple arguments
+        #echo "has ${amount} arguments"
+
+        case $1 in # arguments
+
+            # Override Argument
+            create)
+            sudo /usr/bin/homectl create "$2" "${@:3}" \
+            --luks-extra-mount-options=defcontext=system_u:object_r:user_home_dir_t:s0
+            ;;
+
+            # Override Argument
+            with)
+
+            case $3 in
+
+                # Custom Argument
+                add-subuids)
+
+                # Assert this user exist and is a homed user
+                if ! [[ $(id "$2" 2> /dev/null) ]];then
+                    printf "\e[1;31m%-6s\e[m\n" \
+                        "$2 does not exist"
+                    exit
+                elif ! [[ $(id -g "$2" 2> /dev/null) -ge 60001 && \
+                   $(id -g "$2" 2> /dev/null) -le 60513 ]];then
+                    printf "\e[1;31m%-6s\e[m\n" \
+                        "$2 is not a homed user"
+                    exit
+                fi
+
+                INCREMENT=0
+                SUB_UID_MIN=524288
+                SUB_UID_COUNT=65536
+
+                while true; do
+                    FIRST=$(((SUB_UID_COUNT*INCREMENT)+SUB_UID_MIN))
+                    LAST=$(((SUB_UID_COUNT*INCREMENT)+SUB_UID_MIN+SUB_UID_COUNT-1))
+
+                    # Assert homed user doesn't have a range
+                    if /usr/bin/grep -q "$2:$FIRST:$SUB_UID_COUNT" /etc/subuid; then
+                        printf "\e[1;31m%-6s\e[m\n" \
+                            "$2 $(id -g "$2") ($FIRST-$LAST) is already set"
+                        exit
+                    fi
+
+                    # Set homed user with the first available range
+                    if ! /usr/bin/grep -q "$FIRST:$SUB_UID_COUNT" /etc/subuid; then
+                        printf "%s\n" "$2 $(id -g "$2") ($FIRST-$LAST) assigned successfully"
+                        sudo /usr/sbin/usermod --add-subuids "$FIRST-$LAST" "$2"
+                        sudo /usr/sbin/usermod --add-subgids "$FIRST-$LAST" "$2"
+                        break
+                    fi
+
+                    # Skip to the next unused subuid range
+                    ((INCREMENT++));
+                done
+                ;;
+
+                # Custom Argument
+                del-subuids)
+
+                # Assert homed user range is assigned
+                if ! /usr/bin/grep -q "$2" /etc/subuid; then
+                    printf "\e[1;31m%-6s\e[m\n" \
+                        "$2 is not assigned"
+                    exit
+                fi
+
+                SUB_UID_MIN=524288
+                SUB_UID_COUNT=65536
+                USER_SUBUID=$(/usr/bin/grep "$2" /etc/subuid | /usr/bin/awk -F: '{print $2}')
+
+                if [[ -n $USER_SUBUID ]]; then
+                    FIRST=$((USER_SUBUID))
+                    LAST=$((+USER_SUBUID+SUB_UID_COUNT-1))
+                        printf "%s\n" "$2 $(id -g "$2") ($FIRST-$LAST) removed successfully"
+                        sudo /usr/sbin/usermod --del-subuids "$FIRST-$LAST" "$2"
+                        sudo /usr/sbin/usermod --del-subgids "$FIRST-$LAST" "$2"
+                fi
+                ;;
+
+                passwd)
+                sudo /usr/bin/homectl with "$2" passwd
+                ;;
+
+                update)
+                sudo /usr/bin/homectl with "$2" update "${@:4}"
+                ;;
+
+                --)
+                sudo /usr/bin/homectl with "$2" -- "${@:4}"
+                ;;
+            esac
+            ;;
+
+            *)  # Bypass wrapper
+            /usr/bin/homectl "$@"
+            ;;
+        esac
+
+    esac
