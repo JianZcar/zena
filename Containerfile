@@ -40,7 +40,12 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=tmpfs,dst=/tmp \
     /ctx/05-services.sh
 
-# for debugging purposes, will be remove.
+RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
+    --mount=type=tmpfs,dst=/var \
+    --mount=type=tmpfs,dst=/tmp \
+    /ctx/06-finalize.sh
+
+# for debugging purposes.
 # RUN echo "root:root" | chpasswd
 
 RUN bootc container lint
