@@ -23,7 +23,7 @@ Zena OS is a custom Fedora‑based operating system built with **bootc**. It use
 ## Initial Setup
 ![Initial Setup](https://i.imgur.com/NY27oy9.png)
 
-> **Note:** To use podman, first run this command `homectl with $(whoami) add-subuids` and `podman system migrate` once then run podman.
+* **To use podman**, first run these command `homectl with $(whoami) add-subuids` and `podman system migrate` once then run podman.
 
 ## Dank Material Shell
 <div align="center">
