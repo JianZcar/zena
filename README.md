@@ -215,7 +215,7 @@ Short‑to‑mid term items:
 * Default Flatpaks (optional, can be toggle via initial setup)
 * Gaming packages.
 * Secure Boot support.
-* Improvements to the TUI installer.
+* Improvements to the TUI zena-setup.
 
 ---
 
