@@ -35,13 +35,17 @@ packages=(
   man-db
   man-pages
 
+  tree
   git
   flatpak
+  nix
+  nix-daemon
 
   gum
 )
 dnf5 -y install "${packages[@]}"
-
+ls /
+tree /
 # Install install_weak_deps=false
 packages=(
 )

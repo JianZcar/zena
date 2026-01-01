@@ -7,6 +7,7 @@ set -ouex pipefail
 shopt -s nullglob
 
 system_services=(
+  nix.mount
   podman.socket
   greetd.service
   chronyd.service

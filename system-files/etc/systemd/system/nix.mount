@@ -1,0 +1,15 @@
+[Unit]
+Description=Nix Package Manager
+DefaultDependencies=no
+Before=sockets.target
+After=ostree-remount.service
+BindsTo=var.mount
+
+[Mount]
+What=/var/lib/nix
+Where=/nix
+Options=bind
+Type=none
+
+[Install]
+WantedBy=local-fs.target
