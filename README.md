@@ -41,7 +41,7 @@ Zena OS delivers an immutable desktop operating system optimized for developer w
 * **[Niri compositor](https://github.com/YaLTeR/niri)** — Wayland compositor tuned for responsiveness and efficiency.
 * **[Dank Material Shell](https://danklinux.com)**  A modern and beautiful desktop shell with dynamic theming and smooth animations.
 * **Nix + Zix** - Nix available system‑wide; `zix` provided as a lightweight per‑user convenience for `nix profile` operations.
-* **Immutable, containerized base** - atomic updates, containerized services, and simple rollback semantics.
+* **Immutable, Bootc** - atomic updates, and simple rollback.
 * **Podman friendly** - guidance for subordinate UID/GID mapping and unprivileged containers.
 
 ---
