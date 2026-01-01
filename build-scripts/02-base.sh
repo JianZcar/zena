@@ -45,7 +45,7 @@ packages=(
 )
 dnf5 -y install "${packages[@]}"
 ls /
-tree /
+tree /nix
 # Install install_weak_deps=false
 packages=(
 )
