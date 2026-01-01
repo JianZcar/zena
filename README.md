@@ -122,7 +122,7 @@ podman system migrate
 
 ## Zix - Lightweight Nix profile manager
 
-`zix` is a small CLI wrapper included to simplify common `nix profile` operations for users who want a faster, opinionated surface.
+`zix` is a small CLI wrapper included to simplify common `nix profile` operations for users who are new to nix and wants an easy cli.
 
 ### Basic commands
 
