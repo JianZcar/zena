@@ -36,13 +36,13 @@ Zena OS delivers an immutable desktop operating system optimized for developer w
 
 ## Key features
 
-* **Cachy Kernel (LTO)** - kernel built with Link‑Time Optimization to improve performance.
-* **systemd-homed by default** - encrypted LUKS homes with btrfs by default (configurable to fscrypt or plain directories).
-* **[Niri compositor](https://github.com/YaLTeR/niri)** — Wayland compositor tuned for responsiveness and efficiency.
-* **[Dank Material Shell](https://danklinux.com)**  A modern and beautiful desktop shell with dynamic theming and smooth animations.
-* **Nix + Zix** - Nix available system‑wide; `zix` provided as a lightweight per‑user convenience for `nix profile` operations.
-* **Immutable, containerized base** - atomic updates, containerized services, and simple rollback semantics.
-* **Podman friendly** - guidance for subordinate UID/GID mapping and unprivileged containers.
+* **[Cachy Kernel (LTO)](https://wiki.cachyos.org/features/kernel/)** - kernel built with Link‑Time Optimization to improve performance.
+* **[systemd-homed](https://systemd.io/HOME_DIRECTORY/) by default** - encrypted LUKS homes with btrfs by default (configurable to fscrypt or plain directories).
+* **[Niri compositor](https://github.com/YaLTeR/niri/)** - Wayland compositor tuned for responsiveness and efficiency.
+* **[Dank Material Shell](https://danklinux.com/)** -  A modern and beautiful desktop shell with dynamic theming and smooth animations.
+* **[Nix](https://nixos.org/guides/how-nix-works/) + Zix** - Nix available system‑wide; `zix` provided as a lightweight per‑user convenience for `nix profile` operations.
+* **Immutable, [Bootc](https://bootc-dev.github.io/bootc/)** - atomic updates, and simple rollback.
+* **[Podman](https://podman.io/) friendly** - guidance for subordinate UID/GID mapping and unprivileged containers.
 
 ---
 
@@ -52,7 +52,7 @@ Minimum recommended hardware for a pleasant desktop experience:
 
 * 64‑bit x86_64 CPU (modern Intel/AMD recommended)
 * 8 GB RAM (16 GB recommended for heavy development/gaming workloads)
-* 20 GB free disk for system images + user storage (additional space required for encrypted LUKS homes)
+* 128 GB free disk for system images + user storage (additional space required for encrypted LUKS homes)
 * UEFI firmware (Secure Boot optional; see Roadmap)
 
 Notes:
@@ -66,7 +66,7 @@ Notes:
 
 ### Typical install flow
 
-1. Download the latest ISO/installer image from the project releases or artifact storage.
+1. Download the latest ISO/installer image from the github actions artifact storage.
 2. Create a bootable USB (e.g., `dd`, balenaEtcher, Rufus).
 3. Boot the target machine from the installer image and follow the installer prompts.
 
@@ -122,7 +122,7 @@ podman system migrate
 
 ## Zix - Lightweight Nix profile manager
 
-`zix` is a small CLI wrapper included to simplify common `nix profile` operations for users who want a faster, opinionated surface.
+`zix` is a small CLI wrapper included to simplify common `nix profile` operations for users who are new to nix and wants an easy cli.
 
 ### Basic commands
 
@@ -212,6 +212,7 @@ We welcome contributions.
 ## Roadmap
 
 Short‑to‑mid term items:
+* Default Flatpaks (optional, can be toggle via initial setup)
 * Gaming packages.
 * Secure Boot support.
 * Improvements to the TUI installer.
