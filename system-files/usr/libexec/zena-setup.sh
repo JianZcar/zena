@@ -30,7 +30,7 @@ main_menu() {
 
         choice=$(gum choose \
           "Create Account" \
-          "Adjust Home size" \
+          "Set Home size" \
           "Select Timezone" \
           "Confirm" \
           --limit 1)
@@ -40,8 +40,8 @@ main_menu() {
             "Create Account")
                 create_account
                 ;;
-            "Adjust Home size")
-                adjust_home_size
+            "Set Home size")
+                set_home_size
                 ;;
             "Select Timezone")
                 select_timezone
@@ -136,7 +136,7 @@ create_account() {
     done
 }
 
-adjust_home_size() {
+set_home_size() {
     local avail avail_gb suggested size
     avail=$(df --output=avail /var/home | tail -n1)
     avail_gb=$(( avail / 1024 / 1024 ))

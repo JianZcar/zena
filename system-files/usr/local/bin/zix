@@ -1,0 +1,66 @@
+#!/usr/bin/env python3
+import argparse
+import subprocess
+import sys
+
+
+def run(cmd):
+    try:
+        subprocess.run(cmd, check=True)
+    except subprocess.CalledProcessError as e:
+        sys.exit(e.returncode)
+
+
+def cmd_add(args):
+    for pkg in args.packages:
+        print(f"installing '{pkg}'")
+        run(["nix", "profile", "add", f"nixpkgs#{pkg}"])
+
+
+def cmd_remove(args):
+    for pkg in args.packages:
+        print(f"removing '{pkg}'")
+        run(["nix", "profile", "remove", pkg])
+
+
+def cmd_list(_args):
+    run(["nix", "profile", "list"])
+
+
+def cmd_search(args):
+    run(["nix", "search", "nixpkgs", " ".join(args.query)])
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        prog="zix",
+        description=(
+            "Zix is a simple command-line tool to manage Nix packages "
+            "for your user profile. You can install, remove, list, "
+            "and search packages in a convenient way."
+        ),
+    )
+
+    sub = parser.add_subparsers(dest="command", required=True)
+
+    p_add = sub.add_parser("add", help="Install one or more packages")
+    p_add.add_argument("packages", nargs="+")
+    p_add.set_defaults(func=cmd_add)
+
+    p_remove = sub.add_parser("remove", help="Remove one or more packages")
+    p_remove.add_argument("packages", nargs="+")
+    p_remove.set_defaults(func=cmd_remove)
+
+    p_list = sub.add_parser("list", help="Show installed packages")
+    p_list.set_defaults(func=cmd_list)
+
+    p_search = sub.add_parser("search", help="Search nixpkgs")
+    p_search.add_argument("query", nargs="+")
+    p_search.set_defaults(func=cmd_search)
+
+    args = parser.parse_args()
+    args.func(args)
+
+
+if __name__ == "__main__":
+    main()
