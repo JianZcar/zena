@@ -63,8 +63,6 @@ systemctl set-default graphical.target
 authselect select sssd with-systemd-homed with-faillock without-nullok
 authselect apply-changes
 
-useradd -u 350 --system --no-create-home --shell /usr/sbin/nologin linuxbrew
-
 curl -Lo /etc/flatpak/remotes.d/flathub.flatpakrepo https://dl.flathub.org/repo/flathub.flatpakrepo && \
 echo "Default=true" | tee -a /etc/flatpak/remotes.d/flathub.flatpakrepo > /dev/null
 flatpak remote-add --if-not-exists --system flathub /etc/flatpak/remotes.d/flathub.flatpakrepo
@@ -74,6 +72,8 @@ tar --create --verbose --preserve-permissions \
   --same-owner \
   --file /etc/nix-setup.tar \
   -C / nix
+
+rm -rf /nix/* /nix/.[!.]*
 
 # So it won't reboot on Update
 sed -i 's|^ExecStart=.*|ExecStart=/usr/bin/bootc update --quiet|' /usr/lib/systemd/system/bootc-fetch-apply-updates.service

@@ -1,5 +1,5 @@
 %wheel ALL=(ALL:ALL) ALL
 
-Defaults secure_path="/usr/local/bin:/usr/bin:/bin:/home/linuxbrew/.linuxbrew/bin"
+Defaults secure_path="/usr/local/bin:/usr/bin:/bin"
 Defaults env_keep += "EDITOR VISUAL"
 Defaults timestamp_timeout=0

@@ -15,7 +15,6 @@ system_services=(
   greetd.service
   chronyd.service
   firewalld.service
-  brew-setup.service
   podman-tcp.service
   zena-setup.service
   systemd-homed.service

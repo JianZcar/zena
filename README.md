@@ -16,6 +16,8 @@ Zena OS is a custom Fedora‑based operating system built with **bootc**. It use
 
 * **Optimized Performance**: Custom system settings and kernel tunings designed to give responsive system performance for both desktop and development workflows.
 
+* **Nix Package Manager**: Ships with Nix, enabling reproducible builds, user-level package management, and isolation of software environments.
+
 * **Container-Native and Immutable**: Built on the bootc model, the OS delivers atomic updates and reliable rollback support. System components are delivered as containers, making the base system stable and reproducible.
 
 * **Gaming Support (Coming Soon)**: Planned enhancements to improve performance and compatibility for gaming workloads.
