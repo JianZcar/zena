@@ -14,7 +14,7 @@ def run(cmd):
 def cmd_add(args):
     for pkg in args.packages:
         print(f"installing '{pkg}'")
-        run(["nix", "profile", "add", f"nixpkgs#{pkg}"])
+        run(["nix", "profile", "add", "--impure", f"nixpkgs#{pkg}"])
 
 
 def cmd_remove(args):
