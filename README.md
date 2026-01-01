@@ -52,7 +52,7 @@ Minimum recommended hardware for a pleasant desktop experience:
 
 * 64‑bit x86_64 CPU (modern Intel/AMD recommended)
 * 8 GB RAM (16 GB recommended for heavy development/gaming workloads)
-* 20 GB free disk for system images + user storage (additional space required for encrypted LUKS homes)
+* 128 GB free disk for system images + user storage (additional space required for encrypted LUKS homes)
 * UEFI firmware (Secure Boot optional; see Roadmap)
 
 Notes:
