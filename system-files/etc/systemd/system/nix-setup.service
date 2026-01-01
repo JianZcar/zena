@@ -1,0 +1,20 @@
+[Unit]
+Description=Setup Nix Package Manager
+After=local-fs.target
+Wants=local-fs.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/env bash -c '\
+  echo "Setting up Nix in /var/lib/nix"; \
+  mkdir -p /var/lib/nix; \
+  tar --extract --verbose --preserve-permissions --same-owner \
+      --strip-components=1 \
+      --file /etc/nix-setup.tar \
+      -C /var/lib/nix; \
+  echo "Setup complete"; \
+'
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

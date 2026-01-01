@@ -1,5 +1,5 @@
 [Unit]
-Description=Nix Package Manager
+Description=Mount Nix
 DefaultDependencies=no
 Before=sockets.target
 After=ostree-remount.service
