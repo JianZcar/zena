@@ -56,7 +56,7 @@ Minimum recommended hardware for a pleasant desktop experience:
 * UEFI firmware (Secure Boot optional; see Roadmap)
 
 Notes:
-* Zena OS targets desktop and workstation hardware.
+* Zena OS targets laptop, desktop and workstation hardware.
 
 ---
 
