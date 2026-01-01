@@ -66,7 +66,7 @@ Notes:
 
 ### Typical install flow
 
-1. Download the latest ISO/installer image from the project releases or artifact storage.
+1. Download the latest ISO/installer image from the github actions artifact storage.
 2. Create a bootable USB (e.g., `dd`, balenaEtcher, Rufus).
 3. Boot the target machine from the installer image and follow the installer prompts.
 
