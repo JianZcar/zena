@@ -17,6 +17,8 @@ coprs=(
   ublue-os/packages
   ublue-os/obs-vkcapture
 
+  zhangyaoan/umu-launcher
+
   yalter/niri
   ulysg/xwayland-satellite
   avengemedia/danklinux
