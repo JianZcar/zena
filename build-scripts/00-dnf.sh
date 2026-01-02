@@ -11,6 +11,11 @@ coprs=(
   bieszczaders/kernel-cachyos-addons
 
   ublue-os/packages
+  ublue-os/bazzite
+  ublue-os/bazzite-multilib
+  ublue-os/staging
+  ublue-os/packages
+  ublue-os/obs-vkcapture
 
   yalter/niri
   ulysg/xwayland-satellite
