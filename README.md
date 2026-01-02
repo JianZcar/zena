@@ -91,7 +91,7 @@ On first boot the system presents a TUI setup that collects basic account and sy
 
 * **Create Account** - create your primary user (username and passphrase). Homed user creation is performed via `systemd-homed`.
 * **Set Home Size** - choose the size for the encrypted home container (uses Luks, other options will be added in future update).
-* **Set Timezone** - select the system timezone.
+* **Select Timezone** - select the system timezone.
 
 After the TUI completes, and login in, perform these recommended steps:
 
