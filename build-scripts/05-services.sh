@@ -32,10 +32,12 @@ user_services=(
 mask_services=(
   logrotate.timer
   logrotate.service
+  akmods-keygen.target
   rpm-ostree-countme.timer
   rpm-ostree-countme.service
   systemd-remount-fs.service
   flatpak-add-fedora-repos.service
+  akmods-keygen@akmods-keygen.service
 )
 
 systemctl enable "${system_services[@]}"
