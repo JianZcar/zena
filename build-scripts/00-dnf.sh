@@ -11,12 +11,6 @@ coprs=(
   bieszczaders/kernel-cachyos-addons
 
   ublue-os/packages
-  ublue-os/bazzite
-  ublue-os/bazzite-multilib
-  ublue-os/staging
-  ublue-os/packages
-  ublue-os/obs-vkcapture
-
   zhangyaoan/umu-launcher
 
   yalter/niri
@@ -48,6 +42,5 @@ done
 
 echo "priority=1" | sudo tee -a /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:yalter:niri.repo
 echo "priority=2" | sudo tee -a /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:ulysg:xwayland-satellite.repo
-dnf5 -y config-manager setopt "*bazzite*".priority=3
 
 echo "::endgroup::"
