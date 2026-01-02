@@ -18,7 +18,6 @@ coprs=(
   avengemedia/danklinux
   avengemedia/dms-git
 
-  atim/starship
   scottames/ghostty
   sneexy/zen-browser
 )

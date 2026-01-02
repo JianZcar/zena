@@ -12,9 +12,7 @@ dnf5 -y install \
 
 packages=(
   fastfetch
-  fish
   gh
-  starship
 
   bazaar
   firewall-config
