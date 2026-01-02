@@ -1,6 +1,6 @@
-# Zena OS
+# Zena
 
-Zena OS is a custom Fedora‑based operating system built with **bootc**. It is immutable and container‑native, designed for reproducibility, developer productivity, and a responsive desktop experience. Zena OS ships with `systemd-homed` for secure, portable home directories and a **Cachy kernel** compiled with Link‑Time Optimization (LTO) for improved performance.
+Zena is a custom Fedora‑based operating system built with **bootc**. It is immutable and container‑native, designed for reproducibility, developer productivity, and a responsive desktop experience. Zena ships with `systemd-homed` for secure, portable home directories and a **Cachy kernel** compiled with Link‑Time Optimization (LTO) for improved performance.
 
 ---
 
@@ -25,7 +25,7 @@ Zena OS is a custom Fedora‑based operating system built with **bootc**. It is 
 
 ## Project overview
 
-Zena OS delivers an immutable desktop operating system optimized for developer workflows and reproducibility. Key design principles:
+Zena delivers an immutable desktop operating system optimized for developer workflows and reproducibility. Key design principles:
 
 * **Atomic & container-native** - core system components are delivered as container images and updated atomically with rollback support via the `bootc` model.
 * **Secure & portable homes** - `systemd-homed` is enabled by default to provide portable, encrypted home directories.
@@ -57,7 +57,7 @@ Minimum recommended hardware for a pleasant desktop experience:
 * UEFI firmware (Secure Boot optional; see Roadmap)
 
 Notes:
-* Zena OS targets laptop, desktop and workstation hardware.
+* Zena targets laptop, desktop and workstation hardware.
 
 ---
 
@@ -72,9 +72,9 @@ Installer options include:
 * Target disk selection and partitioning
 * Enable LUKS encryption for the system.
 
-### Switching to Zena OS from an existing bootc system
+### Switching to Zena from an existing bootc system
 
-If you are already running a bootc-based system and want to switch to Zena OS, you can rebase the system image using `bootc switch`:
+If you are already running a bootc-based system and want to switch to Zena, you can rebase the system image using `bootc switch`:
 
 ```bash
 bootc switch ghcr.io/zerixal/zena:latest
@@ -146,7 +146,7 @@ Implementation notes:
 
 ## systemd-homed and home storage details
 
-Zena OS enables `systemd-homed` by default to provide portable, encrypted homes that are easy to create, modify, and export.
+Zena enables `systemd-homed` by default to provide portable, encrypted homes that are easy to create, modify, and export.
 
 ### Default configuration
 
