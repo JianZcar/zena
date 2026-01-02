@@ -12,6 +12,7 @@ coprs=(
 
   ublue-os/packages
   ublue-os/bazzite
+  ublue-os/bazzite-multilib
   ublue-os/staging
   ublue-os/packages
   ublue-os/obs-vkcapture

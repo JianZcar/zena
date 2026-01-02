@@ -41,7 +41,7 @@ packages=(
   libobs_glcapture.i686
   openxr
 )
-dnf5 -y install "${packages[@]}"
+dnf5 -y --allowerasing install "${packages[@]}"
 
 # Install install_weak_deps=false
 packages=(
