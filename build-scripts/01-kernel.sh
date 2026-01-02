@@ -35,9 +35,6 @@ dnf5 distro-sync
 
 dnf5 versionlock add "${packages[@]}"
 
-sed -i 's/omit_drivers/force_drivers/g' /usr/lib/dracut/dracut.conf.d/99-nvidia.conf
-sed -i 's/ nvidia / i915 amdgpu nvidia /g' /usr/lib/dracut/dracut.conf.d/99-nvidia.conf
-
 KVER=$(ls /usr/lib/modules | head -n1)
 echo "Building initramfs for kernel version: $KVER"
 
