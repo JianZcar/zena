@@ -62,9 +62,6 @@ Notes:
 ---
 
 ## Installation
-
-> This README documents the high-level install and first-time setup flows. For production deployments or customized builds, consult the `docs/` directory and release artifacts in the `releases/` page.
-
 ### Typical install flow
 
 1. Download the latest ISO/installer image from the github actions artifact storage.
