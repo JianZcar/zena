@@ -48,5 +48,6 @@ done
 
 echo "priority=1" | sudo tee -a /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:yalter:niri.repo
 echo "priority=2" | sudo tee -a /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:ulysg:xwayland-satellite.repo
+dnf5 -y config-manager setopt "*bazzite*".priority=3
 
 echo "::endgroup::"

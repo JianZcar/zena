@@ -41,7 +41,8 @@ packages=(
   libobs_glcapture.i686
   openxr
 )
-dnf5 -y install --allowerasing "${packages[@]}"
+dnf5 remove -y gamescope-libs.x86_64 gamescope-libs.i686
+dnf5 -y install "${packages[@]}"
 
 # Install install_weak_deps=false
 packages=(
