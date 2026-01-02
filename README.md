@@ -38,7 +38,7 @@ Zena OS delivers an immutable desktop operating system optimized for developer w
 
 * **[Cachy Kernel (LTO)](https://wiki.cachyos.org/features/kernel/)** - kernel built with Link‑Time Optimization to improve performance.
 * **[systemd-homed](https://systemd.io/HOME_DIRECTORY/) by default** - encrypted LUKS homes with btrfs by default (configurable to fscrypt or plain directories).
-* **[Niri compositor](https://github.com/YaLTeR/niri/)** - Wayland compositor. Windows are arranged in columns on an infinite strip going to the right.
+* **[Niri](https://github.com/YaLTeR/niri/)** - Wayland compositor. Windows are arranged in columns on an infinite strip going to the right.
 * **[Dank Material Shell](https://danklinux.com/)** -  A modern and beautiful desktop shell with dynamic theming and smooth animations.
 * **[Nix](https://nixos.org/guides/how-nix-works/) + Zix** - Nix available system‑wide; `zix` provided as a lightweight per‑user convenience for `nix profile` operations.
 * **Immutable, [Bootc](https://bootc-dev.github.io/bootc/)** - atomic updates, and simple rollback.
