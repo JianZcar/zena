@@ -11,29 +11,27 @@ dnf5 -y install \
   https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
 packages=(
-  gh
-  fish
-  starship
   fastfetch
+  fish
+  gh
+  starship
 
   bazaar
+  firewall-config
   ghostty
   nautilus
   nautilus-python
-  firewall-config
-
   zen-browser
 
   gamescope
   v4l2loopback
-  obs-studio-plugin-vkcapture
 )
 dnf5 -y install "${packages[@]}"
 
 # Install install_weak_deps=false
 packages=(
-  steam
   lutris
+  steam
 )
 dnf5 -y install "${packages[@]}" --setopt=install_weak_deps=False
 

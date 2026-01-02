@@ -7,19 +7,122 @@ set -ouex pipefail
 shopt -s nullglob
 
 packages=(
-  @fonts
-  @multimedia
+  ############################
+  # Hardware Support + Core #
+  ############################
   @hardware-support
   @container-management
-  @networkmanager-submodules
+  steam-devices
 
+  ############################
+  # WIFI / WIRELESS FIRMWARE #
+  ############################
+  @networkmanager-submodules
+  NetworkManager-wifi
+
+  atheros-firmware
+  brcmfmac-firmware
+  iwlegacy-firmware
+  iwlwifi-dvm-firmware
+  iwlwifi-mvm-firmware
+  mt7xxx-firmware
+  nxpwireless-firmware
+  realtek-firmware
+  tiwilink-firmware
+
+  ############################
+  # AUDIO / SOUND FIRMWARE   #
+  ############################
+  alsa-firmware
+  alsa-sof-firmware
+  intel-audio-firmware
+
+  ############################
+  # SYSTEM / CORE UTILITIES  #
+  ############################
+  audit
+  audispd-plugins
+  cifs-utils
+  firewalld
+  fuse
+  fuse-common
+  fuse-devel
+  fwupd
+  man-db
+  man-pages
+  systemd-container
+  unzip
+  whois
+  inotify-tools
+  gum
   xdg-user-dirs
   xdg-user-dirs-gtk
 
+  ############################
+  # DESKTOP PORTALS          #
+  ############################
+  xdg-desktop-portal
+  xdg-desktop-portal-gnome
+
+  ############################
+  # MOBILE / CAMERA SUPPORT #
+  ############################
+  gvfs-mtp
+  gvfs-smb
+  ifuse
+  jmtpfs
+
+  libcamera
+  libcamera-v4l2
+  libcamera-gstreamer
+  libcamera-tools
+
+  libimobiledevice
+
+  ############################
+  # AUDIO SYSTEM (PIPEWIRE)  #
+  ############################
+  pipewire
+  pipewire-pulseaudio
+  pipewire-alsa
+  pipewire-jack-audio-connection-kit
+  wireplumber
+  pipewire-plugin-libcamera
+
+  ############################
+  # DEVTOOLS / CLI UTILITIES #
+  ############################
+  git
+  yq
+
+  ############################
+  # DISPLAY + MULTIMEDIA     #
+  ############################
+  @multimedia
+  ffmpeg
+  libavcodec
+  gstreamer1-plugins-base
+  gstreamer1-plugins-good
+  gstreamer1-plugins-bad-free
+  gstreamer1-plugins-bad-free-libs
+  qt6-qtmultimedia
+  lame-libs
+  libjxl
+  ffmpegthumbnailer
+  glycin-thumbnailer
+  webp-pixbuf-loader
+
+  ############################
+  # FONTS / LOCALE SUPPORT   #
+  ############################
+  @fonts
+  glibc-all-langpacks
+
+  ############################
+  # Performance              #
+  ############################
   power-profiles-daemon
   ksmtuned
-
-  # Optimization
   cachyos-ksm-settings
   cachyos-settings
   scx-manager
@@ -27,25 +130,19 @@ packages=(
   scx-tools
   scxctl
 
+  ############################
+  # GRAPHICS / VULKAN        #
+  ############################
   mesa*
   *vulkan*
 
-  ffmpeg
-
-  firewalld
-
-  man-db
-  man-pages
-
-  tree
-  git
+  ############################
+  # PACKAGE MANAGERS         #
+  ############################
   flatpak
   nix
   nix-daemon
-
-  gum
 )
-
 dnf5 -y install "${packages[@]}"
 
 # Install install_weak_deps=false
