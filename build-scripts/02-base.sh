@@ -30,7 +30,6 @@ packages=(
   mesa*
   *vulkan*
 
-  v4l2loopback
   ffmpeg
 
   firewalld

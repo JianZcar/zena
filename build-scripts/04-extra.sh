@@ -25,6 +25,7 @@ packages=(
   zen-browser
 
   gamescope
+  v4l2loopback
   obs-studio-plugin-vkcapture
 )
 dnf5 -y install "${packages[@]}"
