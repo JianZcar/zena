@@ -43,6 +43,7 @@ Zena OS delivers an immutable desktop operating system optimized for developer w
 * **[Nix](https://nixos.org/guides/how-nix-works/) + Zix** - Nix available system‑wide; `zix` provided as a lightweight per‑user convenience for `nix profile` operations.
 * **Immutable, [Bootc](https://bootc-dev.github.io/bootc/)** - atomic updates, and simple rollback.
 * **[Podman](https://podman.io/) friendly** - guidance for subordinate UID/GID mapping and unprivileged containers.
+* **Gaming‑ready by default** - Steam and Lutris are included out of the box.
 
 ---
 
@@ -213,7 +214,6 @@ We welcome contributions.
 
 Short‑to‑mid term items:
 * Default Flatpaks (optional, can be toggle via initial setup)
-* Gaming packages.
 * Secure Boot support.
 * Improvements to the TUI zena-setup.
 
