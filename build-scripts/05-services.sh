@@ -9,7 +9,6 @@ shopt -s nullglob
 system_services=(
   nix.mount
   nix-setup.service
-  nix-daemon.service
   nix-daemon.socket
   podman.socket
   greetd.service

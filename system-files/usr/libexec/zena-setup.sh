@@ -189,6 +189,9 @@ setup() {
     timedatectl set-local-rtc 0
     timedatectl set-timezone "$TIMEZONE"
 
+    hostnamectl set-hostname zena --static
+    hostnamectl set-hostname "Zena" --pretty
+
     NEWPASSWORD="$PASSWORD" \
     /usr/bin/homectl create --password-change-now=false "$USERNAME" \
       --storage=luks \
