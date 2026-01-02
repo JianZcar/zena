@@ -20,22 +20,15 @@ packages=(
   @networkmanager-submodules
   NetworkManager-wifi
 
-  atheros-firmware
-  brcmfmac-firmware
   iwlegacy-firmware
   iwlwifi-dvm-firmware
   iwlwifi-mvm-firmware
-  mt7xxx-firmware
-  nxpwireless-firmware
-  realtek-firmware
-  tiwilink-firmware
 
   ############################
   # AUDIO / SOUND FIRMWARE   #
   ############################
   alsa-firmware
   alsa-sof-firmware
-  intel-audio-firmware
 
   ############################
   # SYSTEM / CORE UTILITIES  #
@@ -48,7 +41,6 @@ packages=(
   fuse-common
   fuse-devel
   fwupd
-  man-db
   man-pages
   systemd-container
   unzip
@@ -110,6 +102,7 @@ packages=(
   libjxl
   ffmpegthumbnailer
   glycin-thumbnailer
+  libopenraw
   webp-pixbuf-loader
 
   ############################
