@@ -1,6 +1,6 @@
-# Zena OS
+# Zena
 
-Zena OS is a custom Fedora‑based operating system built with **bootc**. It is immutable and container‑native, designed for reproducibility, developer productivity, and a responsive desktop experience. Zena OS ships with `systemd-homed` for secure, portable home directories and a **Cachy kernel** compiled with Link‑Time Optimization (LTO) for improved performance.
+Zena is a custom Fedora‑based operating system built with **bootc**. It is immutable and container‑native, designed for reproducibility, developer productivity, and a responsive desktop experience. Zena ships with `systemd-homed` for secure, portable home directories and a **Cachy kernel** compiled with Link‑Time Optimization (LTO) for improved performance.
 
 ---
 
@@ -25,7 +25,7 @@ Zena OS is a custom Fedora‑based operating system built with **bootc**. It is 
 
 ## Project overview
 
-Zena OS delivers an immutable desktop operating system optimized for developer workflows and reproducibility. Key design principles:
+Zena delivers an immutable desktop operating system optimized for developer workflows and reproducibility. Key design principles:
 
 * **Atomic & container-native** - core system components are delivered as container images and updated atomically with rollback support via the `bootc` model.
 * **Secure & portable homes** - `systemd-homed` is enabled by default to provide portable, encrypted home directories.
@@ -38,9 +38,9 @@ Zena OS delivers an immutable desktop operating system optimized for developer w
 
 * **[Cachy Kernel (LTO)](https://wiki.cachyos.org/features/kernel/)** - kernel built with Link‑Time Optimization to improve performance.
 * **[systemd-homed](https://systemd.io/HOME_DIRECTORY/) by default** - encrypted LUKS homes with btrfs by default (configurable to fscrypt or plain directories).
-* **[Niri compositor](https://github.com/YaLTeR/niri/)** - Wayland compositor. Windows are arranged in columns on an infinite strip going to the right.
+* **[Niri](https://github.com/YaLTeR/niri/)** - A wayland compositor. Windows are arranged in columns on an infinite strip going to the right.
 * **[Dank Material Shell](https://danklinux.com/)** -  A modern and beautiful desktop shell with dynamic theming and smooth animations.
-* **[Nix](https://nixos.org/guides/how-nix-works/) + Zix** - Nix available system‑wide; `zix` provided as a lightweight per‑user convenience for `nix profile` operations.
+* **[Nix](https://nixos.org/guides/how-nix-works/) + Zix** - Nix a package manager available system‑wide; `zix` provided as a lightweight per‑user convenience for `nix profile` operations.
 * **Immutable, [Bootc](https://bootc-dev.github.io/bootc/)** - atomic updates, and simple rollback.
 * **[Podman](https://podman.io/) friendly** - guidance for subordinate UID/GID mapping and unprivileged containers.
 * **Gaming‑ready by default** - Steam and Lutris are included out of the box.
@@ -57,14 +57,11 @@ Minimum recommended hardware for a pleasant desktop experience:
 * UEFI firmware (Secure Boot optional; see Roadmap)
 
 Notes:
-* Zena OS targets laptop, desktop and workstation hardware.
+* Zena targets laptop, desktop and workstation hardware.
 
 ---
 
 ## Installation
-
-> This README documents the high-level install and first-time setup flows. For production deployments or customized builds, consult the `docs/` directory and release artifacts in the `releases/` page.
-
 ### Typical install flow
 
 1. Download the latest ISO/installer image from the github actions artifact storage.
@@ -75,9 +72,9 @@ Installer options include:
 * Target disk selection and partitioning
 * Enable LUKS encryption for the system.
 
-### Switching to Zena OS from an existing bootc system
+### Switching to Zena from an existing bootc system
 
-If you are already running a bootc-based system and want to switch to Zena OS, you can rebase the system image using `bootc switch`:
+If you are already running a bootc-based system and want to switch to Zena, you can rebase the system image using `bootc switch`:
 
 ```bash
 bootc switch ghcr.io/zerixal/zena:latest
@@ -149,7 +146,7 @@ Implementation notes:
 
 ## systemd-homed and home storage details
 
-Zena OS enables `systemd-homed` by default to provide portable, encrypted homes that are easy to create, modify, and export.
+Zena enables `systemd-homed` by default to provide portable, encrypted homes that are easy to create, modify, and export.
 
 ### Default configuration
 
