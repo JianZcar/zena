@@ -145,9 +145,6 @@ packages=(
 )
 dnf5 -y install "${packages[@]}"
 
-dnf5 -y module enable nvidia-driver:open-dkms
-dnf5 -y module install nvidia-driver:open-dkms
-
 # Install install_weak_deps=false
 packages=(
 )
