@@ -6,6 +6,11 @@ set -ouex pipefail
 
 shopt -s nullglob
 
+dnf5 -y install \
+  https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
+  https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
+dnf5 distro-sync
 packages=(
   ############################
   # Hardware Support + Core #
@@ -140,8 +145,24 @@ dnf5 -y install "${packages[@]}"
 
 # Install install_weak_deps=false
 packages=(
+  ############################
+  # GRAPHICS / NVIDIA        #
+  ############################
+  nvidia-driver-libs
+  nvidia-utils
+  libnvidia-ml
+  libnvidia-gpucomp
+  libnvidia-fbc
+  libva-nvidia-driver
+  nvidia-modprobe
+  xorg-x11-drv-nvidia
+  nvidia-driver-libs.i686
+  nvidia-utils.i686
+  libnvidia-ml.i686
+  libva-nvidia-driver.i686
+  nvidia-persistenced
 )
-# dnf5 -y install "${packages[@]}" --setopt=install_weak_deps=False
+dnf5 -y install "${packages[@]}" --setopt=install_weak_deps=False
 
 # Uninstall
 packages=(
