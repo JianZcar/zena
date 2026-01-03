@@ -11,8 +11,6 @@ dnf5 -y install \
 
 dnf5 distro-sync
 packages=(
-  @container-management
-
   ############################
   # Hardware Support         #
   ############################
@@ -142,9 +140,6 @@ packages=(
   *vulkan*
   vulkan-icd-loader
   libvulkan1-32bit
-  nvidia-open-vulkan
-  nvidia-open-opengl
-  nvidia-utils
 
   ############################
   # PACKAGE MANAGERS         #
@@ -154,6 +149,9 @@ packages=(
   nix-daemon
 )
 dnf5 -y install "${packages[@]}"
+
+dnf5 -y module enable nvidia-driver:open-dkms --allowerasing
+dnf5 -y module install nvidia-driver:open-dkms
 
 # Install install_weak_deps=false
 packages=(
