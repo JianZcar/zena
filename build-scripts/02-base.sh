@@ -12,11 +12,11 @@ dnf5 -y install \
 
 dnf5 distro-sync
 packages=(
-  ############################
-  # Hardware Support + Core #
-  ############################
-  @hardware-support
   @container-management
+
+  ############################
+  # Hardware Support         #
+  ############################
   steam-devices
 
   ############################
@@ -24,16 +24,23 @@ packages=(
   ############################
   @networkmanager-submodules
   NetworkManager-wifi
-
+  atheros-firmware
+  brcmfmac-firmware
   iwlegacy-firmware
   iwlwifi-dvm-firmware
   iwlwifi-mvm-firmware
+  mt7xxx-firmware
+  nxpwireless-firmware
+  realtek-firmware
+  tiwilink-firmware
 
   ############################
   # AUDIO / SOUND FIRMWARE   #
   ############################
   alsa-firmware
   alsa-sof-firmware
+  alsa-tools-firmware
+  intel-audio-firmware
 
   ############################
   # SYSTEM / CORE UTILITIES  #
