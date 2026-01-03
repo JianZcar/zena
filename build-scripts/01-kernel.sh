@@ -9,7 +9,6 @@ shopt -s nullglob
 packages=(
   kernel-cachyos-lto
   kernel-cachyos-lto-devel-matched
-  kernel-cachyos-lto-nvidia-open
 )
 
 dnf5 -y remove --no-autoremove \
@@ -33,7 +32,7 @@ dnf5 makecache
 dnf5 check
 dnf5 distro-sync
 
-dnf5 -y install nvidia-open
+dnf5 -y install nvidia-open akmod-nvidia-open
 akmods --force --rebuild
 dnf5 versionlock add "${packages[@]}"
 
