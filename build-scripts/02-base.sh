@@ -6,10 +6,6 @@ set -ouex pipefail
 
 shopt -s nullglob
 
-dnf5 -y install \
-  https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-
-dnf5 distro-sync
 packages=(
   ############################
   # Hardware Support         #
@@ -135,6 +131,7 @@ packages=(
   ############################
   # GRAPHICS / VULKAN        #
   ############################
+  nvidia-open
   glx-utils
   mesa*
   *vulkan*
@@ -153,12 +150,8 @@ dnf5 -y module install nvidia-driver:open-dkms
 
 # Install install_weak_deps=false
 packages=(
-  ############################
-  # GRAPHICS / NVIDIA        #
-  ############################
-
 )
-dnf5 -y install "${packages[@]}" --setopt=install_weak_deps=False
+# dnf5 -y install "${packages[@]}" --setopt=install_weak_deps=False
 
 # Uninstall
 packages=(
