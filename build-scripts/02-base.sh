@@ -137,8 +137,14 @@ packages=(
   ############################
   # GRAPHICS / VULKAN        #
   ############################
+  glx-utils
   mesa*
   *vulkan*
+  vulkan-icd-loader
+  libvulkan1-32bit
+  nvidia-open-vulkan
+  nvidia-open-opengl
+  nvidia-utils
 
   ############################
   # PACKAGE MANAGERS         #
@@ -154,19 +160,7 @@ packages=(
   ############################
   # GRAPHICS / NVIDIA        #
   ############################
-  nvidia-driver-libs
-  nvidia-utils
-  libnvidia-ml
-  libnvidia-gpucomp
-  libnvidia-fbc
-  libva-nvidia-driver
-  nvidia-modprobe
-  xorg-x11-drv-nvidia
-  nvidia-driver-libs.i686
-  nvidia-utils.i686
-  libnvidia-ml.i686
-  libva-nvidia-driver.i686
-  nvidia-persistenced
+
 )
 dnf5 -y install "${packages[@]}" --setopt=install_weak_deps=False
 
