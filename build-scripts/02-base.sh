@@ -138,8 +138,6 @@ packages=(
   glx-utils
   mesa*
   *vulkan*
-  vulkan-icd-loader
-  libvulkan1-32bit
 
   ############################
   # PACKAGE MANAGERS         #
