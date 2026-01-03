@@ -131,7 +131,6 @@ packages=(
   ############################
   # GRAPHICS / VULKAN        #
   ############################
-  nvidia-open
   glx-utils
   mesa*
   *vulkan*

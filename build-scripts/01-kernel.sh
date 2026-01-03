@@ -33,6 +33,8 @@ dnf5 makecache
 dnf5 check
 dnf5 distro-sync
 
+dnf5 -y install nvidia-open
+akmods --force --rebuild
 dnf5 versionlock add "${packages[@]}"
 
 KVER=$(ls /usr/lib/modules | head -n1)
