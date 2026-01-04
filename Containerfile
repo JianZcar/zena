@@ -5,8 +5,8 @@ COPY build-scripts /
 
 FROM quay.io/fedora/fedora-bootc:${FEDORA_VERSION}
 # Fix for KeyError: 'vendor' image-builder
-RUN mkdir -p /usr/lib/bootupd/updates \
-    && cp -r /usr/lib/efi/*/*/* /usr/lib/bootupd/updates
+# RUN mkdir -p /usr/lib/bootupd/updates \
+#     && cp -r /usr/lib/efi/*/*/* /usr/lib/bootupd/updates
 
 COPY system-files/ /
 
