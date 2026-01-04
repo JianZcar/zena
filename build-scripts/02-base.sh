@@ -107,7 +107,6 @@ packages=(
   libjxl
   ffmpegthumbnailer
   gdk-pixbuf2
-  gdk-pixbuf2‑libs
   libopenraw
   webp-pixbuf-loader
 
