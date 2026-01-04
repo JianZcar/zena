@@ -7,7 +7,7 @@ set -ouex pipefail
 shopt -s nullglob
 
 coprs=(
-  jianzcar/kernel-cachyos-lto
+  bieszczaders/kernel-cachyos-lto
   bieszczaders/kernel-cachyos-addons
 
   ublue-os/packages
