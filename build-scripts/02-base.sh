@@ -106,7 +106,8 @@ packages=(
   lame-libs
   libjxl
   ffmpegthumbnailer
-  glycin-thumbnailer
+  gdk-pixbuf2
+  gdk-pixbuf2‑libs
   libopenraw
   webp-pixbuf-loader
 
