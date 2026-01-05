@@ -91,6 +91,7 @@ packages=(
   ############################
   git
   yq
+  distrobox
 
   ############################
   # DISPLAY + MULTIMEDIA     #
@@ -131,7 +132,6 @@ packages=(
   ############################
   # GRAPHICS / VULKAN        #
   ############################
-  nvidia-open
   glx-utils
   mesa*
   *vulkan*
