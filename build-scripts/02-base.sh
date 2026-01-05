@@ -132,9 +132,16 @@ packages=(
   nix-daemon
 )
 dnf5 -y install "${packages[@]}" --exclude=scx-tools-nightly --exclude=scx-scheds-nightly
-dnf5 versionlock add "${packages[@]}"
-dnf5 -y install scx-tools-nightly scx-scheds-nightly --allowerasing \
-  --setopt=clean_requirements_on_remove=False
+
+TMPDIR=$(mktemp -d)
+pushd "$TMPDIR"
+
+dnf5 download --arch x86_64 --resolve --destdir "$TMPDIR" scx-scheds-nightly scx-tools-nightly
+rpm -e --nodeps scx-tools scx-scheds
+rpm -Uvh --force --nodeps scx-tools-nightly*.rpm scx-scheds-nightly*.rpm
+
+popd
+rm -rf "$TMPDIR"
 
 # Install install_weak_deps=false
 packages=(
