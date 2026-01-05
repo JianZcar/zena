@@ -17,15 +17,9 @@ packages=(
   ############################
   @networkmanager-submodules
   NetworkManager-wifi
-  atheros-firmware
-  brcmfmac-firmware
   iwlegacy-firmware
   iwlwifi-dvm-firmware
   iwlwifi-mvm-firmware
-  mt7xxx-firmware
-  nxpwireless-firmware
-  realtek-firmware
-  tiwilink-firmware
 
   ############################
   # AUDIO / SOUND FIRMWARE   #
@@ -33,7 +27,6 @@ packages=(
   alsa-firmware
   alsa-sof-firmware
   alsa-tools-firmware
-  intel-audio-firmware
 
   ############################
   # SYSTEM / CORE UTILITIES  #
@@ -43,9 +36,7 @@ packages=(
   cifs-utils
   firewalld
   fuse
-  fuse-common
   fuse-devel
-  fwupd
   man-pages
   systemd-container
   unzip
@@ -124,8 +115,8 @@ packages=(
   cachyos-ksm-settings
   cachyos-settings
   scx-manager
-  scx-scheds
-  scx-tools
+  scx-tools-nightly
+  scx-scheds-nightly
   scxctl
 
   ############################

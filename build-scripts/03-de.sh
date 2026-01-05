@@ -32,7 +32,6 @@ dnf5 -y install "${packages[@]}"
 # Install install_weak_deps=false
 packages=(
   niri
-  adw-gtk3-theme
 )
 
 dnf5 -y install "${packages[@]}" --setopt=install_weak_deps=False

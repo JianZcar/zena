@@ -18,15 +18,16 @@ packages=(
 
 KERNEL_VERSION="$(find "/usr/lib/modules" -maxdepth 1 -type d ! -path "/usr/lib/modules" -exec basename '{}' ';' | sort | tail -n 1)"
 
-dnf5 config-manager setopt "*rpmfusion*".enabled=0
 dnf5 config-manager addrepo --from-repofile=https://negativo17.org/repos/fedora-nvidia.repo
+dnf5 config-manager setopt "*rpmfusion*".enabled=0
 dnf5 config-manager setopt fedora-nvidia.enabled=0
 sed -i '/^enabled=/a\priority=90' /etc/yum.repos.d/fedora-nvidia.repo
 
 dnf5 -y install --enablerepo=fedora-nvidia akmod-nvidia
-mkdir -p /var/tmp # for akmods
+
+mkdir -p /var/tmp
 chmod 1777 /var/tmp
-dnf5 -y install gcc-c++
+
 akmods --force --kernels "${KERNEL_VERSION}" --kmod "nvidia"
 cat /var/cache/akmods/nvidia/*.failed.log || true
 
