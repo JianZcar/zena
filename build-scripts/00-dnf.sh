@@ -16,9 +16,7 @@ coprs=(
   yalter/niri
   ulysg/xwayland-satellite
   avengemedia/danklinux
-  avengemedia/dms-git
-
-  scottames/ghostty
+  avengemedia/dms
   sneexy/zen-browser
 )
 
@@ -29,6 +27,10 @@ repos=(
 mkdir -p /var/roothome
 dnf5 -y install dnf5-plugins
 echo -n "max_parallel_downloads=10" >>/etc/dnf/dnf.conf
+
+dnf5 -y install \
+  https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
+  https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
 for copr in "${coprs[@]}"; do
   echo "Enabling copr: $copr"
@@ -41,5 +43,10 @@ done
 
 echo "priority=1" | sudo tee -a /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:yalter:niri.repo
 echo "priority=2" | sudo tee -a /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:ulysg:xwayland-satellite.repo
+dnf5 -y config-manager setopt "*negativo17*".priority=3 "*negativo17*".excludepkgs="mesa-* *xone*"
+dnf5 -y config-manager setopt "*rpmfusion*".priority=4
+dnf5 -y config-manager setopt "*fedora*".exclude="mesa-* kernel-core-* kernel-modules-* kernel-uki-virt-*"
+
+dnf5 -y distro-sync
 
 echo "::endgroup::"

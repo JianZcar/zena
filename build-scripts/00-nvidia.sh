@@ -7,9 +7,14 @@ set -ouex pipefail
 shopt -s nullglob
 
 packages=(
-  nvidia-open
+  nvidia-driver-cuda
+  libnvidia-fbc
+  libva-nvidia-driver
+  nvidia-driver
+  nvidia-modprobe
+  nvidia-persistenced
+  nvidia-settings
 )
-dnf5 -y install "${packages[@]}"
 
 KERNEL_VERSION="$(find "/usr/lib/modules" -maxdepth 1 -type d ! -path "/usr/lib/modules" -exec basename '{}' ';' | sort | tail -n 1)"
 
@@ -24,8 +29,7 @@ dnf -y install gcc-c++
 akmods --force --kernels "${KERNEL_VERSION}" --kmod "nvidia"
 cat /var/cache/akmods/nvidia/*.failed.log || true
 
-dnf -y install --enablerepo=fedora-nvidia \
-    nvidia-driver-cuda libnvidia-fbc libva-nvidia-driver nvidia-driver nvidia-modprobe nvidia-persistenced nvidia-settings
+dnf5 -y install --enablerepo=fedora-nvidia "${packages[@]}"
 
 dnf config-manager addrepo --from-repofile=https://nvidia.github.io/libnvidia-container/stable/rpm/nvidia-container-toolkit.repo
 dnf config-manager setopt nvidia-container-toolkit.enabled=0
