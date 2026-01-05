@@ -32,6 +32,7 @@ akmods --force --kernels "${KERNEL_VERSION}" --kmod "nvidia"
 cat /var/cache/akmods/nvidia/*.failed.log || true
 
 dnf5 -y install --enablerepo=fedora-nvidia "${packages[@]}"
+dnf5 versionlock add "${packages[@]}"
 
 dnf5 config-manager addrepo --from-repofile=https://nvidia.github.io/libnvidia-container/stable/rpm/nvidia-container-toolkit.repo
 dnf5 config-manager setopt nvidia-container-toolkit.enabled=0
