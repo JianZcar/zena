@@ -115,8 +115,8 @@ packages=(
   cachyos-ksm-settings
   cachyos-settings
   scx-manager
-  scx-tools-nightly
-  scx-scheds-nightly
+  scx-scheds
+  scx-tools
   scxctl
 
   ############################
@@ -133,7 +133,8 @@ packages=(
   nix
   nix-daemon
 )
-dnf5 -y install "${packages[@]}"
+dnf5 -y install "${packages[@]}" --exclude=scx-tools-nightly --exclude=scx-scheds
+dnf5 -y install scx-tools-nightly scx-scheds-nightly --allowerasing
 
 # Install install_weak_deps=false
 packages=(
