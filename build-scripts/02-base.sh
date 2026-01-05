@@ -136,9 +136,9 @@ dnf5 -y install "${packages[@]}" --exclude=scx-tools-nightly --exclude=scx-sched
 TMPDIR=$(mktemp -d)
 pushd "$TMPDIR"
 
-dnf5 download --arch x86_64 --resolve --destdir "$TMPDIR" scx-scheds-nightly scx-tools-nightly
+dnf5 download --arch x86_64 --destdir "$TMPDIR" scx-scheds-nightly scx-tools-nightly
 rpm -e --nodeps scx-tools scx-scheds
-rpm -Uvh --force --nodeps scx-tools-nightly*.rpm scx-scheds-nightly*.rpm
+rpm -Uvh --force --nodeps *.rpm
 
 popd
 rm -rf "$TMPDIR"
