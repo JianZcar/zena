@@ -131,7 +131,7 @@ packages=(
   nix
   nix-daemon
 )
-dnf5 -y install "${packages[@]}" --exclude=scx-tools-nightly --exclude=scx-scheds
+dnf5 -y install "${packages[@]}" --exclude=scx-tools-nightly --exclude=scx-scheds-nightly
 dnf5 versionlock add "${packages[@]}"
 dnf5 -y install scx-tools-nightly scx-scheds-nightly --allowerasing \
   --setopt=clean_requirements_on_remove=False
