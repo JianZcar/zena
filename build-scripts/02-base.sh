@@ -98,7 +98,7 @@ packages=(
   ############################
   @multimedia
   ffmpeg
-  libavcodec
+  libavcodec-free
   gstreamer1-plugins-base
   gstreamer1-plugins-good
   gstreamer1-plugins-bad-free
