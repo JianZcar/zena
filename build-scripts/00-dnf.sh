@@ -43,7 +43,8 @@ done
 
 echo "priority=1" | sudo tee -a /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:yalter:niri.repo
 echo "priority=2" | sudo tee -a /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:ulysg:xwayland-satellite.repo
-dnf5 -y config-manager setopt "*negativo17*".priority=3 "*negativo17*".excludepkgs="mesa-* *xone*"
+
+dnf5 -y config-manager setopt "fedora-multimedia*".priority=3 "fedora-multimedia*".excludepkgs="mesa-* *xone*"
 dnf5 -y config-manager setopt "*rpmfusion*".priority=4
 dnf5 -y config-manager setopt "*fedora*".exclude="mesa-* kernel-core-* kernel-modules-* kernel-uki-virt-*"
 
