@@ -18,24 +18,25 @@ packages=(
 
 KERNEL_VERSION="$(find "/usr/lib/modules" -maxdepth 1 -type d ! -path "/usr/lib/modules" -exec basename '{}' ';' | sort | tail -n 1)"
 
-dnf config-manager addrepo --from-repofile=https://negativo17.org/repos/fedora-nvidia.repo
-dnf config-manager setopt fedora-nvidia.enabled=0
+dnf5 config-manager setopt "*rpmfusion*".enabled=0
+dnf5 config-manager addrepo --from-repofile=https://negativo17.org/repos/fedora-nvidia.repo
+dnf5 config-manager setopt fedora-nvidia.enabled=0
 sed -i '/^enabled=/a\priority=90' /etc/yum.repos.d/fedora-nvidia.repo
 
-dnf -y install --enablerepo=fedora-nvidia akmod-nvidia
+dnf5 -y install --enablerepo=fedora-nvidia akmod-nvidia
 mkdir -p /var/tmp # for akmods
 chmod 1777 /var/tmp
-dnf -y install gcc-c++
+dnf5 -y install gcc-c++
 akmods --force --kernels "${KERNEL_VERSION}" --kmod "nvidia"
 cat /var/cache/akmods/nvidia/*.failed.log || true
 
 dnf5 -y install --enablerepo=fedora-nvidia "${packages[@]}"
 
-dnf config-manager addrepo --from-repofile=https://nvidia.github.io/libnvidia-container/stable/rpm/nvidia-container-toolkit.repo
-dnf config-manager setopt nvidia-container-toolkit.enabled=0
-dnf config-manager setopt nvidia-container-toolkit.gpgcheck=1
+dnf5 config-manager addrepo --from-repofile=https://nvidia.github.io/libnvidia-container/stable/rpm/nvidia-container-toolkit.repo
+dnf5 config-manager setopt nvidia-container-toolkit.enabled=0
+dnf5 config-manager setopt nvidia-container-toolkit.gpgcheck=1
 
-dnf -y install --enablerepo=nvidia-container-toolkit \
+dnf5 -y install --enablerepo=nvidia-container-toolkit \
     nvidia-container-toolkit
 
 curl --retry 3 -L https://raw.githubusercontent.com/NVIDIA/dgx-selinux/master/bin/RHEL9/nvidia-container.pp -o nvidia-container.pp
