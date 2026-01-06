@@ -10,18 +10,33 @@ env:
 
 jobs:
   build_release:
+
     name: Build and release disk image
+
+    strategy:
+      fail-fast: false
+      matrix:
+        flavor: ["", "nvidia"]
+
     runs-on: ubuntu-24.04
+
     permissions:
       contents: read
       packages: read
       id-token: write
+
     timeout-minutes: 60
-    strategy:
-      fail-fast: false
 
     steps:
-      - name: Prepare environment
+      - name: Change image name depending on build flavor
+        env:
+          BUILD_FLAVOR: ${{ matrix.flavor }}
+        run: |
+          if [ "${BUILD_FLAVOR}" != "" ] ; then
+            echo "IMAGE_NAME=${IMAGE_NAME}-${{ matrix.flavor }}" >> $GITHUB_ENV
+          fi
+
+      - name: Lower case image variables
         run: |
           echo "IMAGE_REGISTRY=${IMAGE_REGISTRY,,}" >> ${GITHUB_ENV}
           echo "IMAGE_NAME=${IMAGE_NAME,,}" >> ${GITHUB_ENV}
