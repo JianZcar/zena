@@ -43,7 +43,6 @@ Zena delivers an immutable desktop operating system optimized for developer work
 * **[Nix](https://nixos.org/guides/how-nix-works/) + Zix** - Nix a package manager available system‑wide; `zix` provided as a lightweight per‑user convenience for `nix profile` operations.
 * **Immutable, [Bootc](https://bootc-dev.github.io/bootc/)** - atomic updates, and simple rollback.
 * **[Podman](https://podman.io/) friendly** - guidance for subordinate UID/GID mapping and unprivileged containers.
-* **Gaming‑ready by default** - Steam and Lutris are included out of the box.
 
 ---
 

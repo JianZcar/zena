@@ -11,13 +11,11 @@ coprs=(
   bieszczaders/kernel-cachyos-addons
 
   ublue-os/packages
-  zhangyaoan/umu-launcher
 
   yalter/niri
   ulysg/xwayland-satellite
   avengemedia/danklinux
-  avengemedia/dms
-  sneexy/zen-browser
+  avengemedia/dms-git
 )
 
 mkdir -p /var/roothome
@@ -34,7 +32,7 @@ dnf5 -y install --nogpgcheck --repofrompath \
 for copr in "${coprs[@]}"; do
   echo "Enabling copr: $copr"
   dnf5 -y copr enable "$copr"
-  dnf5 -y config-manager setopt copr:copr.fedorainfracloud.org:${copr////:}.priority=98 ;\
+  dnf5 -y config-manager setopt copr:copr.fedorainfracloud.org:${copr////:}.priority=95 ;\
 done
 
 echo "priority=1" | tee -a /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:yalter:niri.repo
