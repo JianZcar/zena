@@ -106,6 +106,7 @@ packages=(
   ############################
   @fonts
   glibc-all-langpacks
+  dejavu-fonts-all
 
   ############################
   # Performance              #
@@ -133,11 +134,24 @@ packages=(
 )
 dnf5 -y install "${packages[@]}" --exclude=scx-tools-nightly --exclude=scx-scheds-nightly
 
+# Install packages via rpm to avoid dependency checks
 TMPDIR=$(mktemp -d)
 pushd "$TMPDIR"
 
-dnf5 download --arch x86_64 --destdir "$TMPDIR" scx-scheds-nightly scx-tools-nightly
-rpm -e --nodeps scx-tools scx-scheds
+packages=(
+  scx-scheds-nightly
+  scx-tools-nightly
+)
+
+dnf5 download --arch x86_64 \
+  --destdir "$TMPDIR" "${packages[@]}"
+
+packages=(
+  scx-tools
+  scx-scheds
+)
+
+rpm -e --nodeps "${packages[@]}"
 rpm -Uvh --force --nodeps *.rpm
 
 popd
