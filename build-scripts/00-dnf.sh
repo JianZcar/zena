@@ -12,10 +12,10 @@ coprs=(
 
   ublue-os/packages
 
-  yalter/niri
+  yalter/niri-git
   ulysg/xwayland-satellite
   avengemedia/danklinux
-  avengemedia/dms
+  avengemedia/dms-git
 )
 
 mkdir -p /var/roothome
@@ -35,7 +35,7 @@ for copr in "${coprs[@]}"; do
   dnf5 -y config-manager setopt copr:copr.fedorainfracloud.org:${copr////:}.priority=95 ;\
 done
 
-echo "priority=1" | tee -a /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:yalter:niri.repo
+echo "priority=1" | tee -a /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:yalter:niri-git.repo
 echo "priority=2" | tee -a /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:ulysg:xwayland-satellite.repo
 dnf5 -y config-manager setopt "*terra*".priority=3 "*terra*".exclude="nerd-fonts topgrade steam python3-protobuf"
 dnf5 -y config-manager setopt "terra-mesa".enabled=true
