@@ -38,7 +38,7 @@ input {
         natural-scroll
         // accel-speed 0.2
         // accel-profile "flat"
-        scroll-method "edge"
+        scroll-method "two-finger"
         // disabled-on-external-mouse
     }
 
@@ -364,7 +364,7 @@ binds {
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+T hotkey-overlay-title="Open Terminal" { spawn "ghostty"; }
     Mod+E hotkey-overlay-title="Open File Manager" { spawn "nautilus"; }
-    Mod+B hotkey-overlay-title="Open Browser" { spawn "zen-browser"; }
+    Mod+B hotkey-overlay-title="Open Browser" { spawn "xdg-open https://"; }
     Mod+X hotkey-overlay-title="Open Clipboard" { spawn "dms" "ipc" "call" "clipboard" "toggle"; }
     Mod+Space hotkey-overlay-title="Application Launcher" { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen" { spawn "dms" "ipc" "call" "lock" "lock"; }
