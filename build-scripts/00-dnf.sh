@@ -15,7 +15,7 @@ coprs=(
   yalter/niri
   ulysg/xwayland-satellite
   avengemedia/danklinux
-  avengemedia/dms-git
+  avengemedia/dms
 )
 
 mkdir -p /var/roothome
