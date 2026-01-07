@@ -3,7 +3,7 @@ ARG FEDORA_VERSION=${FEDORA_VERSION}
 FROM scratch AS ctx
 COPY build-scripts /
 
-FROM quay.io/fedora/fedora-bootc:${FEDORA_VERSION} AS zena
+FROM quay.io/fedora/fedora-bootc:${FEDORA_VERSION} AS base
 # Fix for KeyError: 'vendor' image-builder
 # RUN mkdir -p /usr/lib/bootupd/updates \
 #     && cp -r /usr/lib/efi/*/*/* /usr/lib/bootupd/updates
@@ -40,14 +40,20 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=tmpfs,dst=/tmp \
     /ctx/05-services.sh
 
+RUN bootc container lint
+
+
+FROM base AS zena
+
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=tmpfs,dst=/var \
     --mount=type=tmpfs,dst=/tmp \
-    /ctx/06-finalize.sh
+    /ctx/10-finalize.sh
 
 RUN bootc container lint
 
-FROM zena AS zena-nvidia
+
+FROM base AS zena-nvidia
 
 COPY system-files/nvidia /
 
@@ -55,5 +61,10 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=tmpfs,dst=/var \
     --mount=type=tmpfs,dst=/tmp \
     /ctx/00-nvidia.sh
+
+RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
+    --mount=type=tmpfs,dst=/var \
+    --mount=type=tmpfs,dst=/tmp \
+    /ctx/10-finalize.sh
 
 RUN bootc container lint
