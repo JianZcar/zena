@@ -27,4 +27,8 @@ s|^DEFAULT_HOSTNAME=.*|DEFAULT_HOSTNAME="zena"|
 /^REDHAT_SUPPORT_PRODUCT_VERSION=/d
 EOF
 
+rm -rf /etc/yum.repos.d/* || true
+rm -rf /tmp/* || true
+dnf5 clean all
+
 echo "::endgroup::"
