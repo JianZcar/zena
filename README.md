@@ -158,7 +158,7 @@ When you run `gaming install` it will:
 
 1. Create a Distrobox instance named `Gaming`: a persistent, first-class container workspace for gaming.
 2. Inside the `Gaming` Distrobox:
-   * Install a curated set of gaming tools and launchers (see Default packages installed below).
+   * Install a curated set of gaming tools and launchers.
    * Register desktop files on the host (so Heroic, Lutris, Steam, etc. appear in the host application launcher).
 3. Leave the `Gaming` Distrobox image in a state where the user can run `gaming enter` to open an interactive shell connected into the Distrobox (or `distrobox enter Gaming` directly).
 
