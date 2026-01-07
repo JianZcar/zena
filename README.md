@@ -31,7 +31,7 @@ Zena delivers an immutable desktop operating system optimized for developer work
 * **Atomic & container-native** - core system components are delivered as container images and updated atomically with rollback support via the `bootc` model.
 * **Secure & portable homes** - `systemd-homed` is enabled by default to provide portable, encrypted home directories.
 * **Reproducible development environment** - Nix is included for reproducible builds and per-user package management.
-* **Developer friendly** - small utilities and tooling (for example, `zix`) simplify common developer workflows.
+* **Developer friendly** - Nix! and Container! all the tooling you need.
 
 ---
 
