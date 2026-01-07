@@ -21,13 +21,21 @@ coprs=(
 mkdir -p /var/roothome
 dnf5 -y install dnf5-plugins
 echo -n "max_parallel_downloads=10" >>/etc/dnf/dnf.conf
+RELEASE=$(rpm -E %fedora)
 
 dnf5 -y install \
   https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
   https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
-dnf5 -y config-manager addrepo --from-repofile=https://github.com/terrapkg/subatomic-repos/raw/main/terra.repo
-dnf5 -y install terra-release terra-release-extras terra-release-mesa
+dnf5 -y install --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' \
+  terra-release{,-extras,-mesa}
+
+dnf5 config-manager setopt "terra.gpgkey=https://repos.fyralabs.com/terra${RELEASE}/key.asc"
+dnf5 config-manager setopt "terra.gpgcheck=1"
+dnf5 config-manager setopt "terra-mesa.gpgkey=https://repos.fyralabs.com/terra${RELEASE}-mesa/key.asc"
+dnf5 config-manager setopt "terra-extras.gpgkey=https://repos.fyralabs.com/terra${RELEASE}-extras/key.asc"
+dnf5 config-manager setopt "terra-mesa.gpgcheck=1"
+dnf5 config-manager setopt "terra-extras.gpgcheck=1"
 
 for copr in "${coprs[@]}"; do
   echo "Enabling copr: $copr"
