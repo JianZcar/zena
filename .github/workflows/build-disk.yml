@@ -56,7 +56,7 @@ jobs:
         id: build-iso
         uses: osbuild/bootc-image-builder-action@main
         with:
-          config-file: ./iso.toml
+          config-file: ${{ matrix.flavor == 'nvidia' && './iso-nvidia.toml' || './iso.toml' }}
           image: ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.DEFAULT_TAG }}
           types: anaconda-iso
           rootfs: btrfs
