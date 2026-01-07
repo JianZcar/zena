@@ -4,6 +4,8 @@ Zena is a custom Fedora‑based operating system built with **bootc**. It is imm
 
 ---
 
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/7ed04bcf-d2c9-4047-9323-188ba6de66fa" />
+
 ## Table of contents
 
 1. Project overview
