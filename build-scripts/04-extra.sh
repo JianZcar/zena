@@ -31,4 +31,7 @@ packages=(
 )
 # dnf5 -y remove "${packages[@]}"
 
+# Make Ghostty default term
+ln -s /usr/bin/ghostty /usr/bin/xterm
+
 echo "::endgroup::"
