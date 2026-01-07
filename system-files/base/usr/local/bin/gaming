@@ -1,0 +1,149 @@
+#!/usr/bin/env python3
+
+import os
+import sys
+import subprocess
+
+CONTAINER_NAME = "Gaming"
+IMAGE = "docker.io/cachyos/cachyos-v3:latest"
+
+
+def run(cmd, **kwargs):
+    """Run a command, print output, raise on error."""
+    print(f"Running: {cmd}")
+    result = subprocess.run(cmd, shell=True, **kwargs)
+    if result.returncode != 0 and not kwargs.get("check") is False:
+        raise subprocess.CalledProcessError(result.returncode, cmd)
+    return result
+
+
+def container_exists(name):
+    """Return True if a Podman container with this name exists."""
+    try:
+        out = subprocess.check_output(
+            "podman ps -a --format '{{.Names}}'",
+            shell=True, text=True
+        )
+        return name in out.splitlines()
+    except subprocess.CalledProcessError:
+        return False
+
+
+def has_nvidia_gpu():
+    """Return True if `nvidia-smi` runs successfully."""
+    try:
+        subprocess.check_output(
+            "nvidia-smi", shell=True, stderr=subprocess.DEVNULL
+        )
+        print("NVIDIA GPU detected - enabling GPU support")
+        return True
+    except Exception:
+        return False
+
+
+def install():
+    if container_exists(CONTAINER_NAME):
+        print(f"Container '{
+              CONTAINER_NAME}' already exists - skipping install.")
+        return
+
+    nvidia_flag = "--nvidia" if has_nvidia_gpu() else ""
+    print(f"Creating distrobox container {CONTAINER_NAME} from {IMAGE}")
+    run(f'distrobox create --name "{CONTAINER_NAME}" --image "{
+        IMAGE}" {nvidia_flag} --yes')
+
+    print("Installing gaming packages...")
+    run(f'distrobox enter "{
+        CONTAINER_NAME}" -- sudo pacman -Syu --noconfirm', check=True)
+    pkgs = [
+        "cachyos-gaming-meta",
+        "cachyos-gaming-applications",
+        "umu-launcher",
+        "protonup-qt",
+    ]
+    run(
+        f'distrobox enter "{
+            CONTAINER_NAME}" -- sudo pacman -S --noconfirm ' + " ".join(pkgs),
+        check=True
+    )
+
+    print("Exporting apps to host...")
+    desktop_files = [
+        "/usr/share/applications/heroic.desktop",
+        "/usr/share/applications/io.github.benjamimgois.goverlay.desktop",
+        "/usr/share/applications/net.davidotek.pupgui2.desktop",
+        "/usr/share/applications/net.lutris.Lutris.desktop",
+        "/usr/share/applications/steam.desktop",
+    ]
+
+    for file in desktop_files:
+        run(
+            f'distrobox enter "{
+                CONTAINER_NAME}" -- distrobox-export --app "{file}"',
+            check=True
+        )
+
+    print("Exporting binary launchers to host...")
+    bin_paths = [
+        "/usr/bin/heroic",
+        "/usr/bin/lutris",
+        "/usr/bin/steam",
+    ]
+
+    for path in bin_paths:
+        run(
+            f'distrobox enter "{
+                CONTAINER_NAME}" -- distrobox-export --bin "{path}"',
+            check=True
+        )
+
+
+def upgrade():
+    if not container_exists(CONTAINER_NAME):
+        print(f"Container '{CONTAINER_NAME}' does not exist - cannot upgrade.")
+        return
+
+    print(f"Upgrading container '{CONTAINER_NAME}' using distrobox upgrade...")
+    run(f'distrobox upgrade "{CONTAINER_NAME}"', check=True)
+
+    print("Upgrade complete!")
+
+
+def enter():
+    if not container_exists(CONTAINER_NAME):
+        print(f"Container '{CONTAINER_NAME}' does not exist - cannot enter.")
+        return
+
+    print(f"Entering container '{CONTAINER_NAME}'...")
+    os.execvp("distrobox", ["distrobox", "enter", CONTAINER_NAME])
+
+
+def uninstall():
+    if not container_exists(CONTAINER_NAME):
+        print(f"Container '{CONTAINER_NAME}' does not exist.")
+        return
+    print(f"Removing distrobox container {CONTAINER_NAME}...")
+    run(f'distrobox rm -f "{CONTAINER_NAME}"')
+    print("Done.")
+
+
+def usage():
+    print(f"Usage: {sys.argv[0]} {{install|upgrade|enter|uninstall}}")
+    sys.exit(1)
+
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        usage()
+
+    cmd = sys.argv[1].lower()
+    if cmd == "install":
+        install()
+    elif cmd == "upgrade":
+        upgrade()
+    elif cmd == "enter":
+        enter()
+    elif cmd == "uninstall":
+        uninstall()
+    else:
+        usage()

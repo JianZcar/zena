@@ -25,9 +25,10 @@ echo -n "max_parallel_downloads=10" >>/etc/dnf/dnf.conf
 dnf5 -y install \
   https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
   https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-dnf5 -y install --nogpgcheck --repofrompath \
-  'terra,https://repos.fyralabs.com/terra$releasever' \
-  terra-release{,-extras,-mesa}
+
+dnf5 -y config-manager addrepo --from-repofile=https://github.com/terrapkg/subatomic-repos/raw/main/terra.repo
+dnf5 install --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' \
+  --setopt='terra.gpgkey=https://repos.fyralabs.com/terra$releasever/key.asc' terra-release
 
 for copr in "${coprs[@]}"; do
   echo "Enabling copr: $copr"
