@@ -258,4 +258,4 @@ See the `LICENSE` file in the repository for licensing details.
 
 ## Contact & support
 
-For issues and feature requests, open an issue in the GitHub repository. Provide logs, steps to reproduce, and relevant hardware details. Include `distrobox` and GPU driver versions when reporting gaming-related problems.
+For issues and feature requests, open an issue in the GitHub repository. Provide logs, steps to reproduce, and relevant hardware details.
