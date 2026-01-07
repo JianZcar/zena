@@ -12,14 +12,15 @@ Zena is a custom Fedora‑based operating system built with **bootc**. It is imm
 4. Installation
 5. Initial setup (first boot)
 6. Zix - Lightweight Nix profile manager
-7. systemd-homed and home storage details
-8. Podman and homectl notes
-9. Configuration & customization
-10. Security considerations
-11. Development & contributing
-12. Roadmap
-13. License
-14. Contact & support
+7. Gaming (opt-in)
+8. systemd-homed and home storage details
+9. Podman, Distrobox and homectl notes
+10. Configuration & customization
+11. Security considerations
+12. Development & contributing
+13. Roadmap
+14. License
+15. Contact & support
 
 ---
 
@@ -43,57 +44,54 @@ Zena delivers an immutable desktop operating system optimized for developer work
 * **[Nix](https://nixos.org/guides/how-nix-works/) + Zix** - Nix a package manager available system‑wide; `zix` provided as a lightweight per‑user convenience for `nix profile` operations.
 * **Immutable, [Bootc](https://bootc-dev.github.io/bootc/)** - atomic updates, and simple rollback.
 * **[Podman](https://podman.io/) friendly** - guidance for subordinate UID/GID mapping and unprivileged containers.
-
----
+* Gaming (opt-in) - an optional CLI-managed gaming environment that creates and manages a Distrobox named `Gaming`, and installs common gaming tools and launchers automatically. See the Gaming (opt-in) section for details.
 
 ## System requirements
 
 Minimum recommended hardware for a pleasant desktop experience:
 
-* 64‑bit x86_64 CPU (modern Intel/AMD recommended)
+* 64-bit x86_64 CPU (modern Intel/AMD recommended)
 * 8 GB RAM (16 GB recommended for heavy development/gaming workloads)
 * 128 GB free disk for system images + user storage (additional space required for encrypted LUKS homes)
 * UEFI firmware (Secure Boot optional; see Roadmap)
 
 Notes:
-* Zena targets laptop, desktop and workstation hardware.
 
----
+* Zena targets laptop, desktop and workstation hardware.
+* For gaming, a modern discrete GPU and up-to-date GPU drivers are strongly recommended. See the Gaming (opt-in) section for specific prerequisites.
 
 ## Installation
+
 ### Typical install flow
 
-1. Download the latest ISO/installer image from the github actions artifact storage.
+1. Download the latest ISO/installer image from the GitHub Actions artifact storage.
 2. Create a bootable USB (e.g., `dd`, balenaEtcher, Rufus).
 3. Boot the target machine from the installer image and follow the installer prompts.
 
 Installer options include:
+
 * Target disk selection and partitioning
-* Enable LUKS encryption for the system.
+* Enable LUKS encryption for the system
 
-### Switching to Zena from an existing bootc system
+Switching to Zena from an existing bootc system:
 
-If you are already running a bootc-based system and want to switch to Zena, you can rebase the system image using `bootc switch`:
-
-```bash
+```
 bootc switch ghcr.io/zerixal/zena:latest
 ```
-
----
 
 ## Initial setup (first boot)
 
 On first boot the system presents a TUI setup that collects basic account and system settings. The TUI options are:
 
-* **Create Account** - create your primary user (username and passphrase). Homed user creation is performed via `systemd-homed`.
-* **Set Home Size** - choose the size for the encrypted home container (uses Luks, other options will be added in future update).
-* **Select Timezone** - select the system timezone.
+* Create Account - create your primary user (username and passphrase). Homed user creation is performed via `systemd-homed`.
+* Set Home Size - choose the size for the encrypted home container (uses LUKS; other options will be added later).
+* Select Timezone - select the system timezone.
 
-After the TUI completes, and login in, perform these recommended steps:
+After the TUI completes and you log in, perform these recommended steps:
 
 1. Verify `systemd-homed` provisioned your account:
 
-```bash
+```
 homectl show $(whoami)
 ```
 
@@ -101,25 +99,24 @@ Review storage, encryption, and home-size fields.
 
 2. Configure subordinate UID/GID ranges for unprivileged containers (Podman):
 
-```bash
+```
 sudo homectl with $(whoami) add-subuids
 ```
 
 3. Migrate Podman storage (run once per user):
 
-```bash
+```
 podman system migrate
 ```
 
 4. Install per-user packages:
-* Use Bazaar, the dedicated GUI app store for Flatpak applications.
-* Use `zix` (see below) or `nix profile` for reproducible per‑user packages.
 
----
+* Use Bazaar, the dedicated GUI app store for Flatpak applications.
+* Use `zix` (see below) or `nix profile` for reproducible per-user packages.
 
 ## Zix - Lightweight Nix profile manager
 
-`zix` is a small CLI wrapper included to simplify common `nix profile` operations for users who are new to nix and wants an easy cli.
+`zix` is a small CLI wrapper included to simplify common `nix profile` operations for users who are new to Nix and want an easy CLI.
 
 ### Basic commands
 
@@ -130,7 +127,7 @@ podman system migrate
 
 Examples:
 
-```bash
+```
 zix add ripgrep fd
 zix remove ripgrep
 zix list
@@ -138,10 +135,52 @@ zix search python
 ```
 
 Implementation notes:
+
 * `zix` forwards to `nix profile` subcommands and handles common error messaging.
 * Advanced users should use the `nix` CLI directly for complex workflows.
 
----
+## Gaming (opt-in)
+
+Zena includes an optional gaming feature implemented as a small CLI wrapper named `gaming`. This feature is opt-in: it is not enabled by default and requires the user to run `gaming install` to provision the gaming environment.
+
+> **Note**: The performance is still native, So don't worry :>
+
+### Objectives
+
+* Provide a convenient, reproducible gaming environment isolated from the main immutable system image.
+* Create a Distrobox container named `Gaming` that contains common gaming tools and launchers (Heroic, Lutris, Steam, ProtonUp-Qt, gOverlay, etc.).
+* Expose desktop entries for GUI launchers so installed apps integrate with the desktop environment.
+* Allow easy lifecycle management: install, uninstall, upgrade, and enter the gaming container.
+
+### What `gaming` does
+
+When you run `gaming install` it will:
+
+1. Create a Distrobox instance named `Gaming`: a persistent, first-class container workspace for gaming.
+2. Inside the `Gaming` Distrobox:
+   * Install a curated set of gaming tools and launchers (see Default packages installed below).
+   * Register desktop files on the host (so Heroic, Lutris, Steam, etc. appear in the host application launcher).
+3. Leave the `Gaming` Distrobox image in a state where the user can run `gaming enter` to open an interactive shell connected into the Distrobox (or `distrobox enter Gaming` directly).
+
+When you run `gaming uninstall`, the utility will:
+
+* Remove the `Gaming` Distrobox and all installed packages inside it.
+* Removes exported apps and binaries.
+
+
+When you run `gaming upgrade`, the utility will:
+
+* Update package lists inside the `Gaming` Distrobox and upgrade packages to their latest available versions.
+
+When you run `gaming enter`, the utility will:
+
+* Open an interactive shell into the `Gaming` Distrobox (equivalent to `distrobox enter Gaming`) so you can run launchers or manage the environment manually.
+
+### Troubleshooting
+
+* If a launcher appears but does not start, run the launcher from a terminal to inspect errors (use `gaming enter` for the containerized launchers).
+* Ensure user subordinate UID/GID ranges are configured (`homectl with $(whoami) add-subuids`) as described in the initial setup section.
+* If Steam shows black, Disable GPU acceleration on steam settings via system tray.
 
 ## systemd-homed and home storage details
 
@@ -149,8 +188,8 @@ Zena enables `systemd-homed` by default to provide portable, encrypted homes tha
 
 ### Default configuration
 
-* **Storage format:** LUKS2 container with a btrfs filesystem by default (provides snapshots and subvolumes).
-* **Alternatives:** fscrypt-backed homes are supported when LUKS is not desired.
+* Storage format: LUKS2 container with a btrfs filesystem by default (provides snapshots and subvolumes).
+* Alternatives: fscrypt-backed homes are supported when LUKS is not desired.
 
 Administration:
 
@@ -158,41 +197,39 @@ Administration:
 * List homed accounts: `homectl list`
 * Create or modify homed users: `homectl create` / `homectl update`
 
----
+## Podman, Distrobox and homectl notes
 
-## Podman and homectl notes
+For proper unprivileged container behavior, configure subordinate UID/GID mappings and migrate Podman storage when appropriate.
 
-For proper unprivileged container behavior, configure subordinate UID/GID mappings and migrate podman storage when appropriate.
+1. Add subordinate UID/GID ranges to the homed account:
 
-1. Add subordinate UID/GID ranges to the homed account (example above).
+```
+sudo homectl with $(whoami) add-subuids
+```
+
 2. Confirm `/etc/subuid` and `/etc/subgid` contain expected ranges for the user.
 3. Run a one-time storage migration:
 
-```bash
+```
 podman system migrate
 ```
 
 If you encounter permission issues, re-check `homectl` entries and subordinate ranges.
 
----
-
 ## Configuration & customization
 
 Common customization points:
 
-* **User profile packages:** use `zix` or `nix profile`.
-* **Desktop:** customize Dank Material Shell and compositor via `~/.config`.
-
----
+* User profile packages: use `zix` or `nix profile`.
+* Desktop: customize Dank Material Shell and Niri via DMS Settings or `~/.config`.
+* Gaming: after `gaming install`, you can further customize the `Gaming` Distrobox by entering it and installing additional packages or configuring Proton/GEs manually.
 
 ## Security considerations
 
-* **Home encryption:** Use strong passphrases.
-* **Atomic updates & rollbacks:** Use `bootc` to perform atomic updates; if a regression occurs, use `bootc` or the bootloader to restore a previous image.
-* **Service exposure:** Validate firewall rules and prefer unprivileged namespaces for network‑facing workloads.
-* **Secure Boot:** Work in progress - see Roadmap.
-
----
+* Home encryption: Use strong passphrases.
+* Atomic updates & rollbacks: Use `bootc` to perform atomic updates; if a regression occurs, use `bootc` or the bootloader to restore a previous image.
+* Service exposure: Validate firewall rules and prefer unprivileged namespaces for network-facing workloads.
+* Gaming & containers: Containerized gaming reduces host modification, but any desktop integration step that copies `.desktop` files or shortcuts should be verified. Be cautious when running installer scripts inside the `Gaming` Distrobox from untrusted sources.
 
 ## Development & contributing
 
@@ -204,25 +241,25 @@ We welcome contributions.
 2. Open a pull request with a clear description of changes and rationale.
 3. Include tests or a short verification plan when applicable.
 
----
+If you are contributing changes to the `gaming` CLI, include:
+
+* A description of the chosen container base image(s).
+* The packaging strategy (Flatpak vs distribution packages vs upstream installers).
+* Any desktop registration steps and how they were tested across distributions.
 
 ## Roadmap
 
-Short‑to‑mid term items:
-* Default Flatpaks (optional, can be toggle via initial setup)
-* Secure Boot support.
-* Improvements to the TUI zena-setup.
+Short-to-mid term items:
 
----
+* Default Flatpaks (optional, toggle via initial setup)
+* Secure Boot support
+* Improvements to the TUI `zena-setup`
+* Further automation for `gaming` desktop integration and optional GPU helper scripts
 
 ## License
 
 See the `LICENSE` file in the repository for licensing details.
 
----
-
 ## Contact & support
 
-For issues and feature requests, open an issue in the GitHub repository. Provide logs, steps to reproduce, and relevant hardware details.
-
-
+For issues and feature requests, open an issue in the GitHub repository. Provide logs, steps to reproduce, and relevant hardware details. Include `distrobox` and GPU driver versions when reporting gaming-related problems.
