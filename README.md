@@ -61,7 +61,7 @@ Notes:
 
 * Zena targets laptop, desktop and workstation hardware.
 * Supported Nvidia GPUs (GTX 16xx and RTX series)
-* For gaming, a modern discrete GPU is strongly recommended. See the Gaming (opt-in) section for specific prerequisites.
+* For gaming, a modern discrete GPU is strongly recommended.
 
 ## Installation
 
