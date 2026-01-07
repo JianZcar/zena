@@ -44,7 +44,7 @@ Zena delivers an immutable desktop operating system optimized for developer work
 * **[Nix](https://nixos.org/guides/how-nix-works/) + Zix** - Nix a package manager available system‑wide; `zix` provided as a lightweight per‑user convenience for `nix profile` operations.
 * **Immutable, [Bootc](https://bootc-dev.github.io/bootc/)** - atomic updates, and simple rollback.
 * **[Podman](https://podman.io/) friendly** - guidance for subordinate UID/GID mapping and unprivileged containers.
-* Gaming (opt-in) - an optional CLI-managed gaming environment that creates and manages a Distrobox named `Gaming`, and installs common gaming tools and launchers automatically. See the Gaming (opt-in) section for details.
+* **Gaming (opt-in)** - an optional CLI-managed gaming environment that creates and manages a Distrobox named `Gaming`, and installs common gaming tools and launchers automatically. See the Gaming (opt-in) section for details.
 
 ## System requirements
 
