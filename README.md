@@ -226,10 +226,10 @@ Common customization points:
 
 ## Security considerations
 
-* Home encryption: Use strong passphrases.
-* Atomic updates & rollbacks: Use `bootc` to perform atomic updates; if a regression occurs, use `bootc` or the bootloader to restore a previous image.
-* Service exposure: Validate firewall rules and prefer unprivileged namespaces for network-facing workloads.
-* Gaming & containers: Containerized gaming reduces host modification, but any desktop integration step that copies `.desktop` files or shortcuts should be verified. Be cautious when running installer scripts inside the `Gaming` Distrobox from untrusted sources.
+* **Home encryption:** Use strong passphrases.
+* **Atomic updates & rollbacks:** Use `bootc` to perform atomic updates; if a regression occurs, use `bootc` or the bootloader to restore a previous image.
+* **Service exposure:** Validate firewall rules and prefer unprivileged namespaces for network‑facing workloads.
+* **Secure Boot:** Work in progress - see Roadmap.
 
 ## Development & contributing
 
@@ -241,12 +241,6 @@ We welcome contributions.
 2. Open a pull request with a clear description of changes and rationale.
 3. Include tests or a short verification plan when applicable.
 
-If you are contributing changes to the `gaming` CLI, include:
-
-* A description of the chosen container base image(s).
-* The packaging strategy (Flatpak vs distribution packages vs upstream installers).
-* Any desktop registration steps and how they were tested across distributions.
-
 ## Roadmap
 
 Short-to-mid term items:
@@ -254,7 +248,6 @@ Short-to-mid term items:
 * Default Flatpaks (optional, toggle via initial setup)
 * Secure Boot support
 * Improvements to the TUI `zena-setup`
-* Further automation for `gaming` desktop integration and optional GPU helper scripts
 
 ## License
 
