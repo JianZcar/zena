@@ -27,7 +27,7 @@ dnf5 -y install \
   https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
 dnf5 -y config-manager addrepo --from-repofile=https://github.com/terrapkg/subatomic-repos/raw/main/terra.repo
-dnf5 -y install terra-release
+dnf5 -y install terra-release terra-release-extras terra-release-mesa
 
 for copr in "${coprs[@]}"; do
   echo "Enabling copr: $copr"
