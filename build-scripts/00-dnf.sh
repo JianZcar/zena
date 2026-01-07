@@ -30,10 +30,6 @@ dnf5 -y install \
 dnf5 -y install --nogpgcheck --repofrompath \
   'terra,https://repos.fyralabs.com/terra$releasever' terra-release{,-extras,-mesa}
 
-dnf5 config-manager setopt 'terra.gpgkey=https://repos.fyralabs.com/terra42/key.asc'
-dnf5 config-manager setopt 'terra-extras.gpgkey=https://repos.fyralabs.com/terra42-extras/key.asc'
-dnf5 config-manager setopt 'terra-mesa.gpgkey=https://repos.fyralabs.com/terra42-mesa/key.asc'
-
 for copr in "${coprs[@]}"; do
   echo "Enabling copr: $copr"
   dnf5 -y copr enable "$copr"

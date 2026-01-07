@@ -27,7 +27,7 @@ s|^DEFAULT_HOSTNAME=.*|DEFAULT_HOSTNAME="zena"|
 /^REDHAT_SUPPORT_PRODUCT_VERSION=/d
 EOF
 
-rm -rf /etc/yum.repos.d/* || true
+find /etc/yum.repos.d/ -maxdepth 1 -type f -name '*.repo' ! -name 'fedora.repo' ! -name 'fedora-updates.repo' ! -name 'fedora-updates-testing.repo' -exec rm -f {} +
 rm -rf /tmp/* || true
 dnf5 clean all
 
