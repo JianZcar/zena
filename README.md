@@ -80,7 +80,7 @@ Installer options include:
 Switching to Zena from an existing bootc system:
 
 ```
-bootc switch ghcr.io/zerixal/zena:latest
+bootc switch ghcr.io/zena-linux/zena:latest
 ```
 
 ## Initial setup (first boot)
