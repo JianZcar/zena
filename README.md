@@ -56,7 +56,7 @@ Minimum recommended hardware for a pleasant desktop experience:
 * 8 GB RAM (16 GB recommended for heavy development/gaming workloads)
 * 128 GB free disk for system images + user storage (additional space required for encrypted LUKS homes)
 * UEFI firmware (Secure Boot optional; see Roadmap)
-  
+
 Notes:
 
 * Zena targets laptop, desktop and workstation hardware.
@@ -161,6 +161,7 @@ When you run `gaming install` it will:
 
 1. Create a Distrobox instance named `Gaming`: a persistent, first-class container workspace for gaming.
 2. Inside the `Gaming` Distrobox:
+
    * Install a curated set of gaming tools and launchers.
    * Register desktop files on the host (so Heroic, Lutris, Steam, etc. appear in the host application launcher).
 3. Leave the `Gaming` Distrobox image in a state where the user can run `gaming enter` to open an interactive shell connected into the Distrobox (or `distrobox enter Gaming` directly).
@@ -169,7 +170,6 @@ When you run `gaming uninstall`, the utility will:
 
 * Remove the `Gaming` Distrobox and all installed packages inside it.
 * Removes exported apps and binaries.
-
 
 When you run `gaming upgrade`, the utility will:
 
@@ -232,7 +232,32 @@ Common customization points:
 * **Home encryption:** Use strong passphrases.
 * **Atomic updates & rollbacks:** Use `bootc` to perform atomic updates; if a regression occurs, use `bootc` or the bootloader to restore a previous image.
 * **Service exposure:** Validate firewall rules and prefer unprivileged namespaces for network‑facing workloads.
-* **Secure Boot:** Work in progress - see Roadmap.
+* **Secure Boot:** Secure Boot is now supported. To enable it for your system, follow these steps:
+
+1. Import the public MOK certificate:
+
+```bash
+sudo mokutil --import /secureboot/MOK.der
+```
+
+You will be prompted to set a temporary password.
+
+2. Reboot your machine. During boot the **MOK Manager** will appear:
+
+   * Choose **Enroll MOK**.
+   * Enter the password set during import.
+   * Confirm and finish enrollment, then reboot again.
+
+3. Verify the enrollment:
+
+```bash
+sudo mokutil --sb-state
+sudo mokutil --list-enrolled
+```
+
+`--sb-state` should report `SecureBoot enabled` once firmware is in User Mode and Secure Boot is active. Your kernel and module signatures will then be trusted if they were signed with the matching private key corresponding to the enrolled certificate.
+
+---
 
 ## Development & contributing
 
