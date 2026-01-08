@@ -16,7 +16,6 @@ packages=(
   nautilus
   nautilus-python
 
-  gamescope
   v4l2loopback
 )
 dnf5 -y install "${packages[@]}"

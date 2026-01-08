@@ -99,6 +99,13 @@ jobs:
           sep-tags: ' '
           sep-annotations: ' '
 
+      - name: Decode Secure Boot keys
+        run: |
+          echo "$SECUREBOOT_KEY" | base64 --decode > system-files/base/secureboot/MOK.key
+          chmod 600 system-files/base/secureboot/MOK.key
+        env:
+          SECUREBOOT_KEY: ${{ secrets.SECUREBOOT_KEY }}
+
       - name: Prepare build args file
         run: |
           cat <<'EOF' >>build_args.txt
