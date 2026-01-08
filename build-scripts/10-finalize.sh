@@ -6,7 +6,6 @@ set -ouex pipefail
 
 shopt -s nullglob
 
-
 RELEASE="$(rpm -E %fedora)"
 DATE=$(date +%Y%m%d)
 
