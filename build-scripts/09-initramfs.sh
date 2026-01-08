@@ -10,6 +10,8 @@ KVER=$(ls /usr/lib/modules | head -n1)
 KIMAGE="/usr/lib/modules/$KVER/vmlinuz"
 SIGN_DIR="/secureboot"
 
+dnf5 install sbsigntools
+
 sbsign \
   --key "$SIGN_DIR/MOK.key" \
   --cert "$SIGN_DIR/MOK.pem" \
