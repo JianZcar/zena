@@ -19,16 +19,14 @@ sbsign \
   "$KIMAGE"
 mv "${KIMAGE}.signed" "$KIMAGE"
 
-mods=(/usr/lib/modules/"$KVER"/**/*.ko)
-
-if (( ${#mods[@]} )); then
-  for mod in "${mods[@]}"; do
+find "/lib/modules/$KVER" -type f -name '*.ko.xz' -print0 | while IFS= read -r -d '' comp; do
+  uncompressed="${comp%.xz}"
+  if xz -d --keep "$comp"; then
     /usr/src/kernels/"$KVER"/scripts/sign-file \
-      sha512 "$SIGN_DIR/MOK.key" "$SIGN_DIR/MOK.pem" "$mod"
-  done
-else
-  echo "No kernel modules to sign for $KVER"
-fi
+      sha512 "$SIGN_DIR/MOK.key" "$SIGN_DIR/MOK.pem" "$uncompressed" || true
+    xz -z "$uncompressed"
+  fi
+done
 
 rm -f "$SIGN_DIR/MOK.key"
 
