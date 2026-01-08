@@ -13,11 +13,11 @@ echo "zena" | tee "/etc/hostname"
 sed -i -f - /usr/lib/os-release <<EOF
 s|^NAME=.*|NAME=\"Zena\"|
 s|^PRETTY_NAME=.*|PRETTY_NAME=\"Zena ${RELEASE}.${DATE}\"|
-s|^HOME_URL=.*|HOME_URL=\"https://github.com/Zerixal/Zena\"|
-s|^BUG_REPORT_URL=.*|BUG_REPORT_URL=\"https://github.com/Zerixal/Zena/issues\"|
-s|^SUPPORT_URL=.*|SUPPORT_URL=\"https://github.com/Zerixal/Zena/issues\"|
-s|^CPE_NAME=\".*\"|CPE_NAME=\"cpe:/o:zerixal:zena\"|
-s|^DOCUMENTATION_URL=.*|DOCUMENTATION_URL=\"https://github.com/Zerixal/Zena\"|
+s|^HOME_URL=.*|HOME_URL=\"https://github.com/Zena-Linux/Zena\"|
+s|^BUG_REPORT_URL=.*|BUG_REPORT_URL=\"https://github.com/Zena-Linux/Zena/issues\"|
+s|^SUPPORT_URL=.*|SUPPORT_URL=\"https://github.com/Zena-Linux/Zena/issues\"|
+s|^CPE_NAME=\".*\"|CPE_NAME=\"cpe:/o:zena-linux:zena\"|
+s|^DOCUMENTATION_URL=.*|DOCUMENTATION_URL=\"https://github.com/Zena-Linux/Zena\"|
 s|^DEFAULT_HOSTNAME=.*|DEFAULT_HOSTNAME="zena"|
 
 /^REDHAT_BUGZILLA_PRODUCT=/d
