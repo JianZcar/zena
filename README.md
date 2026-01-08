@@ -4,6 +4,8 @@ Zena is a custom Fedora‑based operating system built with **bootc**. It is imm
 
 ---
 
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/7ed04bcf-d2c9-4047-9323-188ba6de66fa" />
+
 ## Table of contents
 
 1. Project overview
@@ -54,11 +56,12 @@ Minimum recommended hardware for a pleasant desktop experience:
 * 8 GB RAM (16 GB recommended for heavy development/gaming workloads)
 * 128 GB free disk for system images + user storage (additional space required for encrypted LUKS homes)
 * UEFI firmware (Secure Boot optional; see Roadmap)
-
+  
 Notes:
 
 * Zena targets laptop, desktop and workstation hardware.
-* For gaming, a modern discrete GPU and up-to-date GPU drivers are strongly recommended. See the Gaming (opt-in) section for specific prerequisites.
+* Supported Nvidia GPUs (GTX 16xx and RTX series)
+* For gaming, a modern discrete GPU is strongly recommended.
 
 ## Installation
 
@@ -255,4 +258,4 @@ See the `LICENSE` file in the repository for licensing details.
 
 ## Contact & support
 
-For issues and feature requests, open an issue in the GitHub repository. Provide logs, steps to reproduce, and relevant hardware details. Include `distrobox` and GPU driver versions when reporting gaming-related problems.
+For issues and feature requests, open an issue in the GitHub repository. Provide logs, steps to reproduce, and relevant hardware details.
