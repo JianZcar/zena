@@ -1,5 +1,7 @@
 # Zena
 
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Zena-Linux/Zena/build.yml?style=flat-square&logo=github&label=Build%20Zena)
+
 Zena is a custom Fedora‑based operating system built with **bootc**. It is immutable and container‑native, designed for reproducibility, developer productivity, and a responsive desktop experience. Zena ships with `systemd-homed` for secure, portable home directories and a **Cachy kernel** compiled with Link‑Time Optimization (LTO) for improved performance.
 
 ---
