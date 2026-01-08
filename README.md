@@ -256,7 +256,7 @@ sudo mokutil --sb-state
 sudo mokutil --list-enrolled
 ```
 
-`--sb-state` should report `SecureBoot enabled` once firmware is in User Mode and Secure Boot is active. Your kernel and module signatures will then be trusted if they were signed with the matching private key corresponding to the enrolled certificate.
+`--sb-state` should report `SecureBoot enabled` once firmware is in User Mode and Secure Boot is active. Your kernel and module signatures will then be trusted.
 
 ---
 
