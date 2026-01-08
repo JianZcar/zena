@@ -14,7 +14,7 @@ dnf5 -y install sbsigntools
 
 sbsign \
   --key "$SIGN_DIR/MOK.key" \
-  --cert "$SIGN_DIR/MOK.der" \
+  --cert "$SIGN_DIR/MOK.pem" \
   --output "${KIMAGE}.signed" \
   "$KIMAGE"
 mv "${KIMAGE}.signed" "$KIMAGE"
@@ -24,7 +24,7 @@ mods=(/usr/lib/modules/"$KVER"/**/*.ko)
 if (( ${#mods[@]} )); then
   for mod in "${mods[@]}"; do
     /usr/src/kernels/"$KVER"/scripts/sign-file \
-      sha512 "$SIGN_DIR/MOK.key" "$SIGN_DIR/MOK.der" "$mod"
+      sha512 "$SIGN_DIR/MOK.key" "$SIGN_DIR/MOK.pem" "$mod"
   done
 else
   echo "No kernel modules to sign for $KVER"
