@@ -45,7 +45,7 @@ Zena delivers an immutable desktop operating system optimized for developer work
 * **[Dank Material Shell](https://danklinux.com/)** -  A modern and beautiful desktop shell with dynamic theming and smooth animations.
 * **[Nix](https://nixos.org/guides/how-nix-works/) + Zix** - Nix a package manager available system‑wide; `zix` provided as a lightweight per‑user convenience for `nix profile` operations.
 * **Immutable, [Bootc](https://bootc-dev.github.io/bootc/)** - atomic updates, and simple rollback.
-* **[Podman](https://podman.io/) friendly** - guidance for subordinate UID/GID mapping and unprivileged containers.
+* **[Podman](https://podman.io/) friendly** - guidance for subordinate UID/GID mapping and unprivileged containers. 
 * **Gaming (opt-in)** - an optional CLI-managed gaming environment that creates and manages a Distrobox named `Gaming`, and installs common gaming tools and launchers automatically. See the Gaming (opt-in) section for details.
 
 ## System requirements
@@ -62,6 +62,7 @@ Notes:
 * Zena targets laptop, desktop and workstation hardware.
 * Supported Nvidia GPUs (GTX 16xx and RTX series)
 * For gaming, a modern discrete GPU is strongly recommended.
+* See Security considerations section on how to enable secureboot.
 
 ## Installation
 
@@ -274,7 +275,6 @@ We welcome contributions.
 Short-to-mid term items:
 
 * Default Flatpaks (optional, toggle via initial setup)
-* Secure Boot support
 * Improvements to the TUI `zena-setup`
 
 ## License
