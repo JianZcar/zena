@@ -198,7 +198,7 @@ setup() {
       --fs-type=btrfs \
       --disk-size="$HOMESIZE" \
       --auto-resize-mode=shrink-and-grow \
-      --member-of=wheel \
+      --member-of=wheel,users \
       --real-name="$FULLNAME" \
       --luks-extra-mount-options=defcontext=system_u:object_r:user_home_dir_t:s0
 
