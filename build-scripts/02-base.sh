@@ -131,6 +131,8 @@ packages=(
   flatpak
   nix
   nix-daemon
+
+  plymouth
 )
 dnf5 -y install "${packages[@]}" --exclude=scx-tools-nightly --exclude=scx-scheds-nightly
 

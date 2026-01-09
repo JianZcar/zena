@@ -12,7 +12,10 @@ DATE=$(date +%Y%m%d)
 echo "zena" | tee "/etc/hostname"
 sed -i -f - /usr/lib/os-release <<EOF
 s|^NAME=.*|NAME=\"Zena\"|
+s|^ID=.*|ID=\"zena\"|
+s|^VERSION=.*|VERSION=\"${RELEASE}.${DATE}\"|
 s|^PRETTY_NAME=.*|PRETTY_NAME=\"Zena ${RELEASE}.${DATE}\"|
+s|^LOGO=.*|LOGO=\"cachyos\"|
 s|^HOME_URL=.*|HOME_URL=\"https://github.com/Zena-Linux/Zena\"|
 s|^BUG_REPORT_URL=.*|BUG_REPORT_URL=\"https://github.com/Zena-Linux/Zena/issues\"|
 s|^SUPPORT_URL=.*|SUPPORT_URL=\"https://github.com/Zena-Linux/Zena/issues\"|
