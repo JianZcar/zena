@@ -1,5 +1,5 @@
 <div align="center">
-  <img width="256" height="256" alt="zena-logo" src="https://github.com/user-attachments/assets/f848b4c7-e48c-40db-b402-8d631a0b844e" />
+  <img width="256" height="256" alt="zena-logo" src="https://github.com/user-attachments/assets/ddd3136d-49cc-4f73-a4cb-c2f7b2bf6b5a" />
   
   ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Zena-Linux/Zena/build.yml?style=flat-square&logo=github&label=Build%20Zena)
 </div>  
