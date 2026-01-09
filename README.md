@@ -1,4 +1,4 @@
-# Zena
+# <img width="75" height="75" alt="zena-logo" src="https://github.com/user-attachments/assets/33e75878-881a-4229-ab4b-2989886e87d5" /> Zena
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Zena-Linux/Zena/build.yml?style=flat-square&logo=github&label=Build%20Zena)
 
