@@ -46,8 +46,6 @@ semodule -i nvidia-container.pp
 rm -f nvidia-container.pp
 
 systemctl enable nvctk-cdi.service
-systemctl mask akmods-keygen@akmods-keygen.service
-systemctl mask akmods-keygen.target
 
 preset_file="/usr/lib/systemd/system-preset/01-zena.preset"
 touch "$preset_file"
