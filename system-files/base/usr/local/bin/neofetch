@@ -1,0 +1,3 @@
+#!/usr/bin/bash
+
+/usr/bin/fastfetch --logo /usr/share/icons/logo.txt --logo-color-1 blue --color-keys blue "${@}"
