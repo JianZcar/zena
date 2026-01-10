@@ -37,6 +37,7 @@ mask_services=(
   rpm-ostree-countme.service
   systemd-remount-fs.service
   flatpak-add-fedora-repos.service
+  NetworkManager-wait-online.service
   akmods-keygen@akmods-keygen.service
 )
 
