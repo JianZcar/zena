@@ -8,7 +8,7 @@ Type=simple
 StateDirectory=preload
 LogsDirectory=preload
 
-ExecStart=/usr/local/sbin/preload --foreground --logfile /var/log/preload/preload.log
+ExecStart=/usr/local/sbin/preload --foreground --logfile /var/log/preload/preload.log --verbose 9
 
 Restart=on-failure
 RestartSec=5
