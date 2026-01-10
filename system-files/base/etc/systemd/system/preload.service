@@ -1,0 +1,23 @@
+[Unit]
+Description=Preload Daemon - Adaptive Readahead
+After=local-fs.target
+
+[Service]
+Type=simple
+
+StateDirectory=preload
+LogsDirectory=preload
+
+ExecStart=/usr/local/sbin/preload --foreground --logfile /var/log/preload/preload.log
+
+Restart=on-failure
+RestartSec=5
+
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/var/log/preload /var/lib/preload
+PrivateTmp=true
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

@@ -173,6 +173,19 @@ packages=(
 )
 dnf5 -y remove "${packages[@]}"
 
+TMPDIR=$(mktemp -d)
+pushd "$TMPDIR"
+
+git clone https://github.com/miguel-b-p/preload-ng.git "$TMPDIR/preload-ng"
+mkdir -p "/usr/local/sbin"
+cp "$TMPDIR/preload-ng/bin/preload" "/usr/local/sbin/preload"
+cp "$TMPDIR/preload-ng/bin/preload.conf" "/etc/preload.conf"
+chmod 755 "/usr/local/sbin/preload"
+chmod 644 "/etc/preload.conf"
+
+popd
+rm -rf "$TMPDIR"
+
 systemctl set-default graphical.target
 authselect select sssd with-systemd-homed with-faillock without-nullok
 authselect apply-changes
@@ -188,16 +201,6 @@ tar --create --verbose --preserve-permissions \
   -C / nix
 
 rm -rf /nix/* /nix/.[!.]*
-
-TMPDIR=$(mktemp -d)
-pushd "$TMPDIR"
-
-git clone https://github.com/zena-linux/preload-ng.git "$TMPDIR/preload-ng"
-cd "$TMPDIR/preload-ng/scripts"
-bash install-ni.sh
-
-popd
-rm -rf "$TMPDIR"
 
 install -Dpm0644 -t /usr/share/plymouth/themes/spinner/ /ctx/assets/logos/watermark.png
 
