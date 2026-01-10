@@ -34,7 +34,7 @@ find "/lib/modules/$KVER" -type f -name '*.ko.xz' -print0 | while IFS= read -r -
   rm -f "$comp"
 
   if xz -z "$uncompressed"; then
-    echo "Recompressed and signed $uncompressed → ${uncompressed}.xz"
+    echo "Recompressed and signed $uncompressed - ${uncompressed}.xz"
   else
     echo "Warning: failed to recompress $uncompressed"
   fi
