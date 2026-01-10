@@ -10,7 +10,7 @@ Zena is an operating system built with **bootc**. It is immutable and containerâ
 
 ---
 
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/a15079f6-e5e6-4d75-a19c-d2af1143dd3e" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/e07900a3-0b7a-4ec4-90cc-f5452eb53279" />
 
 ## Table of contents
 
