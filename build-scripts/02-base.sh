@@ -189,6 +189,16 @@ tar --create --verbose --preserve-permissions \
 
 rm -rf /nix/* /nix/.[!.]*
 
+TMPDIR=$(mktemp -d)
+pushd "$TMPDIR"
+
+git clone https://github.com/zena-linux/preload-ng.git "$TMPDIR/preload-ng"
+cd "$TMPDIR/preload-ng/scripts"
+bash install-ni.sh
+
+popd
+rm -rf "$TMPDIR"
+
 install -Dpm0644 -t /usr/share/plymouth/themes/spinner/ /ctx/assets/logos/watermark.png
 
 # So it won't reboot on Update
