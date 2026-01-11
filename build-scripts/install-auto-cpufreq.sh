@@ -68,7 +68,7 @@ chmod a+x $AUTO_CPUFREQ_FILE
 cp scripts/start_app $AUTO_CPUFREQ_GTK_FILE
 chmod a+x $AUTO_CPUFREQ_GTK_FILE
 
-desktop-file-install --dir=$APPLICATIONS_PATH scripts/$AUTO_CPUFREQ_GTK_DESKTOP_FILE
+cp scripts/$AUTO_CPUFREQ_GTK_DESKTOP_FILE $APPLICATIONS_PATH
 
 popd
 rm -rf "$TMPDIR"
