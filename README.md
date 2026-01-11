@@ -38,6 +38,7 @@ Zena delivers an immutable desktop operating system optimized for developer work
 
 * **Atomic & container-native** - The os is delivered as an image and updated atomically with rollback support via the `bootc` model.
 * **Fedora-based (tracking Fedora 42)** - Zena currently follows Fedora 42, inheriting its up-to-date toolchain, kernel, and ecosystem.
+* **Rapid, image-based updates** - Updates are delivered daily, and sometimes multiple times per day, while remaining fully atomic and rollback-safe.
 * **Secure & portable homes** - `systemd-homed` is enabled by default to provide portable, encrypted home directories.
 * **Reproducible development environment** - Nix is included for reproducible builds and per-user package management.
 * **Developer friendly** - Nix! and Containers! all the tooling you need.
