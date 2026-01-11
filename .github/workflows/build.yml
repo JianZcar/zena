@@ -56,6 +56,10 @@ jobs:
           echo "IMAGE_REGISTRY=${IMAGE_REGISTRY,,}" >> ${GITHUB_ENV}
           echo "IMAGE_NAME=${IMAGE_NAME,,}" >> ${GITHUB_ENV}
 
+      - name: Set tag prefix
+        run: |
+          echo "TAG_PREFIX=${{ github.ref_name == 'edge' && 'edge.' || '' }}" >> $GITHUB_ENV
+
       - name: Checkout
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
 
@@ -80,10 +84,10 @@ jobs:
         id: metadata
         with:
           tags: |
-            type=raw,value={{date 'YYYYMMDD'}}
-            type=raw,value=${{ env.DEFAULT_TAG }}
-            type=raw,value=${{ env.FEDORA_VERSION }}
-            type=raw,value=${{ env.FEDORA_VERSION }}.{{date 'YYYYMMDD'}}
+            type=raw,value=${{ env.TAG_PREFIX }}{{date 'YYYYMMDD'}}
+            type=raw,value=${{ env.TAG_PREFIX }}${{ env.DEFAULT_TAG }}
+            type=raw,value=${{ env.TAG_PREFIX }}${{ env.FEDORA_VERSION }}
+            type=raw,value=${{ env.TAG_PREFIX }}${{ env.FEDORA_VERSION }}.{{date 'YYYYMMDD'}}
             type=sha,enable=${{ github.event_name == 'pull_request' }}
             type=ref,event=pr
           labels: |
