@@ -37,6 +37,7 @@ Zena is an operating system built with **bootc**. It is immutable and containerâ
 Zena delivers an immutable desktop operating system optimized for developer workflows and reproducibility. Key design principles:
 
 * **Atomic & container-native** - The os is delivered as an image and updated atomically with rollback support via the `bootc` model.
+* **Fedora-based (tracking Fedora 42)** - Zena currently follows Fedora 42, inheriting its up-to-date toolchain, kernel, and ecosystem.
 * **Secure & portable homes** - `systemd-homed` is enabled by default to provide portable, encrypted home directories.
 * **Reproducible development environment** - Nix is included for reproducible builds and per-user package management.
 * **Developer friendly** - Nix! and Containers! all the tooling you need.
