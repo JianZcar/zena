@@ -121,7 +121,7 @@ sudo homectl with $(whoami) add-subuids
 podman system migrate
 ```
 
-3. Make sure you are using latest update:
+4. Make sure you are using latest update:
 
 ```
 sudo bootc upgrade
