@@ -119,7 +119,13 @@ sudo homectl with $(whoami) add-subuids
 podman system migrate
 ```
 
-4. Install per-user packages:
+3. Make sure you are using latest update:
+
+```
+sudo bootc upgrade
+```
+
+5. Install per-user packages:
 
 * Use Bazaar, the dedicated GUI app store for Flatpak applications.
 * Use `zix` (see below) or `nix profile` for reproducible per-user packages.
