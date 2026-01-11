@@ -6,6 +6,8 @@
   [![Discord Invite](https://img.shields.io/badge/Join_Discord-Chat_with_us-blue?style=social&logo=discord)](https://discord.gg/22MFgGgjG9)
 </div>  
 
+* Test webhook
+
 # Zena
 
 Zena is an operating system built with **bootc**. It is immutable and container‑native, designed for reproducibility, developer productivity, and a responsive desktop experience. Zena ships with `systemd-homed` for secure, portable home directories and a **Cachy kernel** compiled with Link‑Time Optimization (LTO) for improved performance.
