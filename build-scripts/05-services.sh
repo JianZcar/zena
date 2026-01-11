@@ -8,15 +8,16 @@ shopt -s nullglob
 
 system_services=(
   nix.mount
-  preload.service
-  nix-setup.service
-  nix-daemon.service
   podman.socket
   greetd.service
   chronyd.service
+  preload.service
   firewalld.service
+  nix-setup.service
+  nix-daemon.service
   podman-tcp.service
   zena-setup.service
+  auto-cpufreq.service
   systemd-homed.service
   systemd-resolved.service
   bootc-fetch-apply-updates.service

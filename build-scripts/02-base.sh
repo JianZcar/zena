@@ -186,6 +186,8 @@ chmod 644 "/etc/preload.conf"
 popd
 rm -rf "$TMPDIR"
 
+/ctx/install-auto-cpufreq.sh
+
 systemctl set-default graphical.target
 authselect select sssd with-systemd-homed with-faillock without-nullok
 authselect apply-changes
