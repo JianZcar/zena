@@ -12,12 +12,12 @@ system_services=(
   greetd.service
   chronyd.service
   preload.service
+  thermald.service
   firewalld.service
   nix-setup.service
   nix-daemon.service
   podman-tcp.service
   zena-setup.service
-  auto-cpufreq.service
   systemd-homed.service
   systemd-resolved.service
   bootc-fetch-apply-updates.service
