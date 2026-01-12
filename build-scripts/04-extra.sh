@@ -20,6 +20,7 @@ packages=(
   nautilus-open-any-terminal
 )
 dnf5 -y install "${packages[@]}"
+dnf5 -y upgrade nautilus-python --releasever=44
 
 # Install install_weak_deps=false
 packages=(
