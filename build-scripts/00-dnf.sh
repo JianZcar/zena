@@ -16,6 +16,8 @@ coprs=(
   ulysg/xwayland-satellite
   avengemedia/danklinux
   avengemedia/dms-git
+
+  monkeygold/nautilus-open-any-terminal
 )
 
 mkdir -p /var/roothome

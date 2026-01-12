@@ -17,6 +17,7 @@ packages=(
   nautilus-python
 
   v4l2loopback
+  nautilus-open-any-terminal
 )
 dnf5 -y install "${packages[@]}"
 
@@ -30,7 +31,7 @@ packages=(
 )
 # dnf5 -y remove "${packages[@]}"
 
-# Make Ghostty default term
-ln -s /usr/bin/ghostty /usr/bin/xterm
+dconf update
+rm /usr/share/nautilus-python/extensions/ghostty.py
 
 echo "::endgroup::"

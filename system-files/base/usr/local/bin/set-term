@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+supported_terms="ghostty blackbox wezterm ptyxis"
+
+if [ -n "$1" ]; then
+    term="$1"
+else
+    echo "No terminal specified."
+    echo "Supported Terminal: $supported_terms"
+    exit 1
+fi
+
+if ! echo "$supported_terms" | grep -qw "$term"; then
+    echo "Error: '$term' is not a supported terminal."
+    echo "Supported Terminal: $supported_terms"
+    exit 1
+fi
+
+gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal "$term"

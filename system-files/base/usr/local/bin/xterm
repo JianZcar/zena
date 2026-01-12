@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+
+term=$(gsettings get com.github.stunkymonkey.nautilus-open-any-terminal terminal)
+
+if ! command -v "$term" >/dev/null 2>&1 && \
+    declare -A dict=(
+        [blackbox]=com.raggesilver.BlackBox
+        [wezterm]=org.wezfurlong.wezterm
+        [ptyxis]=app.devsuite.Ptyxis
+    )
+
+    id=${dict[$term]}
+
+    flatpak list --app --columns=application | grep -xq "$id"; then
+      exec flatpak run "$id" "$@"
+fi
+
+exec ghostty "$@"
