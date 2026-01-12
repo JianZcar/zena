@@ -63,6 +63,8 @@ cp -r images/ $SHARE_DIR
 cp images/icon.png $IMG_FILE
 cp scripts/$(basename $ORG_FILE) $(dirname $ORG_FILE)
 
+cp scripts/cpufreqctl.sh /usr/local/bin/cpufreqctl.auto-cpufreq
+chmod a+x /usr/local/bin/cpufreqctl.auto-cpufreq
 cp scripts/auto-cpufreq-venv-wrapper $AUTO_CPUFREQ_FILE
 chmod a+x $AUTO_CPUFREQ_FILE
 cp scripts/start_app $AUTO_CPUFREQ_GTK_FILE
