@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-term=$(gsettings get com.github.stunkymonkey.nautilus-open-any-terminal terminal)
+term=$(gsettings get com.github.stunkymonkey.nautilus-open-any-terminal terminal | tr -d "'")
 
 declare -A dict=(
     [blackbox]=com.raggesilver.BlackBox
@@ -12,5 +12,5 @@ if [ -n "${dict[$term]}" ]; then
     id=${dict[$term]}
     exec flatpak run "$id" "$@"
 else
-    exec ghostty "$@"
+    exec /usr/bin/ghostty "$@"
 fi
