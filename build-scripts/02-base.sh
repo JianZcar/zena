@@ -97,9 +97,10 @@ packages=(
   lame-libs
   libjxl
   ffmpegthumbnailer
+  glycin
+  glycin-thumbnailer
   gdk-pixbuf2
   libopenraw
-  webp-pixbuf-loader
 
   ############################
   # FONTS / LOCALE SUPPORT   #
