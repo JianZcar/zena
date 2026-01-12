@@ -1,7 +1,5 @@
 <div align="center">
   <img width="256" height="256" alt="zena-logo" src="https://github.com/user-attachments/assets/82db85b8-b2a6-4899-b977-bae9b966c944" />
-
-  ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Zena-Linux/Zena/build.yml?style=flat-square&logo=github&label=Build%20Zena)
   
   [![Discord Invite](https://img.shields.io/badge/Join_Discord-Chat_with_us-blue?style=social&logo=discord)](https://discord.gg/22MFgGgjG9)
 </div>  
