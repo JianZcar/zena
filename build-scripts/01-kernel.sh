@@ -27,7 +27,7 @@ dnf5 -y install "${packages[@]}"
 dnf5 versionlock add "${packages[@]}"
 
 # Fix for Cachy Kernel not installing properly
-rm -rf /usr/lib/modules/*
+rm -rf "/usr/lib/modules/$(ls /usr/lib/modules | head -n1)"
 
 KFILE=$(ls /boot/vmlinuz-* | head -n1)
 KVER="${KFILE#/boot/vmlinuz-}"
