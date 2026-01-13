@@ -26,6 +26,16 @@ dnf5 -y remove --no-autoremove \
 dnf5 -y install "${packages[@]}"
 dnf5 versionlock add "${packages[@]}"
 
-ls /boot
+# Fix for Cachy Kernel not installing properly
+rm -rf "$(ls /usr/lib/modules | head -n1)"
+
+KFILE=$(ls /boot/vmlinuz-* | head -n1)
+KVER="${KFILE#/boot/vmlinuz-}"
+
+mv "/boot/vmlinuz-${KVER}" "/usr/lib/modules/${KVER}/vmlinuz"
+mv "/boot/System.map-${KVER}" "/usr/lib/modules/${KVER}/System.map"
+mv "/boot/config-${KVER}" "/usr/lib/modules/${KVER}/config"
+mv "/boot/symvers-${KVER}.zst" "/usr/lib/modules/${KVER}/symvers.zst"
+rm -rf /boot
 
 echo "::endgroup::"
