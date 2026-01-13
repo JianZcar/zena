@@ -38,4 +38,6 @@ mv "/boot/config-${KVER}" "/usr/lib/modules/${KVER}/config"
 mv "/boot/symvers-${KVER}.zst" "/usr/lib/modules/${KVER}/symvers.zst"
 rm -rf /boot
 
+/ctx/09-initramfs.sh
+
 echo "::endgroup::"
