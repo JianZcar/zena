@@ -111,12 +111,10 @@ packages=(
   ############################
   @fonts
   glibc-all-langpacks
-  lato-fonts
-  twitter-twemoji-fonts
-  google-noto-sans-cjk-fonts
+  jetbrains-mono-fonts
   fira-code-fonts
-  nerd-fonts
   dejavu-fonts-all
+  nerd-fonts
 
   ############################
   # Performance              #
