@@ -7,6 +7,7 @@ set -ouex pipefail
 shopt -s nullglob
 
 KVER=$(ls /usr/lib/modules | head -n1)
+ls "/usr/lib/modules"
 ls "/usr/lib/modules/$KVER"
 KIMAGE="/usr/lib/modules/$KVER/vmlinuz"
 SIGN_DIR="/secureboot"
