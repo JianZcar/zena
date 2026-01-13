@@ -25,8 +25,9 @@ system_services=(
 
 user_services=(
   dms.service
-  dsearch.service
   podman.socket
+  dsearch.service
+  foot-server.service
   gnome-keyring-daemon.socket
   gnome-keyring-daemon.service
 )

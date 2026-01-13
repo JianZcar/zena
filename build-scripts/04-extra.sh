@@ -12,7 +12,8 @@ packages=(
 
   bazaar
   firewall-config
-  ghostty
+
+  foot
   nautilus
   nautilus-python
 
@@ -32,9 +33,5 @@ packages=(
 # dnf5 -y remove "${packages[@]}"
 
 dconf update
-# Patch ghostty to work well with "open in terminal"
-rm /usr/share/nautilus-python/extensions/ghostty.py
-sed -i 's|^Exec=/usr/bin/ghostty --gtk-single-instance=true$|Exec=/usr/local/bin/ghostty-pwd|' \
-  /usr/share/applications/com.mitchellh.ghostty.desktop
 
 echo "::endgroup::"
