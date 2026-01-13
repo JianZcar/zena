@@ -12,10 +12,10 @@ coprs=(
 
   ublue-os/packages
 
-  yalter/niri-git
+  yalter/niri
   ulysg/xwayland-satellite
   avengemedia/danklinux
-  avengemedia/dms-git
+  avengemedia/dms
 
   che/nerd-fonts
 )
@@ -37,7 +37,7 @@ for copr in "${coprs[@]}"; do
   dnf5 -y copr enable "$copr"
 done
 
-echo "priority=1" | tee -a /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:yalter:niri-git.repo
+echo "priority=1" | tee -a /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:yalter:niri.repo
 echo "priority=2" | tee -a /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:ulysg:xwayland-satellite.repo
 echo "priority=3" | tee -a /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:avengemedia:danklinux.repo
 dnf5 -y config-manager setopt "*terra*".priority=4 "*terra*".exclude="nerd-fonts topgrade steam python3-protobuf"

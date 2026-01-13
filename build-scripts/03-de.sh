@@ -17,14 +17,13 @@ packages=(
   dms
   dgop
   danksearch
-  quickshell-git
+  quickshell
 
   adw-gtk3-theme
   xwayland-satellite
 
   cava
   matugen
-  cliphist
   wl-clipboard
 )
 dnf5 -y install "${packages[@]}"
