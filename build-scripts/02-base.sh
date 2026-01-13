@@ -44,12 +44,14 @@ packages=(
   inotify-tools
   gum
   xdg-user-dirs
+  xdg-terminal-exec
   xdg-user-dirs-gtk
 
   ############################
   # DESKTOP PORTALS          #
   ############################
   xdg-desktop-portal
+  xdg-desktop-portal-gtk
   xdg-desktop-portal-gnome
 
   ############################
@@ -174,18 +176,19 @@ packages=(
 )
 dnf5 -y remove "${packages[@]}"
 
-TMPDIR=$(mktemp -d)
-pushd "$TMPDIR"
-
-git clone https://github.com/miguel-b-p/preload-ng.git "$TMPDIR/preload-ng"
+PRELOAD_TMPDIR=$(mktemp -d)
+git clone https://github.com/miguel-b-p/preload-ng.git "$PRELOAD_TMPDIR"
 mkdir -p "/usr/local/sbin"
-cp "$TMPDIR/preload-ng/bin/preload" "/usr/local/sbin/preload"
-cp "$TMPDIR/preload-ng/bin/preload.conf" "/etc/preload.conf"
+cp "$PRELOAD_TMPDIR/bin/preload"      "/usr/local/sbin/preload"
+cp "$PRELOAD_TMPDIR/bin/preload.conf" "/etc/preload.conf"
 chmod 755 "/usr/local/sbin/preload"
 chmod 644 "/etc/preload.conf"
+rm -rf "$PRELOAD_TMPDIR"
 
-popd
-rm -rf "$TMPDIR"
+XDG_EXT_TMPDIR="$(mktemp -d)"
+curl -fsSLo - "$(curl -fsSL https://api.github.com/repos/tulilirockz/xdg-terminal-exec-nautilus/releases/latest | jq -rc .tarball_url)" | tar -xzvf - -C "${XDG_EXT_TMPDIR}"
+install -Dpm0644 -t "/usr/share/nautilus-python/extensions/" "${XDG_EXT_TMPDIR}"/*/xdg-terminal-exec-nautilus.py
+rm -rf "${XDG_EXT_TMPDIR}"
 
 systemctl set-default graphical.target
 authselect select sssd with-systemd-homed with-faillock without-nullok

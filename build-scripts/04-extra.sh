@@ -17,7 +17,6 @@ packages=(
   nautilus-python
 
   v4l2loopback
-  nautilus-open-any-terminal
 )
 dnf5 -y install "${packages[@]}"
 
