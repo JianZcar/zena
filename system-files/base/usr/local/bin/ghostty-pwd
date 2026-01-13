@@ -1,0 +1,3 @@
+#!/bin/bash
+# This script captures the current directory and passes it to Ghostty
+/usr/bin/ghostty --gtk-single-instance=true --working-directory="$PWD" "$@"
