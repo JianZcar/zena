@@ -1,7 +1,5 @@
 <div align="center">
   <img width="256" height="256" alt="zena-logo" src="https://github.com/user-attachments/assets/82db85b8-b2a6-4899-b977-bae9b966c944" />
-
-  ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Zena-Linux/Zena/build.yml?style=flat-square&logo=github&label=Build%20Zena)
   
   [![Discord Invite](https://img.shields.io/badge/Join_Discord-Chat_with_us-blue?style=social&logo=discord)](https://discord.gg/22MFgGgjG9)
 </div>  
@@ -39,7 +37,7 @@ Zena is an operating system built with **bootc**. It is immutable and containerâ
 Zena delivers an immutable desktop operating system optimized for developer workflows and reproducibility. Key design principles:
 
 * **Atomic & container-native** - The os is delivered as an image and updated atomically with rollback support via the `bootc` model.
-* **Fedora-based (currently tracking Fedora 42)** - Zena uses Fedora as its base, inheriting its toolchain, and ecosystem.
+* **Fedora-based (currently tracking Fedora 43)** - Zena uses Fedora as its base, inheriting its toolchain, and ecosystem.
 * **Rapid, image-based updates** - Updates are delivered daily, and sometimes multiple times per day, while remaining fully atomic and rollback-safe.
 * **Secure & portable homes** - `systemd-homed` is enabled by default to provide portable, encrypted home directories.
 * **Reproducible development environment** - Nix is included for reproducible builds and per-user package management.
@@ -78,7 +76,7 @@ Notes:
 
 ### Typical install flow
 
-1. Download the latest ISO/installer image from Gofile [link](https://gofile.io/d/zr5q5Q) or from the GitHub Actions artifact storage.
+1. Download the latest ISO/installer image from Gofile [link](https://gofile.io/d/5nTLku) or from the GitHub Actions artifact storage.
 2. Create a bootable USB (e.g., `dd`, balenaEtcher, Rufus).
 3. Boot the target machine from the installer image and follow the installer prompts.
 
