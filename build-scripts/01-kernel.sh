@@ -26,4 +26,6 @@ dnf5 -y remove --no-autoremove \
 dnf5 -y install "${packages[@]}"
 dnf5 versionlock add "${packages[@]}"
 
+ls /boot
+
 echo "::endgroup::"
