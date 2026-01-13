@@ -12,12 +12,12 @@ packages=(
 
   bazaar
   firewall-config
-  ghostty
+
+  foot
   nautilus
   nautilus-python
 
   v4l2loopback
-  nautilus-open-any-terminal
 )
 dnf5 -y install "${packages[@]}"
 dnf5 -y upgrade nautilus-python --releasever=44
@@ -33,6 +33,5 @@ packages=(
 # dnf5 -y remove "${packages[@]}"
 
 dconf update
-rm /usr/share/nautilus-python/extensions/ghostty.py
 
 echo "::endgroup::"

@@ -17,7 +17,7 @@ coprs=(
   avengemedia/danklinux
   avengemedia/dms-git
 
-  monkeygold/nautilus-open-any-terminal
+  che/nerd-fonts
 )
 
 mkdir -p /var/roothome

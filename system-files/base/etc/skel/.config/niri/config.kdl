@@ -362,7 +362,7 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
-    Mod+T hotkey-overlay-title="Open Terminal" { spawn "xterm"; }
+    Mod+T hotkey-overlay-title="Open Terminal" { spawn "xdg-terminal-exec"; }
     Mod+E hotkey-overlay-title="Open File Manager" { spawn "nautilus"; }
     Mod+B hotkey-overlay-title="Open Browser" { spawn "xdg-open" "https://"; }
     Mod+X hotkey-overlay-title="Open Clipboard" { spawn "dms" "ipc" "call" "clipboard" "toggle"; }
