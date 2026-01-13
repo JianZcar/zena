@@ -6,6 +6,12 @@ set -ouex pipefail
 
 shopt -s nullglob
 
+pushd /usr/lib/kernel/install.d
+printf '%s\n' '#!/bin/sh' 'exit 0' > 05-rpmostree.install
+printf '%s\n' '#!/bin/sh' 'exit 0' > 50-dracut.install
+chmod +x  05-rpmostree.install 50-dracut.install
+popd
+
 packages=(
   kernel-cachyos-lto
   kernel-cachyos-lto-devel-matched
@@ -17,21 +23,7 @@ dnf5 -y remove --no-autoremove \
   kernel-modules-extra kernel-tools \
   kernel-tools-libs
 
-TMPDIR=$(mktemp -d)
-pushd "$TMPDIR"
-
-dnf5 download --arch x86_64 --resolve --destdir "$TMPDIR" "${packages[@]}"
-rpm -U --noscripts --notriggers *.rpm
-
-popd
-rm -rf "$TMPDIR"
-
-rpm --rebuilddb
-dnf5 clean all
-dnf5 makecache
-dnf5 check
-dnf5 -y distro-sync
-
+dnf5 -y install "${packages[@]}"
 dnf5 versionlock add "${packages[@]}"
 
 echo "::endgroup::"
