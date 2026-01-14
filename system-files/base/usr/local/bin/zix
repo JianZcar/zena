@@ -10,6 +10,14 @@ def run(cmd):
     except subprocess.CalledProcessError as e:
         sys.exit(e.returncode)
 
+def cmd_upgrade(args):
+    if not args.packages:
+        print("upgrading all packages")
+        run(["nix", "profile", "upgrade", "--impure", "--all"])
+    else:
+        for pkg in args.packages:
+            print(f"upgrading '{pkg}'")
+            run(["nix", "profile", "upgrade", "--impure", pkg])
 
 def cmd_add(args):
     for pkg in args.packages:
@@ -46,6 +54,10 @@ def main():
     p_add = sub.add_parser("add", help="Install one or more packages")
     p_add.add_argument("packages", nargs="+")
     p_add.set_defaults(func=cmd_add)
+
+    p_upgrade = sub.add_parser("upgrade", help="Upgrade installed packages")
+    p_upgrade.add_argument("packages", nargs="*", help="Packages to upgrade. If empty, upgrades all.")
+    p_upgrade.set_defaults(func=cmd_upgrade)
 
     p_remove = sub.add_parser("remove", help="Remove one or more packages")
     p_remove.add_argument("packages", nargs="+")
