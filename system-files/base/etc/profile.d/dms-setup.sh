@@ -4,10 +4,18 @@ DMS="$HOME/.config/niri/dms"
 
 mkdir -p "$DMS"
 
-touch "$DMS/colors.kdl"
-touch "$DMS/wpblur.kdl"
-touch "$DMS/cursor.kdl"
-touch "$DMS/outputs.kdl"
-touch "$DMS/layout.kdl"
-touch "$DMS/alttab.kdl"
-touch "$DMS/binds.kdl"
+files="
+colors.kdl
+wpblur.kdl
+cursor.kdl
+outputs.kdl
+layout.kdl
+alttab.kdl
+binds.kdl
+"
+
+for file in $files; do
+    if [ ! -e "$DMS/$file" ]; then
+        touch "$DMS/$file"
+    fi
+done
