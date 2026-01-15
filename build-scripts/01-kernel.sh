@@ -36,4 +36,6 @@ mv "/boot/config-${KVER}" "/usr/lib/modules/${KVER}/config"
 mv "/boot/symvers-${KVER}.zst" "/usr/lib/modules/${KVER}/symvers.zst"
 rm -rf /boot/*
 
+dnf5 -y distro-sync
+
 echo "::endgroup::"
