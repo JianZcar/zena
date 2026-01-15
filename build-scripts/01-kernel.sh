@@ -17,11 +17,9 @@ packages=(
   kernel-cachyos-lto-devel-matched
 )
 
-dnf5 -y remove --no-autoremove \
-  kernel kernel-core \
-  kernel-modules kernel-modules-core \
-  kernel-modules-extra kernel-tools \
-  kernel-tools-libs
+for pkg in kernel kernel-core kernel-modules kernel-modules-core; do
+  rpm --erase $pkg --nodeps
+done
 
 dnf5 -y install "${packages[@]}"
 dnf5 versionlock add "${packages[@]}"
