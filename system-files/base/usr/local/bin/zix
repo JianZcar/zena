@@ -2,65 +2,171 @@
 import argparse
 import subprocess
 import sys
+import shutil
+from typing import List, NoReturn
 
+class Style:
+    RESET = "\033[0m"
+    BOLD = "\033[1m"
+    DIM = "\033[2m"
 
-def run(cmd):
+    RED = "\033[38;2;255;95;95m"
+    GREEN = "\033[38;2;0;230;170m"
+    YELLOW = "\033[38;2;255;225;100m"
+    BLUE = "\033[38;2;43;149;255m"
+    CYAN = "\033[38;2;108;221;253m"
+
+def log_info(msg: str) -> None:
+    print(f"{Style.BLUE}ℹ{Style.RESET}  {msg}")
+
+def log_task(msg: str) -> None:
+    print(f"{Style.BOLD}{Style.CYAN}==>{Style.RESET} {msg}")
+
+def log_success(msg: str) -> None:
+    print(f"{Style.GREEN}✔{Style.RESET}  {msg}")
+
+def log_warn(msg: str) -> None:
+    print(f"{Style.YELLOW}⚠{Style.RESET}  {msg}")
+
+def log_error(msg: str) -> None:
+    print(f"{Style.RED}✖  Error:{Style.RESET} {msg}", file=sys.stderr)
+
+def check_nix_installed() -> None:
+    if shutil.which("nix") is None:
+        log_error("The 'nix' command was not found in PATH.")
+        log_info("Please install Nix before using Zix.")
+        sys.exit(1)
+
+def run(cmd: List[str], silent: bool = False, check_warnings: bool = False) -> None:
+    """Executes a subprocess command with visual error handling."""
+    cmd_str = " ".join(cmd)
+    
+    if not silent:
+        print(f"   {Style.DIM}$ {cmd_str}{Style.RESET}")
+
     try:
-        subprocess.run(cmd, check=True)
+        # If we need to check warnings, we must capture output
+        if check_warnings:
+            result = subprocess.run(cmd, capture_output=True, text=True)
+            if result.stdout:
+                print(result.stdout, end='')
+            if result.stderr:
+                print(result.stderr, file=sys.stderr, end='')
+            
+            if result.returncode != 0:
+                raise subprocess.CalledProcessError(result.returncode, cmd)
+            
+            err_output = result.stderr
+            if "does not match any packages" in err_output or "No packages to" in err_output:
+                raise subprocess.CalledProcessError(1, cmd)
+        else:
+            subprocess.run(cmd, check=True)
+
     except subprocess.CalledProcessError as e:
+        print() # Blank line to separate
+        log_error(f"Failed to execute command.")
+        log_info(f"Command: {cmd_str}")
+        log_info(f"Exit code: {e.returncode}")
         sys.exit(e.returncode)
+    except KeyboardInterrupt:
+        print()
+        log_warn("Operation cancelled by user.")
+        sys.exit(130)
 
+def cmd_upgrade(args: argparse.Namespace) -> None:
+    if not args.packages:
+        log_task("Upgrading all profile packages...")
+        run(["nix", "profile", "upgrade", "--impure", "--all"])
+        log_success("All packages have been upgraded!")
+    else:
+        count = len(args.packages)
+        log_task(f"Upgrading {count} package(s)...")
+        for pkg in args.packages:
+            log_info(f"Processing '{pkg}'...")
+            run(["nix", "profile", "upgrade", "--impure", pkg], check_warnings=True)
+        log_success("Upgrade complete.")
 
-def cmd_add(args):
+def cmd_add(args: argparse.Namespace) -> None:
+    log_task(f"Installing {len(args.packages)} package(s)...")
+    
     for pkg in args.packages:
-        print(f"installing '{pkg}'")
-        run(["nix", "profile", "add", "--impure", f"nixpkgs#{pkg}"])
+        target = pkg if "#" in pkg else f"nixpkgs#{pkg}"
+        
+        log_info(f"Adding '{Style.BOLD}{pkg}{Style.RESET}'...")
+        run(["nix", "profile", "add", "--impure", target])
+    
+    log_success("Installation finished successfully.")
 
-
-def cmd_remove(args):
+def cmd_remove(args: argparse.Namespace) -> None:
+    log_task(f"Removing {len(args.packages)} package(s)...")
+    
     for pkg in args.packages:
-        print(f"removing '{pkg}'")
-        run(["nix", "profile", "remove", pkg])
+        log_info(f"Removing '{Style.BOLD}{pkg}{Style.RESET}'...")
+        run(["nix", "profile", "remove", pkg], check_warnings=True)
+        
+    log_success("Removal complete.")
 
-
-def cmd_list(_args):
+def cmd_list(_args: argparse.Namespace) -> None:
+    log_task("Listing installed packages:")
+    # Here we don't use log_success at the end because nix output is already the list
     run(["nix", "profile", "list"])
 
+def cmd_search(args: argparse.Namespace) -> None:
+    query = " ".join(args.query)
+    log_task(f"Searching for '{Style.BOLD}{query}{Style.RESET}' in nixpkgs...")
+    run(["nix", "search", "nixpkgs", query])
 
-def cmd_search(args):
-    run(["nix", "search", "nixpkgs", " ".join(args.query)])
+class ColoredHelpFormatter(argparse.RawDescriptionHelpFormatter):
+    def start_section(self, heading):
+        if heading:
+            # Títulos agora usam o Ciano elétrico do logo
+            heading = f"{Style.BOLD}{Style.CYAN}{heading.title()}{Style.RESET}"
+        super().start_section(heading)
 
+    def _format_usage(self, usage, actions, groups, prefix):
+        if prefix is None:
+            prefix = 'usage: '
+        # O prefixo de uso agora usa o Verde Menta
+        prefix = f"{Style.BOLD}{Style.GREEN}{prefix}{Style.RESET}"
+        return super()._format_usage(usage, actions, groups, prefix)
 
-def main():
+def main() -> None:
+    check_nix_installed()
+
     parser = argparse.ArgumentParser(
         prog="zix",
-        description=(
-            "Zix is a simple command-line tool to manage Nix packages "
-            "for your user profile. You can install, remove, list, "
-            "and search packages in a convenient way."
-        ),
+        description=f"{Style.BOLD}Zix{Style.RESET} - Simplified Nix package manager.",
+        epilog=f"{Style.DIM}Use 'zix <command> --help' for more information.{Style.RESET}",
+        formatter_class=ColoredHelpFormatter
     )
 
-    sub = parser.add_subparsers(dest="command", required=True)
+    sub = parser.add_subparsers(dest="command", required=True, title="available commands")
 
-    p_add = sub.add_parser("add", help="Install one or more packages")
-    p_add.add_argument("packages", nargs="+")
+    p_add = sub.add_parser("add", help="Installs one or more packages", formatter_class=ColoredHelpFormatter)
+    p_add.add_argument("packages", nargs="+", help="Package names (e.g. hello, git)")
     p_add.set_defaults(func=cmd_add)
 
-    p_remove = sub.add_parser("remove", help="Remove one or more packages")
-    p_remove.add_argument("packages", nargs="+")
+    p_upgrade = sub.add_parser("upgrade", help="Upgrades installed packages", formatter_class=ColoredHelpFormatter)
+    p_upgrade.add_argument("packages", nargs="*", help="Packages to upgrade (empty = all)")
+    p_upgrade.set_defaults(func=cmd_upgrade)
+
+    p_remove = sub.add_parser("remove", help="Removes one or more packages", formatter_class=ColoredHelpFormatter)
+    p_remove.add_argument("packages", nargs="+", help="Name or index of packages")
     p_remove.set_defaults(func=cmd_remove)
 
-    p_list = sub.add_parser("list", help="Show installed packages")
+    p_list = sub.add_parser("list", help="Lists installed packages", formatter_class=ColoredHelpFormatter)
     p_list.set_defaults(func=cmd_list)
 
-    p_search = sub.add_parser("search", help="Search nixpkgs")
-    p_search.add_argument("query", nargs="+")
+    p_search = sub.add_parser("search", help="Searches in nixpkgs", formatter_class=ColoredHelpFormatter)
+    p_search.add_argument("query", nargs="+", help="Search term")
     p_search.set_defaults(func=cmd_search)
 
-    args = parser.parse_args()
-    args.func(args)
-
+    try:
+        args = parser.parse_args()
+        args.func(args)
+    except KeyboardInterrupt:
+        print()
+        sys.exit(0)
 
 if __name__ == "__main__":
     main()
