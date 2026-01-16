@@ -28,6 +28,7 @@ user_services=(
   podman.socket
   dsearch.service
   foot-server.service
+  flathub-setup.service
   gnome-keyring-daemon.socket
   gnome-keyring-daemon.service
 )
