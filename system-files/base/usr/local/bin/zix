@@ -3,7 +3,12 @@ import argparse
 import subprocess
 import sys
 import shutil
+import json
 from typing import List, NoReturn
+
+# -----------------------------------------------------------------------------
+# Style & Logging
+# -----------------------------------------------------------------------------
 
 class Style:
     RESET = "\033[0m"
@@ -31,11 +36,22 @@ def log_warn(msg: str) -> None:
 def log_error(msg: str) -> None:
     print(f"{Style.RED}✖  Error:{Style.RESET} {msg}", file=sys.stderr)
 
+# -----------------------------------------------------------------------------
+# System Helpers
+# -----------------------------------------------------------------------------
+
 def check_nix_installed() -> None:
     if shutil.which("nix") is None:
         log_error("The 'nix' command was not found in PATH.")
         log_info("Please install Nix before using Zix.")
         sys.exit(1)
+
+def check_flatpak_installed() -> bool:
+    if shutil.which("flatpak") is None:
+        log_error("The 'flatpak' command was not found in PATH.")
+        log_info("Please install Flatpak to use this feature.")
+        return False
+    return True
 
 def run(cmd: List[str], silent: bool = False, check_warnings: bool = False) -> None:
     """Executes a subprocess command with visual error handling."""
@@ -73,92 +89,439 @@ def run(cmd: List[str], silent: bool = False, check_warnings: bool = False) -> N
         log_warn("Operation cancelled by user.")
         sys.exit(130)
 
-def cmd_upgrade(args: argparse.Namespace) -> None:
-    if not args.packages:
-        log_task("Upgrading all profile packages...")
-        run(["nix", "profile", "upgrade", "--impure", "--all"])
-        log_success("All packages have been upgraded!")
-    else:
-        count = len(args.packages)
-        log_task(f"Upgrading {count} package(s)...")
-        for pkg in args.packages:
-            log_info(f"Processing '{pkg}'...")
-            run(["nix", "profile", "upgrade", "--impure", pkg], check_warnings=True)
-        log_success("Upgrade complete.")
+def parse_package_args(packages: List[str]) -> tuple[List[str], List[str]]:
+    """
+    Parses a list of package arguments, handling prefixes and splitting by comma.
+    Returns a tuple (nix_packages, flatpak_packages).
+    
+    Supported formats:
+      - pkg1,pkg2 (defaults to nixpkgs)
+      - nixpkgs#pkg1,pkg2
+      - flatpak#pkg1,pkg2
+    """
+    nix_pkgs = []
+    flatpak_pkgs = []
+
+    for arg in packages:
+        if arg.startswith("flatpak#"):
+            # Strip prefix and split by comma
+            content = arg.split("#", 1)[1]
+            items = [p.strip() for p in content.split(",") if p.strip()]
+            flatpak_pkgs.extend(items)
+        elif arg.startswith("nixpkgs#"):
+            content = arg.split("#", 1)[1]
+            items = [p.strip() for p in content.split(",") if p.strip()]
+            nix_pkgs.extend(items)
+        else:
+            # Default to nixpkgs, just split by comma
+            items = [p.strip() for p in arg.split(",") if p.strip()]
+            nix_pkgs.extend(items)
+            
+    return nix_pkgs, flatpak_pkgs
+
+# -----------------------------------------------------------------------------
+# Core Functionality
+# -----------------------------------------------------------------------------
+
+def get_nix_packages() -> List[dict]:
+    try:
+        # Use --json for reliable parsing
+        result = subprocess.run(
+            ["nix", "profile", "list", "--json"],
+            capture_output=True,
+            text=True
+        )
+        if result.returncode != 0:
+            return []
+        
+        data = json.loads(result.stdout)
+        packages = []
+        elements = data.get("elements", {})
+        
+        # Handle dict structure (common in newer Nix versions)
+        if isinstance(elements, dict):
+            for name, details in elements.items():
+                origin = details.get("originalUrl") or details.get("attrPath", "unknown")
+                packages.append({"name": name, "origin": origin})
+        # Fallback for potential list structure (older versions?)
+        elif isinstance(elements, list):
+            for element in elements:
+                attr_path = element.get("attrPath") or element.get("url", "unknown")
+                name = attr_path.split('.')[-1] if '.' in attr_path else attr_path
+                packages.append({"name": name, "origin": attr_path})
+                
+        return packages
+    except Exception:
+        return []
+
+def get_flatpak_packages() -> List[dict]:
+    if not shutil.which("flatpak"):
+        return []
+        
+    try:
+        result = subprocess.run(
+            ["flatpak", "list", "--app", "--columns=name,application,description"],
+            capture_output=True,
+            text=True
+        )
+        packages = []
+        if result.returncode == 0:
+            lines = result.stdout.strip().split('\n')
+            for line in lines:
+                parts = line.split('\t')
+                if len(parts) >= 2:
+                    packages.append({"name": parts[0], "id": parts[1]})
+        return packages
+    except Exception:
+        return []
+
+def install_flatpak_interactive(term: str) -> None:
+    if not check_flatpak_installed():
+        return
+
+    log_task(f"Searching for '{Style.BOLD}{term}{Style.RESET}' in flathub...")
+    
+    # Run flatpak search with specific columns for parsing
+    try:
+        # We use --columns to ensure predictable output format
+        # name, application, description
+        result = subprocess.run(
+            ["flatpak", "search", term, "--columns=name,application,description"], 
+            capture_output=True, 
+            text=True
+        )
+        
+        if result.returncode != 0:
+            log_error("Failed to search flatpak.")
+            if result.stderr:
+                print(result.stderr, file=sys.stderr)
+            return
+
+        lines = result.stdout.strip().split('\n')
+        # Skip empty lines
+        lines = [line for line in lines if line.strip()]
+
+        if not lines:
+            log_warn(f"No matches found for '{term}'.")
+            return
+
+        # Flatpak search usually doesn't output a header with --columns if piped, 
+        # but let's be safe. If the first line looks like a header (e.g. "Name  Application  Description"), skip it?
+        # "Name\tApplication ID\tDescription" usually
+        if lines and "Application ID" in lines[0]:
+            lines = lines[1:]
+        
+        if not lines:
+             log_warn(f"No matches found for '{term}'.")
+             return
+
+        packages = []
+        for line in lines:
+            parts = line.split('\t')
+            # Fallback if not tab separated (older flatpak versions might use spaces)
+            if len(parts) < 2: 
+                 # Try 3 spaces as separator fallback
+                 parts = line.split("   ")
+            
+            # Clean up parts
+            parts = [p.strip() for p in parts if p.strip()]
+            
+            if len(parts) >= 2:
+                # Assuming Name, AppID, Description
+                name = parts[0]
+                app_id = parts[1]
+                desc = parts[2] if len(parts) > 2 else "No description"
+                packages.append({'name': name, 'id': app_id, 'desc': desc})
+
+        if not packages:
+            log_warn(f"No matches found for '{term}'.")
+            return
+
+        # Display menu
+        print(f"\n{Style.BOLD}Available packages:{Style.RESET}")
+        for i, pkg in enumerate(packages):
+            idx = i + 1
+            print(f" {Style.GREEN}{idx}.{Style.RESET} {Style.BOLD}{pkg['name']}{Style.RESET} ({Style.DIM}{pkg['id']}{Style.RESET})")
+            print(f"    {pkg['desc']}")
+        
+        print()
+        try:
+            choice = input(f"{Style.BLUE}Select a package (1-{len(packages)}) or 'q' to cancel: {Style.RESET}")
+            if choice.lower() == 'q':
+                log_warn("Operation cancelled.")
+                return
+            
+            choice_idx = int(choice) - 1
+            if 0 <= choice_idx < len(packages):
+                selected = packages[choice_idx]
+                log_task(f"Installing {selected['name']} ({selected['id']})...")
+                run(["flatpak", "install", selected['id']])
+            else:
+                log_error("Invalid selection.")
+        except ValueError:
+             log_error("Invalid input. Please enter a number.")
+
+    except Exception as e:
+        log_error(f"An error occurred: {e}")
+
+# -----------------------------------------------------------------------------
+# Command Handlers
+# -----------------------------------------------------------------------------
 
 def cmd_add(args: argparse.Namespace) -> None:
-    log_task(f"Installing {len(args.packages)} package(s)...")
+    nix_packages, flatpak_queries = parse_package_args(args.packages)
     
-    for pkg in args.packages:
-        target = pkg if "#" in pkg else f"nixpkgs#{pkg}"
-        
-        log_info(f"Adding '{Style.BOLD}{pkg}{Style.RESET}'...")
-        run(["nix", "profile", "add", "--impure", target])
-    
-    log_success("Installation finished successfully.")
+    # Process Nix packages
+    if nix_packages:
+        log_task(f"Installing {len(nix_packages)} nix package(s)...")
+        for pkg in nix_packages:
+            target = pkg if "#" in pkg else f"nixpkgs#{pkg}"
+            log_info(f"Adding '{Style.BOLD}{pkg}{Style.RESET}'...")
+            run(["nix", "profile", "add", "--impure", target])
+
+    # Process Flatpak packages
+    if flatpak_queries:
+        log_task(f"Processing {len(flatpak_queries)} flatpak search(es)...")
+        for query in flatpak_queries:
+            install_flatpak_interactive(query)
+
+    if nix_packages or flatpak_queries:
+        log_success("Installation process finished.")
+    else:
+        log_warn("No packages specified.")
 
 def cmd_remove(args: argparse.Namespace) -> None:
-    log_task(f"Removing {len(args.packages)} package(s)...")
+    nix_packages, flatpak_packages = parse_package_args(args.packages)
     
-    for pkg in args.packages:
-        log_info(f"Removing '{Style.BOLD}{pkg}{Style.RESET}'...")
-        run(["nix", "profile", "remove", pkg], check_warnings=True)
-        
-    log_success("Removal complete.")
+    # Process Nix packages
+    if nix_packages:
+        log_task(f"Removing {len(nix_packages)} nix package(s)...")
+        for pkg in nix_packages:
+            log_info(f"Removing '{Style.BOLD}{pkg}{Style.RESET}'...")
+            run(["nix", "profile", "remove", pkg], check_warnings=True)
 
-def cmd_list(_args: argparse.Namespace) -> None:
-    log_task("Listing installed packages:")
-    # Here we don't use log_success at the end because nix output is already the list
-    run(["nix", "profile", "list"])
+    # Process Flatpak packages
+    if flatpak_packages:
+        log_task(f"Removing {len(flatpak_packages)} flatpak package(s)...")
+        for pkg in flatpak_packages:
+             if not check_flatpak_installed():
+                 continue
+             log_info(f"Removing '{Style.BOLD}{pkg}{Style.RESET}' (flatpak)...")
+             run(["flatpak", "uninstall", pkg])
+
+    if nix_packages or flatpak_packages:
+        log_success("Removal process finished.")
+    else:
+        log_warn("No packages specified.")
+
+def cmd_upgrade(args: argparse.Namespace) -> None:
+    # Check for "upgrade all" special keywords
+    target_all_nix = False
+    target_all_flatpak = False
+    
+    if not args.packages:
+        target_all_nix = True
+        target_all_flatpak = True
+    elif len(args.packages) == 1 and args.packages[0] == 'nixpkgs':
+        target_all_nix = True
+    elif len(args.packages) == 1 and args.packages[0] == 'flatpak':
+        target_all_flatpak = True
+    
+    if target_all_nix or target_all_flatpak:
+        if target_all_nix:
+            log_task("Upgrading all Nix profile packages...")
+            run(["nix", "profile", "upgrade", "--impure", "--all"])
+            log_success("All Nix packages have been upgraded!")
+        
+        if target_all_flatpak:
+            if check_flatpak_installed():
+                log_task("Upgrading all Flatpak packages...")
+                run(["flatpak", "update", "-y"]) # -y for non-interactive
+                log_success("All Flatpak packages have been upgraded!")
+        return
+
+    # Specific packages
+    nix_packages, flatpak_packages = parse_package_args(args.packages)
+
+    if nix_packages:
+        log_task(f"Upgrading {len(nix_packages)} Nix package(s)...")
+        for pkg in nix_packages:
+            log_info(f"Processing '{pkg}'...")
+            run(["nix", "profile", "upgrade", "--impure", pkg], check_warnings=True)
+        log_success("Nix upgrade complete.")
+
+    if flatpak_packages:
+        if check_flatpak_installed():
+            log_task(f"Upgrading {len(flatpak_packages)} Flatpak package(s)...")
+            log_info(f"Updating: {', '.join(flatpak_packages)}")
+            run(["flatpak", "update", "-y"] + flatpak_packages)
+            log_success("Flatpak upgrade complete.")
+            
+    if not nix_packages and not flatpak_packages:
+         log_warn("No packages specified for upgrade.")
+
+def cmd_list(args: argparse.Namespace) -> None:
+    show_nix = args.type in [None, 'nixpkgs']
+    show_flatpak = args.type in [None, 'flatpak']
+
+    if show_nix:
+        log_task("Fetching Nix packages...")
+        nix_pkgs = get_nix_packages()
+        if nix_pkgs:
+            print(f"\n{Style.BOLD}{Style.BLUE}:: Nix Packages ({len(nix_pkgs)}){Style.RESET}")
+            for pkg in nix_pkgs:
+                print(f"  {Style.GREEN}•{Style.RESET} {Style.BOLD}{pkg['name']}{Style.RESET} {Style.DIM}({pkg['origin']}){Style.RESET}")
+        else:
+             if args.type == 'nixpkgs':
+                 log_warn("No Nix packages found.")
+
+    if show_flatpak:
+        if show_nix: print() # Spacing
+        log_task("Fetching Flatpak packages...")
+        flatpak_pkgs = get_flatpak_packages()
+        if flatpak_pkgs:
+            print(f"\n{Style.BOLD}{Style.BLUE}:: Flatpak Packages ({len(flatpak_pkgs)}){Style.RESET}")
+            for pkg in flatpak_pkgs:
+                print(f"  {Style.GREEN}•{Style.RESET} {Style.BOLD}{pkg['name']}{Style.RESET} {Style.DIM}({pkg['id']}){Style.RESET}")
+        else:
+             if args.type == 'flatpak':
+                 log_warn("No Flatpak packages found.")
 
 def cmd_search(args: argparse.Namespace) -> None:
-    query = " ".join(args.query)
-    log_task(f"Searching for '{Style.BOLD}{query}{Style.RESET}' in nixpkgs...")
-    run(["nix", "search", "nixpkgs", query])
+    nix_queries, flatpak_queries = parse_package_args(args.query)
+
+    # Process Nix searches
+    for query in nix_queries:
+        log_task(f"Searching for '{Style.BOLD}{query}{Style.RESET}' in nixpkgs...")
+        run(["nix", "search", "nixpkgs", query])
+
+    # Process Flatpak searches
+    for query in flatpak_queries:
+        if not check_flatpak_installed():
+            continue
+        log_task(f"Searching for '{Style.BOLD}{query}{Style.RESET}' in flathub...")
+        run(["flatpak", "search", query])
+
+# -----------------------------------------------------------------------------
+# Main Entry Point
+# -----------------------------------------------------------------------------
 
 class ColoredHelpFormatter(argparse.RawDescriptionHelpFormatter):
     def start_section(self, heading):
         if heading:
-            # Títulos agora usam o Ciano elétrico do logo
             heading = f"{Style.BOLD}{Style.CYAN}{heading.title()}{Style.RESET}"
         super().start_section(heading)
 
     def _format_usage(self, usage, actions, groups, prefix):
         if prefix is None:
             prefix = 'usage: '
-        # O prefixo de uso agora usa o Verde Menta
         prefix = f"{Style.BOLD}{Style.GREEN}{prefix}{Style.RESET}"
         return super()._format_usage(usage, actions, groups, prefix)
 
 def main() -> None:
     check_nix_installed()
 
+    main_epilog = f"""
+{Style.BOLD}EXAMPLES:{Style.RESET}
+  {Style.GREEN}#{Style.RESET} Install packages from Nix (default)
+  {Style.DIM}$ zix add micro git{Style.RESET}
+
+  {Style.GREEN}#{Style.RESET} Install packages from Flatpak
+  {Style.DIM}$ zix add flatpak#Spotify,"OBS Studio"{Style.RESET}
+
+  {Style.GREEN}#{Style.RESET} Install mixed packages
+  {Style.DIM}$ zix add nixpkgs#vim flatpak#equibop{Style.RESET}
+
+  {Style.GREEN}#{Style.RESET} Search for packages
+  {Style.DIM}$ zix search "web browser" flatpak#spotify{Style.RESET}
+
+  {Style.GREEN}#{Style.RESET} Upgrade all packages
+  {Style.DIM}$ zix upgrade{Style.RESET}
+
+  {Style.GREEN}#{Style.RESET} Upgrade only Flatpak packages
+  {Style.DIM}$ zix upgrade flatpak{Style.RESET}
+
+  {Style.GREEN}#{Style.RESET} Upgrade only Nix packages
+  {Style.DIM}$ zix upgrade nixpkgs{Style.RESET}
+"""
+
     parser = argparse.ArgumentParser(
         prog="zix",
-        description=f"{Style.BOLD}Zix{Style.RESET} - Simplified Nix package manager.",
-        epilog=f"{Style.DIM}Use 'zix <command> --help' for more information.{Style.RESET}",
+        description=f"{Style.BOLD}Zix{Style.RESET} - A unified package manager wrapper for Nix and Flatpak.",
+        epilog=main_epilog,
         formatter_class=ColoredHelpFormatter
     )
 
     sub = parser.add_subparsers(dest="command", required=True, title="available commands")
 
-    p_add = sub.add_parser("add", help="Installs one or more packages", formatter_class=ColoredHelpFormatter)
-    p_add.add_argument("packages", nargs="+", help="Package names (e.g. hello, git)")
+    # ADD
+    p_add = sub.add_parser(
+        "add", 
+        help="Installs packages from Nix or Flatpak",
+        description=f"Installs packages. Use {Style.BOLD}flatpak#{Style.RESET} prefix for Flatpak packages.",
+        formatter_class=ColoredHelpFormatter
+    )
+    p_add.add_argument(
+        "packages", 
+        nargs="+", 
+        help="Package names. E.g. 'git', 'nixpkgs#vim', 'flatpak#Spotify'"
+    )
     p_add.set_defaults(func=cmd_add)
 
-    p_upgrade = sub.add_parser("upgrade", help="Upgrades installed packages", formatter_class=ColoredHelpFormatter)
-    p_upgrade.add_argument("packages", nargs="*", help="Packages to upgrade (empty = all)")
+    # UPGRADE
+    p_upgrade = sub.add_parser(
+        "upgrade", 
+        help="Upgrades installed packages", 
+        description="Upgrades all installed packages or specific ones.",
+        formatter_class=ColoredHelpFormatter
+    )
+    p_upgrade.add_argument(
+        "packages", 
+        nargs="*", 
+        help="Specific packages to upgrade, or 'nixpkgs'/'flatpak' to upgrade all of that type. Empty = upgrade all."
+    )
     p_upgrade.set_defaults(func=cmd_upgrade)
 
-    p_remove = sub.add_parser("remove", help="Removes one or more packages", formatter_class=ColoredHelpFormatter)
-    p_remove.add_argument("packages", nargs="+", help="Name or index of packages")
+    # REMOVE
+    p_remove = sub.add_parser(
+        "remove", 
+        help="Removes packages",
+        description="Removes installed packages from Nix or Flatpak.", 
+        formatter_class=ColoredHelpFormatter
+    )
+    p_remove.add_argument(
+        "packages", 
+        nargs="+", 
+        help="Package names to remove. E.g. 'git', 'flatpak#Spotify'"
+    )
     p_remove.set_defaults(func=cmd_remove)
 
-    p_list = sub.add_parser("list", help="Lists installed packages", formatter_class=ColoredHelpFormatter)
+    # LIST
+    p_list = sub.add_parser(
+        "list", 
+        help="Lists installed packages", 
+        formatter_class=ColoredHelpFormatter
+    )
+    p_list.add_argument(
+        "type", 
+        nargs="?", 
+        choices=["nixpkgs", "flatpak"], 
+        help="Optional: filter list by 'nixpkgs' or 'flatpak'"
+    )
     p_list.set_defaults(func=cmd_list)
 
-    p_search = sub.add_parser("search", help="Searches in nixpkgs", formatter_class=ColoredHelpFormatter)
-    p_search.add_argument("query", nargs="+", help="Search term")
+    # SEARCH
+    p_search = sub.add_parser(
+        "search", 
+        help="Searches for packages",
+        description="Searches in Nixpkgs and/or Flathub.", 
+        formatter_class=ColoredHelpFormatter
+    )
+    p_search.add_argument(
+        "query", 
+        nargs="+", 
+        help="Search terms. Use 'flatpak#term' to search Flathub. Default is Nixpkgs."
+    )
     p_search.set_defaults(func=cmd_search)
 
     try:
