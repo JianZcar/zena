@@ -1,0 +1,11 @@
+[Unit]
+Description=Trigger DMS greeter sync
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/libexec/dms-greeter-sync-trigger.sh
+
+[Install]
+WantedBy=graphical-session.target

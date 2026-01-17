@@ -1,0 +1,14 @@
+[Unit]
+Description=Watch DankMaterialShell config files
+Wants=graphical-session.target
+After=graphical-session.target
+
+[Path]
+PathModified=%h/.config/DankMaterialShell/settings.json
+PathModified=%h/.local/state/DankMaterialShell/session.json
+PathModified=%h/.cache/quickshell/dankshell/dms-colors.json
+
+Unit=dms-greeter-sync-trigger.service
+
+[Install]
+WantedBy=graphical-session.target
