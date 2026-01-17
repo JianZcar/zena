@@ -44,6 +44,7 @@ dnf5 -y install --enablerepo=nvidia-container-toolkit \
 curl --retry 3 -L https://raw.githubusercontent.com/NVIDIA/dgx-selinux/master/bin/RHEL9/nvidia-container.pp -o nvidia-container.pp
 semodule -i nvidia-container.pp
 rm -f nvidia-container.pp
+rm /etc/xdg/autostart/nvidia-settings-load.desktop
 
 systemctl enable nvctk-cdi.service
 
