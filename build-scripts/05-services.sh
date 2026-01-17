@@ -26,6 +26,7 @@ system_services=(
 user_services=(
   dms.service
   podman.socket
+  dms-watch.path
   dsearch.service
   foot-server.service
   flathub-setup.service

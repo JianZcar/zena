@@ -1,4 +1,5 @@
 #!/bin/bash
+
 set -euo pipefail
 
 if getent passwd 1000 >/dev/null; then

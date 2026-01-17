@@ -1,0 +1,6 @@
+[Unit]
+Description=Copy DMS configs & wallpaper to global greeter cache
+
+[Service]
+Type=oneshot
+ExecStart=/usr/libexec/dms-greeter-sync.sh
