@@ -182,6 +182,8 @@ packages=(
 )
 dnf5 -y remove "${packages[@]}"
 
+curl -fsSL https://raw.githubusercontent.com/Zena-Linux/zix/refs/heads/main/zix | install -m 755 /dev/stdin /usr/local/bin/zix
+
 PRELOAD_TMPDIR=$(mktemp -d)
 git clone https://github.com/miguel-b-p/preload-ng.git "$PRELOAD_TMPDIR"
 mkdir -p "/usr/local/sbin"
