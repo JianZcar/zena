@@ -23,9 +23,9 @@ mkdir -p "$GREETER_CACHE"
 
 cp "/home/$ACTIVE_USER/.config/DankMaterialShell/settings.json" "$GREETER_CACHE/settings.json"
 cp "/home/$ACTIVE_USER/.local/state/DankMaterialShell/session.json" "$GREETER_CACHE/session.json"
-cp "/home/$ACTIVE_USER/.cache/quickshell/dankshell/dms-colors.json" "$GREETER_CACHE/colors.json"
+cp "/home/$ACTIVE_USER/.cache/DankMaterialShell/dms-colors.json" "$GREETER_CACHE/colors.json"
 
-WP_PATH_FILE="/home/$ACTIVE_USER/.cache/dms-wallpaper"
+WP_PATH_FILE="/home/$ACTIVE_USER/.cache/DankMaterialShell/wallpaper"
 if [ -f "$WP_PATH_FILE" ]; then
     WP=$(cat "$WP_PATH_FILE")
     if [ -n "$WP" ] && [ -f "$WP" ]; then
