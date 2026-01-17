@@ -18,7 +18,7 @@ if [ -z "$ACTIVE_USER" ]; then
     exit 0
 fi
 
-GREETER_CACHE="/var/cache/dms-greeter/$ACTIVE_USER"
+GREETER_CACHE="/var/cache/dms-greeter"
 mkdir -p "$GREETER_CACHE"
 
 cp "/home/$ACTIVE_USER/.config/DankMaterialShell/settings.json" "$GREETER_CACHE/settings.json"
