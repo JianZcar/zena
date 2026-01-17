@@ -1,7 +1,8 @@
 [Unit]
 Description=Trigger DMS greeter sync
 PartOf=graphical-session.target
-After=graphical-session.target
+Requires=dms.service
+After=dms.service graphical-session.target
 
 [Service]
 Type=oneshot
